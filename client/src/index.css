@@ -10,6 +10,11 @@
   font-family: "Karla", sans-serif;
 }
 
+body {
+  max-width: 100vw;
+  /* overflow-x: hidden; */
+}
+
 .main-layout {
   min-height: 100vh;
   display: grid;
@@ -79,6 +84,76 @@
 
 .navContainer.closed {
   animation: slideLeft 0.7s ease;
+}
+
+/* category container */
+
+.category-listing {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  grid-template-rows: 25rem;
+  grid-auto-flow: row;
+  grid-auto-rows: 20rem;
+}
+
+.grid-col-4 {
+  grid-column: span 4;
+}
+.grid-col-3 {
+  grid-column: span 3;
+}
+
+/* auth-form */
+
+.registerform {
+  position: relative;
+}
+
+.registerform::before {
+  content: "";
+  position: absolute;
+  top: -1.2rem;
+  right: 3rem;
+  border-bottom: 10px solid #9c9b9b;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.registerform::after {
+  content: "";
+  position: absolute;
+  top: -1.1rem;
+  right: 3rem;
+  border-bottom: 10px solid #fff;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.loginform {
+  position: relative;
+}
+
+.loginform::before {
+  content: "";
+  position: absolute;
+  top: -1.2rem;
+  left: 3rem;
+  border-bottom: 10px solid #9c9b9b;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.loginform::after {
+  content: "";
+  position: absolute;
+  top: -1.1rem;
+  left: 3rem;
+  border-bottom: 10px solid #fff;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
 }
 
 @keyframes slideRight {
