@@ -3,7 +3,7 @@ import headerLogo from "../../assets/shopping-cart.svg";
 
 const Footer = () => {
   return (
-    <footer className="py-4 my-4">
+    <footer className="py-4 my-4 ">
       <div className="bg-[#E11B23] py-4">
         <h1 className="text-4xl text-white text-center">
           Over 6 Million Happy Customers
@@ -17,7 +17,7 @@ const Footer = () => {
             className="w-12 h-12 object-cover block"
           />
         </div>
-        <section className="grid grid-cols-4 justify-center gap-16 px-8">
+        <section className="grid sm:grid-cols-4 grid-cols-1 justify-center sm:gap-16 gap-2 px-8">
           <div className="flex flex-col items-start ">
             <h2 className="text-xl uppercase text-[#E11B23] font-extrabold mb-2">
               About Us

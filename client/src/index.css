@@ -156,6 +156,26 @@ body {
   border-right: 10px solid transparent;
 }
 
+/* form input box */
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid gray;
+  border-radius: 50%;
+  outline: none;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: white;
+  border: 5px solid red;
+}
+
 @keyframes slideRight {
   0% {
     transform: translateX(-100%);

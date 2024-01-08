@@ -1,7 +1,57 @@
+import { useForm } from "react-hook-form";
+
 const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm();
+
+  const onSubmit = () => {
+    reset();
+  };
+
   return (
-    <form className="border-[1px] p-4 border-slate-500 loginform">
-      LoginForm
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="border-[1px] p-4 border-slate-500  loginform flex flex-col gap-y-2"
+    >
+      <input
+        {...register("email", {
+          required: "Email is required",
+        })}
+        type="email"
+        placeholder="Email"
+        className="px-4 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+      />
+      {errors.email && (
+        <p className="text-red-500 px-2">{`${errors.email.message}`}</p>
+      )}
+
+      <input
+        {...register("password", {
+          required: "Password is required",
+          minLength: {
+            value: 10,
+            message: "Password must be at least 10 characters",
+          },
+        })}
+        type="password"
+        placeholder="Password"
+        className="px-4 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none"
+      />
+      {errors.password && (
+        <p className="text-red-500 px-2">{`${errors.password.message}`}</p>
+      )}
+
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="bg-[#117A7A] hover:bg-[#298E83] font-bold uppercase  text-white disabled:bg-gray-500 border-slate-400 py-2 rounded-lg border-[1px] focus:border-blue-400 outline-none"
+      >
+        Login
+      </button>
     </form>
   );
 };

@@ -172,7 +172,7 @@ const PrimaryNav = ({ setSecondaryNav }) => {
         <Link className="text-2xl flex items-center" to="/auth/login">
           <FaRegUser />
         </Link>
-        <Link className="text-3xl flex items-center">
+        <Link className="text-3xl flex items-center" to="/mywishlist">
           <IoMdHeartEmpty />
         </Link>
         <Link className="text-3xl flex items-center">

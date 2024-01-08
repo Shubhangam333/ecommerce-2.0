@@ -8,8 +8,7 @@ const AuthComponent = () => {
   console.log(id);
   return (
     <section className="flex flex-col items-center justify-center gap-4 my-8">
-      <h2>Login with ecommerce</h2>
-      <div className="w-[25rem] flex flex-col gap-4">
+      <div className="w-[25rem] sm:w-[27rem] flex flex-col gap-4">
         <div className="flex w-full">
           <Link
             className={`py-2 px-6 border-[1px] uppercase border-slate-500 basis-[100%] text-center ${
