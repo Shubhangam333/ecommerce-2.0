@@ -10,13 +10,13 @@ const RegisterForm = () => {
     control,
   } = useForm();
 
-  const onSubmit = () => {
+  const onSubmit = handleSubmit((data) => {
     reset();
-  };
+  });
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className="border-[1px] p-4 border-slate-500  registerform flex flex-col gap-y-2"
     >
       <div className="flex flex-col sm:flex-row gap-2 ">
@@ -64,7 +64,7 @@ const RegisterForm = () => {
           required: "Password is required",
           minLength: {
             value: 10,
-            message: "Password must be at least 10 characters",
+            message: "Password must be at least 6 characters",
           },
         })}
         type="password"
