@@ -18,6 +18,12 @@ export const authapi = createApi({
         body: credentials,
       }),
     }),
+    getProfile: builder.query({
+      query: (userId) => ({
+        url: `/profile/${userId}`,
+        method: "GET",
+      }),
+    }),
     logout: builder.mutation({
       query: () => ({
         url: "/logout",
@@ -27,5 +33,9 @@ export const authapi = createApi({
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLogoutMutation } =
-  authapi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useGetProfileQuery,
+} = authapi;

@@ -2,12 +2,14 @@ import { useForm, Controller } from "react-hook-form";
 import { useRegisterMutation } from "../../redux/api/auth/authapi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RegisterForm = () => {
   const [registerUser, { isLoading, isError, error, isSuccess }] =
     useRegisterMutation();
 
-  console.log(isLoading, isError, isSuccess);
+  console.log(isError, isSuccess);
+
   const navigate = useNavigate();
 
   const {
@@ -21,15 +23,14 @@ const RegisterForm = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     await registerUser(data).unwrap();
+    reset();
   });
-
   if (isError) {
-    console.log("e", error);
-    toast.error(error);
+    toast.error(error.data.message);
   }
   if (isSuccess) {
-    toast.success("Register");
-    navigate("/");
+    toast.success("Registration Successful. Please login.");
+    navigate("/auth/login");
   }
 
   return (
@@ -38,6 +39,7 @@ const RegisterForm = () => {
       className="border-[1px] p-4 border-slate-500  registerform flex flex-col gap-y-2"
     >
       <div className="flex flex-col sm:flex-row gap-2 ">
+        {isLoading && <h1>Loading</h1>}
         <div className="basis-[100%]">
           <input
             {...register("firstName", {

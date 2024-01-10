@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authapi } from "./api/auth/authapi";
+import authReducer from "./slice/authSlice";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
-  reducer: { [authapi.reducerPath]: authapi.reducer },
+  reducer: { [authapi.reducerPath]: authapi.reducer, auth: authReducer },
+
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {},
-    }).concat(authapi.middleware),
+    getDefaultMiddleware().concat(authapi.middleware),
 });
+
+setupListeners(store.dispatch);

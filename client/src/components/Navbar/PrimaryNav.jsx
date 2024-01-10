@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import headerLogo from "../../assets/shopping-cart.svg";
 import { FaRegUser } from "react-icons/fa6";
-import { IoIosArrowDown, IoMdHeartEmpty } from "react-icons/io";
+import { IoIosArrowDown, IoIosLogIn, IoMdHeartEmpty } from "react-icons/io";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
   const navbar = useRef();
+
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -169,9 +172,15 @@ const PrimaryNav = ({ setSecondaryNav }) => {
         </li>
       </ul>
       <div className="button-container flex items-center md:gap-4 order-2 md:order-2">
-        <Link className="text-2xl flex items-center" to="/auth/login">
-          <FaRegUser />
-        </Link>
+        {user ? (
+          <Link className="text-2xl flex items-center">
+            <FaRegUser />{" "}
+          </Link>
+        ) : (
+          <Link className="text-4xl flex items-center" to="/auth/login">
+            <IoIosLogIn />
+          </Link>
+        )}
         <Link className="text-3xl flex items-center" to="/mywishlist">
           <IoMdHeartEmpty />
         </Link>

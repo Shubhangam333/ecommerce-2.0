@@ -1,12 +1,7 @@
 import Category from "../components/Categorypage/Category";
-import Layout from "../components/Layout/Layout";
 
 const Categorypage = () => {
-  return (
-    <Layout>
-      <Category />
-    </Layout>
-  );
+  return <Category />;
 };
 
 export default Categorypage;

@@ -1,6 +1,17 @@
 import { useForm } from "react-hook-form";
+import { useLoginMutation } from "../../redux/api/auth/authapi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+// import { setUser } from "../../redux/slice/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserId } from "../../redux/slice/authSlice";
 
 const LoginForm = () => {
+  const [loginUser, { data, isLoading, isError, error }] = useLoginMutation();
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -8,15 +19,26 @@ const LoginForm = () => {
     reset,
   } = useForm();
 
-  const onSubmit = () => {
+  const onSubmit = handleSubmit(async (data) => {
+    await loginUser(data).unwrap();
     reset();
-  };
+  });
+
+  if (data) {
+    toast.success("Login Successful");
+    dispatch(setUserId(data.userId));
+    navigate("/");
+  }
+  if (isError) {
+    toast.error(error.data.message);
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="border-[1px] p-4 border-slate-500  loginform flex flex-col gap-y-2"
     >
+      {isLoading && <h1>Loading</h1>}
       <input
         {...register("email", {
           required: "Email is required",
@@ -33,8 +55,8 @@ const LoginForm = () => {
         {...register("password", {
           required: "Password is required",
           minLength: {
-            value: 10,
-            message: "Password must be at least 10 characters",
+            value: 6,
+            message: "Password must be at least 6 characters",
           },
         })}
         type="password"

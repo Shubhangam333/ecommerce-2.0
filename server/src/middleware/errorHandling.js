@@ -1,5 +1,4 @@
-// src/middlewares/errorHandling.js
-import CustomError from "../errors/CustomError.js";
+import CustomError from "../errors/customError.js";
 
 function errorHandler(err, req, res, next) {
   let httpStatusCode = 500;
@@ -18,21 +17,38 @@ function errorHandler(err, req, res, next) {
     }
   }
 
+  if (err.name === "ValidationError") {
+    message = "Please fill all the required details";
+  }
+
+  // Wrong Mongodb Id error
+  if (err.name === "CastError") {
+    message = `Resource not found. Invalid: ${err.path}`;
+  }
+
+  // Mongoose duplicate key error
+  if (err.code === 11000) {
+    message = `Duplicate ${Object.keys(err.keyValue)} Entered`;
+  }
+
+  // Wrong JWT error
+
+  // JWT EXPIRE error
+  if (err.name === "TokenExpiredError") {
+    message = `Json Web Token is Expired, Try again `;
+  }
+
   let stackTrace = undefined;
 
   if (process.env.NODE_ENV !== "production") {
     stackTrace = err.stack;
   }
-  res.status(httpStatusCode).send({
-    error: {
-      message: message,
-      timestamp: err.timestamp || undefined,
-      documentationUrl: err.documentationUrl || undefined,
-      stackTrace: stackTrace,
-    },
+  res.status(httpStatusCode).json({
+    message: message,
+    timestamp: err.timestamp || undefined,
+    documentationUrl: err.documentationUrl || undefined,
+    stackTrace: stackTrace,
   });
-
-  return next(err);
 }
 
 export default errorHandler;

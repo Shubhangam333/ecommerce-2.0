@@ -5,7 +5,6 @@ import RegisterForm from "./RegisterForm";
 const AuthComponent = () => {
   const { id } = useParams();
 
-  console.log(id);
   return (
     <section className="flex flex-col items-center justify-center gap-4 my-8">
       <div className="w-[25rem] sm:w-[27rem] flex flex-col gap-4">
