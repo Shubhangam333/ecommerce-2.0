@@ -1,6 +1,15 @@
 import { useForm, Controller } from "react-hook-form";
+import { useRegisterMutation } from "../../redux/api/auth/authapi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  const [registerUser, { isLoading, isError, error, isSuccess }] =
+    useRegisterMutation();
+
+  console.log(isLoading, isError, isSuccess);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -10,9 +19,18 @@ const RegisterForm = () => {
     control,
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    reset();
+  const onSubmit = handleSubmit(async (data) => {
+    await registerUser(data).unwrap();
   });
+
+  if (isError) {
+    console.log("e", error);
+    toast.error(error);
+  }
+  if (isSuccess) {
+    toast.success("Register");
+    navigate("/");
+  }
 
   return (
     <form
@@ -22,28 +40,28 @@ const RegisterForm = () => {
       <div className="flex flex-col sm:flex-row gap-2 ">
         <div className="basis-[100%]">
           <input
-            {...register("firstname", {
+            {...register("firstName", {
               required: "Firstname is required",
             })}
             type="firstname"
             placeholder="Firstname"
             className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
           />
-          {errors.firstname && (
-            <p className="text-red-500 px-2">{`${errors.firstname.message}`}</p>
+          {errors.firstName && (
+            <p className="text-red-500 px-2">{`${errors.firstName.message}`}</p>
           )}
         </div>
         <div className="basis-[100%]">
           <input
-            {...register("lastname", {
+            {...register("lastName", {
               required: "Lastname is required",
             })}
             type="lastname"
-            placeholder="lastname"
+            placeholder="Lastname"
             className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
           />
-          {errors.lastname && (
-            <p className="text-red-500 px-2">{`${errors.lastname.message}`}</p>
+          {errors.lastName && (
+            <p className="text-red-500 px-2">{`${errors.lastName.message}`}</p>
           )}
         </div>
       </div>
@@ -63,7 +81,7 @@ const RegisterForm = () => {
         {...register("password", {
           required: "Password is required",
           minLength: {
-            value: 10,
+            value: 6,
             message: "Password must be at least 6 characters",
           },
         })}
@@ -98,13 +116,13 @@ const RegisterForm = () => {
             rules={{ required: "Please select a gender" }}
             render={({ field }) => (
               <div className="flex items-center gap-2">
-                <input type="radio" {...field} value="male" id="male" />
+                <input type="radio" {...field} value="Male" id="male" />
                 <label htmlFor="male">Male</label>
 
-                <input type="radio" {...field} value="female" id="female" />
+                <input type="radio" {...field} value="Female" id="female" />
                 <label htmlFor="female">Female</label>
 
-                <input type="radio" {...field} value="other" id="other" />
+                <input type="radio" {...field} value="Other" id="other" />
                 <label htmlFor="other">Other</label>
               </div>
             )}
