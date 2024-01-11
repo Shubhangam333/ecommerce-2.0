@@ -6,23 +6,20 @@ import Categorypage from "./pages/Categorypage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useGetProfileQuery } from "./redux/api/auth/authapi";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import { setUser, removeUser } from "./redux/slice/authSlice";
+import { setUser, removeUser, setUserId } from "./redux/slice/authSlice";
+import Dashboardpage from "./pages/Admin/Dashboardpage";
+import CreateProduct from "./components/Admin/Products/CreateProduct";
+import ProductDashboard from "./components/Admin/Products/ProductDashboard";
 
 function App() {
   const dispatch = useDispatch();
   const { userId } = useSelector((state) => state.auth);
 
-  console.log(userId);
-
   const {
     data: user,
     error,
     isFetching,
-  } = useGetProfileQuery(userId, { pollingInterval: 20000 });
-
-  console.log(isFetching);
+  } = useGetProfileQuery(userId, { pollingInterval: 900000 });
 
   useEffect(() => {
     if (user) {
@@ -33,6 +30,7 @@ function App() {
   useEffect(() => {
     if (error) {
       dispatch(removeUser());
+      dispatch(setUserId(""));
     }
   }, [error, dispatch]);
 
@@ -42,14 +40,19 @@ function App() {
         <h1>Loading</h1>
       ) : (
         <>
-          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/auth/:id" element={<Authentication />} />
+            <Route
+              path="/auth/:id"
+              element={<Authentication isAuthenticated={user ? true : false} />}
+            />
             <Route path="/mywishlist" element={<Wishlist />} />
             <Route path="/:catname" element={<Categorypage />} />
+            <Route path="/admin/dashboard" element={<Dashboardpage />}>
+              <Route path="create-product" element={<CreateProduct />} />
+              <Route path="products" element={<ProductDashboard />} />
+            </Route>
           </Routes>
-          <Footer />
         </>
       )}
     </>
