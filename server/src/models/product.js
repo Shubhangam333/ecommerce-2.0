@@ -11,9 +11,21 @@ const productSchema = new mongoose.Schema(
     description: { type: String, required: true, trim: true },
     price: { type: Number, required: true },
     stock: { type: Number, default: 5 },
-    productImages: [{ url: { type: String } }],
+    productImages: [{ url: { type: String, required: true } }],
     section: { type: String, enum: ["Men", "Women", "Kids"] },
-    size: { type: String, enum: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"] },
+    sizes: [
+      {
+        sizeType: {
+          type: String,
+          enum: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+          required: true,
+        },
+        quanity: {
+          type: Number,
+          default: 0,
+        },
+      },
+    ],
     rating: {
       type: Number,
       default: 0,
