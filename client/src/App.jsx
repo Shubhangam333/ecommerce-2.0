@@ -10,6 +10,8 @@ import { setUser, removeUser, setUserId } from "./redux/slice/authSlice";
 import Dashboardpage from "./pages/Admin/Dashboardpage";
 import CreateProduct from "./components/Admin/Products/CreateProduct";
 import ProductDashboard from "./components/Admin/Products/ProductDashboard";
+import CategoryDashboard from "./components/Admin/Category/CategoryDashboard";
+import CreateCategory from "./components/Admin/Category/CreateCategory";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +53,8 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />
               <Route path="products" element={<ProductDashboard />} />
+              <Route path="category" element={<CategoryDashboard />} />
+              <Route path="create-category" element={<CreateCategory />} />
             </Route>
           </Routes>
         </>

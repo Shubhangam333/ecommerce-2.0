@@ -12,7 +12,7 @@ const ProductForm = () => {
   const onSubmit = async (data) => {
     try {
       // Send the form data to your backend to create the product
-
+      console.log("d", data);
       // Handle success or redirect to the product list page
       console.log("Product created successfully");
     } catch (error) {
@@ -118,9 +118,15 @@ const ProductForm = () => {
             rules={{ required: `${sizeType} quantity is required` }}
             render={({ field }) => (
               <>
-                <input {...field} type="number" />
+                <input
+                  {...field}
+                  type="number"
+                  className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+                />
                 {errors.sizes && errors.sizes[sizeType] && (
-                  <p>{errors.sizes[sizeType].quanity.message}</p>
+                  <p className="text-red-500 px-2">
+                    {errors.sizes[sizeType].quanity.message}
+                  </p>
                 )}
               </>
             )}
@@ -161,25 +167,6 @@ const ProductForm = () => {
             </select>
             {errors.section && (
               <p className="text-red-500 px-2">{errors.section.message}</p>
-            )}
-          </>
-        )}
-      />
-      {/* Sizes */}
-      <label htmlFor="sizes">Sizes</label>
-      <Controller
-        name="sizes"
-        control={control}
-        defaultValue=""
-        rules={{ required: "Sizes are required" }}
-        render={({ field }) => (
-          <>
-            <input
-              {...field}
-              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
-            />
-            {errors.sizes && (
-              <p className="text-red-500 px-2">{errors.sizes.message}</p>
             )}
           </>
         )}
