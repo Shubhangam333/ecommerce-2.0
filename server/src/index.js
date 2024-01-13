@@ -8,10 +8,16 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import errorHandler from "./middleware/errorHandling.js";
 import morgan from "morgan";
+import cloudinary from "cloudinary";
 
 const app = express();
 
 dotenv.config();
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 db();
 
 if (process.env.NODE_ENV === "development") {
