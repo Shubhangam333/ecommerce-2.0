@@ -5,7 +5,7 @@ export const profile = async (req, res) => {
   const user = await User.findById(req.params.userId);
 
   if (!user) {
-    throw new CustomError("No user found.");
+    throw new CustomError("No user found.", 400);
   }
 
   res.status(200).json(user);

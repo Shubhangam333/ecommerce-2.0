@@ -1,23 +1,42 @@
 import { useForm, Controller } from "react-hook-form";
+import { useCreateCategoryMutation } from "../../../redux/api/category/categoryapi";
+import { toast } from "react-toastify";
 
 const CategoryForm = () => {
   const {
     handleSubmit,
     control,
     setValue,
-
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const [postCategory, { data: cat }] = useCreateCategoryMutation();
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        setValue("catImage", event.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
   const onSubmit = async (data) => {
     try {
-      // Send the form data to your backend to create the product
-      console.log("d", data);
-      // Handle success or redirect to the product list page
-      console.log("Product created successfully");
+      // const imageDetails = getValues("categoryDetails");
+      const formData = { ...data };
+      console.log(formData);
+
+      await postCategory(formData).unwrap();
+
+      if (data) {
+        toast.success("category created successfully");
+      }
     } catch (error) {
-      // Handle error
-      console.error("Error creating product", error);
+      toast.error("Something went wrong.Please try again later");
     }
   };
 
@@ -48,15 +67,12 @@ const CategoryForm = () => {
       <label htmlFor="categoryImages">Category Image</label>
       <input
         type="file"
-        onChange={(e) => {
-          const file = e.target.files;
-          const imageUrls = file.map((file) => URL.createObjectURL(file));
-          setValue("category", imageUrls);
-        }}
+        onChange={handleImageChange}
+        accept="image/*"
         className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
       />
-      {errors.productImages && (
-        <p className="text-red-500 px-2">{errors.productImages.message}</p>
+      {errors.categoryImages && (
+        <p className="text-red-500 px-2">{errors.categoryImages.message}</p>
       )}
       <button
         type="submit"
