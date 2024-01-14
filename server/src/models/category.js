@@ -12,7 +12,14 @@ const categorySchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    categoryImage: { type: String },
+    categoryImage: {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
     parentId: {
       type: String,
     },

@@ -14,5 +14,5 @@ export const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authapi.middleware, categoryapi.middleware),
+    getDefaultMiddleware({}).concat(authapi.middleware, categoryapi.middleware),
 });
