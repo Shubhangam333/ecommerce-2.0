@@ -5,6 +5,7 @@ import { db } from "./utils/connectDB.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import catRoutes from "./routes/categoryRoutes.js";
+import styleRoutes from "./routes/styleRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import errorHandler from "./middleware/errorHandling.js";
@@ -38,6 +39,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/category", catRoutes);
+app.use("/api/style", styleRoutes);
 
 app.use(errorHandler);
 

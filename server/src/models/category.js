@@ -20,9 +20,7 @@ const categorySchema = new mongoose.Schema(
         type: String,
       },
     },
-    parentId: {
-      type: String,
-    },
+    parentId: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

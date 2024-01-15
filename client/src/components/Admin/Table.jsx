@@ -6,6 +6,7 @@ import {
 import { useFilters, usePagination, useSortBy, useTable } from "react-table";
 import CategoryHeader from "./Category/CategoryHeader";
 import { MdDelete } from "react-icons/md";
+import StyleHeader from "./Style/StyleHeader";
 
 const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   const options = {
@@ -45,6 +46,12 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
     <div className="flex flex-col gap-4">
       {tableFor === "categories" && (
         <CategoryHeader
+          filterInput={filterInput}
+          handleFilterChange={handleFilterChange}
+        />
+      )}
+      {tableFor === "styles" && (
+        <StyleHeader
           filterInput={filterInput}
           handleFilterChange={handleFilterChange}
         />

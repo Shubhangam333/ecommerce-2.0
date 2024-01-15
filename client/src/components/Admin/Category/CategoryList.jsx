@@ -20,6 +20,18 @@ const columns = [
     accessor: "title",
   },
   {
+    Header: "Parent",
+    accessor: "parentId",
+    Cell: ({ cell: { value } }) => {
+      if (value && value.title) {
+        const name = value.title;
+
+        return name;
+      }
+      return "No Parent";
+    },
+  },
+  {
     Header: "CreatedBy",
     accessor: "createdBy",
     Cell: ({ cell: { value } }) => {
@@ -83,8 +95,7 @@ const columns = [
 
 const CategoryList = () => {
   const { data } = useGetAllCategoriesQuery();
-  const [deleteCatById, { data: result, isSuccess }] =
-    useDeleteCategoryByIdMutation();
+  const [deleteCatById] = useDeleteCategoryByIdMutation();
 
   const handleDeleteItem = async (id) => {
     try {

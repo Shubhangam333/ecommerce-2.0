@@ -1,22 +1,60 @@
 import { useForm, Controller } from "react-hook-form";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import {
+  useGetAllParentCategoriesQuery,
+  useGetAllSubCatByParentIdMutation,
+} from "../../../redux/api/category/categoryapi";
+import { useGetAllStylesBySubCatMutation } from "../../../redux/api/style/styleapi";
+import { useState } from "react";
 
 const ProductForm = () => {
   const {
     handleSubmit,
     control,
     setValue,
-
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const { data: parentCat } = useGetAllParentCategoriesQuery();
+  const [getSubCat, { data: subcat }] = useGetAllSubCatByParentIdMutation();
+  const [getStyleBySubCat, { data: styles }] =
+    useGetAllStylesBySubCatMutation();
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleParentCatChange = async (e) => {
+    try {
+      await getSubCat(e.target.value).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSubCatChange = async (e) => {
+    try {
+      await getStyleBySubCat(e.target.value).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    console.log("files", e.target.files);
+    const files = Array.from(e.target.files);
+
+    files.forEach((file) => {
+      setSelectedImages((prevSelectedImages) => [...prevSelectedImages, file]);
+    });
+  };
+
+  console.log("s", selectedImages);
+
   const onSubmit = async (data) => {
     try {
-      // Send the form data to your backend to create the product
       console.log("d", data);
-      // Handle success or redirect to the product list page
+
       console.log("Product created successfully");
     } catch (error) {
-      // Handle error
       console.error("Error creating product", error);
     }
   };
@@ -53,9 +91,9 @@ const ProductForm = () => {
         rules={{ required: "Description is required" }}
         render={({ field }) => (
           <>
-            <textarea
+            <ReactQuill
               {...field}
-              className="w-full px-2 py-2 h-72 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+              theme="snow" // or use another theme as per your preference
             />
             {errors.description && (
               <p className="text-red-500 px-2">{errors.description.message}</p>
@@ -92,7 +130,10 @@ const ProductForm = () => {
         name="stock"
         control={control}
         defaultValue=""
-        rules={{ pattern: { value: /^[0-9]+$/, message: "Invalid stock" } }}
+        rules={
+          ({ pattern: { value: /^[0-9]+$/, message: "Invalid stock" } },
+          { required: "Stock is required" })
+        }
         render={({ field }) => (
           <>
             <input
@@ -135,15 +176,20 @@ const ProductForm = () => {
       ))}
       {/* Product Images */}
       <label htmlFor="productImages">Product Images</label>
-      <input
-        type="file"
-        multiple
-        onChange={(e) => {
-          const files = Array.from(e.target.files);
-          const imageUrls = files.map((file) => URL.createObjectURL(file));
-          setValue("productImages", imageUrls);
-        }}
-        className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+      <Controller
+        name="productImages"
+        control={control}
+        defaultValue={[]}
+        render={({ field }) => (
+          <>
+            <input
+              type="file"
+              multiple
+              onChange={handleImageChange}
+              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+            />
+          </>
+        )}
       />
       {errors.productImages && (
         <p className="text-red-500 px-2">{errors.productImages.message}</p>
@@ -161,6 +207,7 @@ const ProductForm = () => {
               {...field}
               className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
             >
+              <option value="">Select Section</option>
               <option value="Men">Men</option>
               <option value="Women">Women</option>
               <option value="Kids">Kids</option>
@@ -171,7 +218,7 @@ const ProductForm = () => {
           </>
         )}
       />
-      {/* Category */}
+      {/* Parent Category - Dropdown */}
       <label htmlFor="category">Category</label>
       <Controller
         name="category"
@@ -180,12 +227,82 @@ const ProductForm = () => {
         rules={{ required: "Category is required" }}
         render={({ field }) => (
           <>
-            <input
+            <select
               {...field}
-              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
-            />
+              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none"
+              onChange={(e) => {
+                field.onChange(e);
+                handleParentCatChange(e);
+              }}
+            >
+              <option value="">Select Category</option>
+              {parentCat &&
+                parentCat.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.title}
+                  </option>
+                ))}
+            </select>
             {errors.category && (
               <p className="text-red-500 px-2">{errors.category.message}</p>
+            )}
+          </>
+        )}
+      />
+      {/* Sub Category - Dropdown */}
+      <label htmlFor="subCategory">Sub Category</label>
+      <Controller
+        name="subCategory"
+        control={control}
+        defaultValue=""
+        rules={{ required: "Sub Category is required" }}
+        render={({ field }) => (
+          <>
+            <select
+              {...field}
+              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none"
+              onChange={(e) => {
+                field.onChange(e);
+                handleSubCatChange(e);
+              }}
+            >
+              <option value="">Select Sub Category</option>
+              {subcat &&
+                subcat.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.title}
+                  </option>
+                ))}
+            </select>
+            {errors.subCategory && (
+              <p className="text-red-500 px-2">{errors.subCategory.message}</p>
+            )}
+          </>
+        )}
+      />
+      {/* Styles - Dropdown */}
+      <label htmlFor="styles">Styles</label>
+      <Controller
+        name="styles"
+        control={control}
+        defaultValue=""
+        rules={{ required: "Styles is required" }}
+        render={({ field }) => (
+          <>
+            <select
+              {...field}
+              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none"
+            >
+              <option value="">Select Styles</option>
+              {styles &&
+                styles.map((style) => (
+                  <option key={style._id} value={style._id}>
+                    {style.title}
+                  </option>
+                ))}
+            </select>
+            {errors.styles && (
+              <p className="text-red-500 px-2">{errors.styles.message}</p>
             )}
           </>
         )}

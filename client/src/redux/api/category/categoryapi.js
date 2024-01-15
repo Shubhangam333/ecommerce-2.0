@@ -27,6 +27,25 @@ export const categoryapi = createApi({
       }),
       providesTags: ["categories"],
     }),
+    getAllParentCategories: builder.query({
+      query: () => ({
+        url: "/parentCategories",
+        method: "GET",
+      }),
+      providesTags: ["categories"],
+    }),
+    getAllSubCategories: builder.query({
+      query: () => ({
+        url: "/subCategories",
+        method: "GET",
+      }),
+    }),
+    getAllSubCatByParentId: builder.mutation({
+      query: (parentCatId) => ({
+        url: `/subCategories/${parentCatId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -34,4 +53,7 @@ export const {
   useCreateCategoryMutation,
   useGetAllCategoriesQuery,
   useDeleteCategoryByIdMutation,
+  useGetAllParentCategoriesQuery,
+  useGetAllSubCategoriesQuery,
+  useGetAllSubCatByParentIdMutation,
 } = categoryapi;

@@ -1,11 +1,8 @@
 import { useSelector } from "react-redux";
-import MainContainer from "../Admin/Dashboard/MainContainer";
 import MegaMenu from "../Admin/Dashboard/MegaMenu/MegaMenu";
-import MenuBtn from "../Admin/Dashboard/MenuBtn";
 import DashboardHeader from "../Admin/Dashboard/DashboardHeader";
 
 const DashBoardLayout = ({ children }) => {
-  console.log("c", children);
   const { isActive } = useSelector((state) => state.dashboard);
   return (
     <section className="overflow-x-hidden">

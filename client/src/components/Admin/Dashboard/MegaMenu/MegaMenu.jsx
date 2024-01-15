@@ -26,6 +26,11 @@ const navItems = [
     title: "Orders",
     url: "/admin/dashboard/orders",
   },
+  {
+    icon: <BsCartFill className="text-xl text-[#17B987]  " />,
+    title: "Styles",
+    url: "/admin/dashboard/styles",
+  },
 ];
 
 const MegaMenu = () => {

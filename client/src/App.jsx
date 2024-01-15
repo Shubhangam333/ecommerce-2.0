@@ -12,6 +12,8 @@ import CreateProduct from "./components/Admin/Products/CreateProduct";
 import ProductDashboard from "./components/Admin/Products/ProductDashboard";
 import CategoryDashboard from "./components/Admin/Category/CategoryDashboard";
 import CreateCategory from "./components/Admin/Category/CreateCategory";
+import StyleDashboard from "./components/Admin/Style/StyleDashboard";
+import CreateStyle from "./components/Admin/Style/CreateStyle";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +57,8 @@ function App() {
               <Route path="products" element={<ProductDashboard />} />
               <Route path="category" element={<CategoryDashboard />} />
               <Route path="create-category" element={<CreateCategory />} />
+              <Route path="styles" element={<StyleDashboard />} />
+              <Route path="create-style" element={<CreateStyle />} />
             </Route>
           </Routes>
         </>
