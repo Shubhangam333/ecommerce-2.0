@@ -76,6 +76,11 @@ export const deleteProductById = async (req, res, next) => {
     throw new CustomError(404, "No Product with such id exist");
   }
 
+  if (product.productImages) {
+    for (let i = 0; i < product.productImages.length; i++) {
+      await cloudinary.uploader.destroy(product.productImages[i].public_id);
+    }
+  }
   await Product.findByIdAndDelete(req.params.id);
 
   res.status(200).json({ msg: "Product Deleted" });
