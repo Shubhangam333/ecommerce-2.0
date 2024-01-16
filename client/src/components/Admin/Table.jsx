@@ -7,6 +7,7 @@ import { useFilters, usePagination, useSortBy, useTable } from "react-table";
 import CategoryHeader from "./Category/CategoryHeader";
 import { MdDelete } from "react-icons/md";
 import StyleHeader from "./Style/StyleHeader";
+import ProductHeader from "./Products/ProductHeader";
 
 const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   const options = {
@@ -56,8 +57,16 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
           handleFilterChange={handleFilterChange}
         />
       )}
+      {tableFor === "products" && (
+        <ProductHeader
+          filterInput={filterInput}
+          handleFilterChange={handleFilterChange}
+        />
+      )}
 
-      <h2 className="text-3xl font-bold text-[#E11B23]">Categories</h2>
+      <h2 className="text-3xl font-bold text-[#E11B23] capitalize">
+        {tableFor}
+      </h2>
 
       <table {...getTableProps()} className="basis-[80%]">
         <thead>

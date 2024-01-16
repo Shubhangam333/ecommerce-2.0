@@ -1,9 +1,9 @@
-import ProductHeader from "./ProductHeader";
+import ProductList from "./ProductList";
 
 const ProductDashboard = () => {
   return (
     <main className="py-12 px-6">
-      <ProductHeader />
+      <ProductList />
     </main>
   );
 };

@@ -28,4 +28,4 @@ const styleSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Style = new mongoose.model("Style", styleSchema);
+export const Style = mongoose.model("Style", styleSchema);

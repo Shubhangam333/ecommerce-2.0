@@ -13,4 +13,4 @@ const filter = function (req, file, cb) {
   cb(null, true);
 };
 
-export const upload = multer({ storage: storage, fileFilter: filter });
+export const upload = multer({ storage: storage, imageFilter: filter });

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SearchInput from "../Dashboard/SearchInput";
 
-const ProductHeader = () => {
+const ProductHeader = ({ filterInput, handleFilterChange }) => {
   return (
     <section className="flex gap-6">
       <SearchInput />

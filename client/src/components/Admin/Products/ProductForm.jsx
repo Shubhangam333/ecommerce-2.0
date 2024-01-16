@@ -6,14 +6,15 @@ import {
   useGetAllSubCatByParentIdMutation,
 } from "../../../redux/api/category/categoryapi";
 import { useGetAllStylesBySubCatMutation } from "../../../redux/api/style/styleapi";
-import { useState } from "react";
+import { useCreateProductMutation } from "../../../redux/api/product/productapi";
+import { toast } from "react-toastify";
 
 const ProductForm = () => {
   const {
     handleSubmit,
     control,
     setValue,
-    getValues,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -21,8 +22,8 @@ const ProductForm = () => {
   const [getSubCat, { data: subcat }] = useGetAllSubCatByParentIdMutation();
   const [getStyleBySubCat, { data: styles }] =
     useGetAllStylesBySubCatMutation();
-  const [selectedImages, setSelectedImages] = useState([]);
-
+  // const [selectedImages, setSelectedImages] = useState([]);
+  const [createProduct, { data }] = useCreateProductMutation();
   const handleParentCatChange = async (e) => {
     try {
       await getSubCat(e.target.value).unwrap();
@@ -39,21 +40,30 @@ const ProductForm = () => {
   };
 
   const handleImageChange = async (e) => {
-    console.log("files", e.target.files);
     const files = Array.from(e.target.files);
-
-    files.forEach((file) => {
-      setSelectedImages((prevSelectedImages) => [...prevSelectedImages, file]);
-    });
+    // Use setValue to update the value of the 'productImages' field
+    setValue("productImages", files);
   };
-
-  console.log("s", selectedImages);
 
   const onSubmit = async (data) => {
     try {
-      console.log("d", data);
+      const formData = new FormData();
 
-      console.log("Product created successfully");
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("price", data.price);
+      formData.append("sizes", JSON.stringify(data.sizes));
+      formData.append("section", data.section);
+      formData.append("category", data.category);
+      formData.append("subCategory", data.subCategory);
+      formData.append("style", data.styles);
+
+      for (let i = 0; i < data.productImages.length; i++) {
+        formData.append("productImages", data.productImages[i]);
+      }
+      await createProduct(formData).unwrap();
+      reset();
+      toast.success("Product created successfully");
     } catch (error) {
       console.error("Error creating product", error);
     }
@@ -124,36 +134,13 @@ const ProductForm = () => {
           </>
         )}
       />
-      {/* Stock */}
-      <label htmlFor="stock">Stock</label>
-      <Controller
-        name="stock"
-        control={control}
-        defaultValue=""
-        rules={
-          ({ pattern: { value: /^[0-9]+$/, message: "Invalid stock" } },
-          { required: "Stock is required" })
-        }
-        render={({ field }) => (
-          <>
-            <input
-              {...field}
-              type="number"
-              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
-            />
-            {errors.stock && (
-              <p className="text-red-500 px-2">{errors.stock.message}</p>
-            )}
-          </>
-        )}
-      />
       {/* Sizes */}
       <label>Sizes</label>
       {["XS", "S", "M", "L", "XL", "XXL", "XXXL"].map((sizeType) => (
         <div key={sizeType}>
           <label>{sizeType}</label>
           <Controller
-            name={`sizes.${sizeType}.quanity`}
+            name={`sizes.${sizeType}.quantity`}
             control={control}
             defaultValue=""
             rules={{ required: `${sizeType} quantity is required` }}
@@ -174,8 +161,6 @@ const ProductForm = () => {
           />
         </div>
       ))}
-      {/* Product Images */}
-      <label htmlFor="productImages">Product Images</label>
       <Controller
         name="productImages"
         control={control}
@@ -185,15 +170,15 @@ const ProductForm = () => {
             <input
               type="file"
               multiple
-              onChange={handleImageChange}
+              onChange={(e) => {
+                field.onChange(e);
+                handleImageChange(e);
+              }}
               className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
             />
           </>
         )}
       />
-      {errors.productImages && (
-        <p className="text-red-500 px-2">{errors.productImages.message}</p>
-      )}
       {/* Section */}
       <label htmlFor="section">Section</label>
       <Controller
