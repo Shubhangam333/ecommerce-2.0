@@ -11,7 +11,9 @@ const Productsection = ({ categoryId }) => {
 
   const [currenPage, setCurrenPage] = useState(1);
   const { section } = useSelector((state) => state.auth);
-  const { sort } = useSelector((state) => state.sort);
+  const { sort, orderBy } = useSelector((state) => state.sort);
+
+  console.log("ob", orderBy);
 
   // const [id] = useId();
 
@@ -19,11 +21,17 @@ const Productsection = ({ categoryId }) => {
 
   useEffect(() => {
     const getProducts = async () => {
-      await getProductByCategory({ categoryId, currenPage, section, sort });
+      await getProductByCategory({
+        categoryId,
+        currenPage,
+        section,
+        sort,
+        orderBy,
+      });
     };
 
     getProducts();
-  }, [categoryId, getProductByCategory, currenPage, section, sort]);
+  }, [categoryId, getProductByCategory, currenPage, section, sort, orderBy]);
 
   if (isFetching) {
     return <Loader />;

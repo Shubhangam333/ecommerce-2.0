@@ -9,9 +9,11 @@ const Productcard = ({ product }) => {
         />
       </div>
       <div className="flex flex-col px-2 py-2">
-        <h4 className="text-lg font-extrabold">Star Wars: Do or Do Not</h4>
-        <p className="text-md font-normal capitalize">Men Oversized hoodies</p>
-        <span className="text-lg font-extrabold">144</span>
+        <h4 className="text-lg font-extrabold">{product.title}</h4>
+        <p className="text-md font-normal capitalize">
+          {product.subCategory.title}
+        </p>
+        <span className="text-lg font-extrabold">{product.price}</span>
       </div>
     </div>
   );

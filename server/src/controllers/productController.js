@@ -91,7 +91,7 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
   // Filtering
 
   const queryObj = { ...req.query };
-  const excludeFields = ["page", "sort", "limit", "fields", "q"];
+  const excludeFields = ["page", "limit", "fields", "q", "sortBy", "orderBy"];
   excludeFields.forEach((el) => delete queryObj[el]);
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
@@ -109,9 +109,14 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
 
   // Sorting
 
-  if (req.query.sort) {
-    const sortBy = req.query.sort.split(",").join(" ");
-    query = query.sort(sortBy);
+  const sort = {};
+
+  if (req.query.sortBy) {
+    const sortOrder = req.query.orderBy === "desc" ? -1 : 1;
+
+    // Construct the sort object
+    sort[req.query.sortBy] = sortOrder;
+    query = query.sort(sort);
   } else {
     query = query.sort("-createdAt");
   }
@@ -141,7 +146,7 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
   if (skip >= productCount)
     throw new CustomError(404, "This Page does not exists");
 
-  const products = await query;
+  const products = await query.populate("subCategory", "title");
 
   if (!products) {
     throw new CustomError(404, "No Product with such category exist.");

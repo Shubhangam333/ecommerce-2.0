@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   sort: "title",
+  orderBy: "asc",
 };
 
 export const sortSlice = createSlice({
@@ -11,8 +12,11 @@ export const sortSlice = createSlice({
     setSortFilter: (state, action) => {
       state.sort = action.payload;
     },
+    setOrderByFilter: (state, action) => {
+      state.orderBy = action.payload;
+    },
   },
 });
 
-export const { setSortFilter } = sortSlice.actions;
+export const { setSortFilter, setOrderByFilter } = sortSlice.actions;
 export default sortSlice.reducer;

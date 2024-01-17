@@ -29,7 +29,7 @@ export const productapi = createApi({
     }),
     getProductsBySubCategoryId: builder.mutation({
       query: (data) => ({
-        url: `/products/${data.categoryId}?page=${data.currenPage}&section=${data.section}&sort=${data.sort}`,
+        url: `/products/${data.categoryId}?page=${data.currenPage}&section=${data.section}&sortBy=${data.sort}&orderBy=${data.orderBy}`,
         method: "GET",
       }),
       providesTags: ["products"],
