@@ -1,6 +1,7 @@
 import { useForm, Controller } from "react-hook-form";
 import {
   useGetAllParentCategoriesQuery,
+  useGetAllSubCatByParentIdMutation,
   useGetAllSubCategoriesQuery,
 } from "../../../redux/api/category/categoryapi";
 import { toast } from "react-toastify";
@@ -15,8 +16,16 @@ const StyleForm = () => {
   } = useForm();
 
   const { data } = useGetAllParentCategoriesQuery();
-  const { data: subcat } = useGetAllSubCategoriesQuery();
+  const [getSubCat, { data: subcat }] = useGetAllSubCatByParentIdMutation();
   const [createStyle] = useCreateStyleMutation();
+
+  const handleParentCatChange = async (e) => {
+    try {
+      await getSubCat(e.target.value).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onSubmit = async (data) => {
     try {
       const formData = { ...data };
@@ -66,6 +75,10 @@ const StyleForm = () => {
             <select
               {...field}
               className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none"
+              onChange={(e) => {
+                field.onChange(e);
+                handleParentCatChange(e);
+              }}
             >
               <option value="">Select Parent Category</option>
               {data &&

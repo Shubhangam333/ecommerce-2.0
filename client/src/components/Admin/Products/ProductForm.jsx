@@ -193,9 +193,9 @@ const ProductForm = () => {
               className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
             >
               <option value="">Select Section</option>
-              <option value="Men">Men</option>
-              <option value="Women">Women</option>
-              <option value="Kids">Kids</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="kids">Kids</option>
             </select>
             {errors.section && (
               <p className="text-red-500 px-2">{errors.section.message}</p>

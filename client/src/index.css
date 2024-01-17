@@ -195,15 +195,15 @@ input[type="radio"]:checked {
 }
 
 .dropdown-menu {
-  position: absolute; /* Position submenu outside of normal flow */
-  top: 100%; /* Align with top of parent item */
+  /* position: absolute;
+  top: 100%;
   left: 0;
-  transform: translateY(-10px); /* Adjust for visual gap */
-  transition: transform 0.3s ease-in-out; /* Smooth transition */
-  visibility: hidden; /* Hide initially */
-  opacity: 0; /* Ensure smooth fade-in */
+  transform: translateY(-10px);
+  transition: transform 0.3s ease-in-out;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 10000; */
 }
-
 .dropdown-menu.show {
   visibility: visible; /* Show submenu when open */
   opacity: 1;

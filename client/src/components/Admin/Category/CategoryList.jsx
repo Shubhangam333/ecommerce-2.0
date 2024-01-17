@@ -102,6 +102,7 @@ const CategoryList = () => {
       await deleteCatById(id).unwrap();
       toast.success("Category Deleted Succssfully");
     } catch (error) {
+      console.log("er", error);
       toast.error("Something went wrong. Please try again later");
     }
   };

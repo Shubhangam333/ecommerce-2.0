@@ -8,6 +8,8 @@ import {
   getAllParentCategories,
   getAllSubCategories,
   getSubCategoriesByParentCategoryId,
+  getCategoryWithSubCategories,
+  getCategoryBySlug,
 } from "../controllers/categoryController.js";
 
 const router = express.Router();
@@ -26,5 +28,7 @@ router
 router
   .route("/subCategories/:parentCatId")
   .get(isAuthenticated, isAdmin, getSubCategoriesByParentCategoryId);
+router.route("/allcategories").get(getCategoryWithSubCategories);
+router.route("/category/:slug").get(getCategoryBySlug);
 
 export default router;

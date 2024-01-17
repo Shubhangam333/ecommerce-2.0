@@ -1,9 +1,9 @@
 import Categorynav from "./Categorynav";
 
-const Categorynavsection = () => {
+const Categorynavsection = ({ title }) => {
   return (
     <div className="flex justify-end mt-8 mx-4">
-      <Categorynav />
+      <Categorynav title={title} />
     </div>
   );
 };

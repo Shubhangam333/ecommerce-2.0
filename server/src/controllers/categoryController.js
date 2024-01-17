@@ -61,6 +61,8 @@ export const deleteCategoryById = async (req, res, next) => {
 
   await Category.findByIdAndDelete(catId);
 
+  console.log("ccc");
+
   res.status(200).json({ msg: "deleted successfully" });
 };
 
@@ -97,4 +99,33 @@ export const getSubCategoriesByParentCategoryId = async (req, res, next) => {
   }
 
   res.status(200).json(subCat);
+};
+
+export const getCategoryWithSubCategories = async (req, res, next) => {
+  const parentCategories = await Category.find({
+    parentId: { $exists: false },
+  });
+
+  const categoriesWithSubcategories = await Promise.all(
+    parentCategories.map(async (parentCategory) => {
+      const subcategories = await Category.find({
+        parentId: parentCategory._id,
+      });
+      return {
+        parent: parentCategory,
+        subcategories: subcategories,
+      };
+    })
+  );
+  res.status(200).json(categoriesWithSubcategories);
+};
+
+export const getCategoryBySlug = async (req, res, next) => {
+  const category = await Category.findOne({ slug: req.params.slug });
+
+  if (!category) {
+    throw new CustomError(404, "No Category Exists.");
+  }
+
+  res.status(200).json(category);
 };

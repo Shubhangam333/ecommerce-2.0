@@ -1,11 +1,9 @@
 import React from "react";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ title }) => {
   return (
     <div>
-      <p className="text-sm text-slate-500">
-        Home / Men Hoodies and Sweatshirts
-      </p>
+      <p className="text-sm text-slate-500">{title}</p>
     </div>
   );
 };

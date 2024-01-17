@@ -61,6 +61,7 @@ export const getAllProducts = async (req, res, next) => {
     .populate("createdBy", "firstName")
     .populate("category", "title")
     .populate("subCategory", "title")
+    .populate("style", "title")
     .sort("-createdAt");
 
   if (!products) {
@@ -84,4 +85,67 @@ export const deleteProductById = async (req, res, next) => {
   await Product.findByIdAndDelete(req.params.id);
 
   res.status(200).json({ msg: "Product Deleted" });
+};
+
+export const getProductsBySubCategoryId = async (req, res, next) => {
+  // Filtering
+
+  const queryObj = { ...req.query };
+  const excludeFields = ["page", "sort", "limit", "fields", "q"];
+  excludeFields.forEach((el) => delete queryObj[el]);
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+  console.log(queryStr);
+
+  let query = Product.find(JSON.parse(queryStr)).populate("category", "-__v");
+
+  if (req.query.q) {
+    query = query
+      .find({
+        name: { $regex: req.query.q, $options: "i" },
+      })
+      .populate("category", "-__v");
+  }
+
+  // Sorting
+
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt");
+  }
+
+  if (req.params.categoryId) {
+    query.find({ subCategory: req.params.categoryId });
+  }
+
+  // limiting the fields
+
+  if (req.query.fields) {
+    const fields = req.query.fields.split(",").join(" ");
+    query = query.select(fields);
+  } else {
+    query = query.select("-__v");
+  }
+  const productCount = await Product.countDocuments(query);
+  // pagination
+
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 6;
+  const skip = (page - 1) * limit;
+  query = query.skip(skip).limit(limit);
+
+  const pages = Math.ceil(productCount / limit);
+
+  if (skip >= productCount)
+    throw new CustomError(404, "This Page does not exists");
+
+  const products = await query;
+
+  if (!products) {
+    throw new CustomError(404, "No Product with such category exist.");
+  }
+
+  res.status(200).json({ productCount, products, pages });
 };

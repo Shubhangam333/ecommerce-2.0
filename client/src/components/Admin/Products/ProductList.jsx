@@ -24,6 +24,15 @@ const columns = [
     accessor: "price",
   },
   {
+    Header: "Style",
+    accessor: "style",
+    Cell: ({ cell: { value } }) => {
+      const title = value.title;
+
+      return title;
+    },
+  },
+  {
     Header: "Category",
     accessor: "category",
     Cell: ({ cell: { value } }) => {
@@ -57,31 +66,6 @@ const columns = [
       const name = value.firstName;
 
       return name;
-    },
-  },
-
-  {
-    Header: "UpdatedAt",
-    accessor: "updatedAt",
-    Cell: ({ cell: { value } }) => {
-      // Create a Date object from the original date string
-      const dateObject = new Date(value);
-      const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        timeZone: "Asia/Kolkata",
-      };
-
-      // Format the date using Intl.DateTimeFormat
-      const formattedDate = new Intl.DateTimeFormat("en-IN", options).format(
-        dateObject
-      );
-
-      return formattedDate;
     },
   },
 ];

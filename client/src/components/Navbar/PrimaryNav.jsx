@@ -6,12 +6,18 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useGetAllCategoriesWithSubCatQuery } from "../../redux/api/category/categoryapi";
 
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
   const navbar = useRef();
 
   const { user } = useSelector((state) => state.auth);
+  const { data: categoryList } = useGetAllCategoriesWithSubCatQuery();
+
+  // console.log("ccc", parentCat);
+
+  console.log("clist", categoryList);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +38,7 @@ const PrimaryNav = ({ setSecondaryNav }) => {
   }, []);
 
   const navbarClass = isNavbarFixed ? "fixed top-0 left-0 right-0" : "";
+  const { section } = useSelector((state) => state.auth);
 
   return (
     <nav
@@ -50,126 +57,31 @@ const PrimaryNav = ({ setSecondaryNav }) => {
         <RxHamburgerMenu className="text-3xl" />
       </button>
       <ul className="justify-between items-center basis-[70%] h-full md:flex hidden md:order-1">
-        <li className="h-full flex items-center">
-          <div className="navItem relative h-full flex flex-col justify-center">
-            <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
-              WinterWear <IoIosArrowDown />
-            </h3>
-            <ul className="absolute top-[100%] p-4 z-50 bg-white  dropdown-menu left-0 w-full transition-all font-light text-md ">
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  All WinterWear
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  Hoodies
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  SweatShirt
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="h-full flex items-center">
-          <div className="navItem relative h-full flex flex-col justify-center">
-            <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
-              TopWear <IoIosArrowDown />
-            </h3>
-            <ul className="absolute top-[100%] z-[1000] bg-white p-4 dropdown-menu left-0 w-full transition-all font-light text-md ">
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  All WinterWear
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  Hoodies
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  SweatShirt
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="h-full flex items-center">
-          <div className="navItem relative h-full flex flex-col justify-center">
-            <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
-              Sneakers <IoIosArrowDown />
-            </h3>
-            <ul className="absolute top-[100%] z-[1000] bg-white  p-4 dropdown-menu left-0 w-full transition-all font-light text-md ">
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  All WinterWear
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  Hoodies
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  SweatShirt
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="h-full flex items-center">
-          <div className="navItem relative h-full flex flex-col justify-center">
-            <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
-              Accessories <IoIosArrowDown />
-            </h3>
-            <ul className="absolute top-[100%] p-4 z-[1000] bg-white  dropdown-menu left-0 w-full transition-all font-light text-md ">
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  All WinterWear
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  Hoodies
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  SweatShirt
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="h-full flex items-center">
-          <div className="navItem relative h-full flex flex-col justify-center">
-            <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
-              Collections <IoIosArrowDown />
-            </h3>
-            <ul className="absolute top-[100%] p-4 z-[1000] bg-white  dropdown-menu left-0 w-full transition-all font-light text-md ">
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  All WinterWear
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  Hoodies
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:text-[#E01B23]">
-                  SweatShirt
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
+        {categoryList &&
+          categoryList.map((cat) => (
+            <li className="h-full flex items-center" key={cat._id}>
+              <div className="navItem relative h-full flex flex-col justify-center">
+                <h3 className="cursor-pointer flex items-center uppercase font-extrabold text-slate-700 text-sm hover:text-[#E01B23]">
+                  {cat.parent.title} <IoIosArrowDown />
+                </h3>
+                <ul className="absolute top-[100%] z-[1000] bg-white p-4 dropdown-menu left-0 w-full transition-all font-light text-md ">
+                  {cat.subcategories &&
+                    cat.subcategories.map((subcat) => (
+                      <>
+                        <li className="w-full block">
+                          <Link
+                            to={`/${section}/${subcat.slug}`}
+                            className="hover:text-[#E01B23] w-full block"
+                          >
+                            {subcat.title}
+                          </Link>
+                        </li>
+                      </>
+                    ))}
+                </ul>
+              </div>
+            </li>
+          ))}
       </ul>
       <div className="button-container flex items-center md:gap-4 order-2 md:order-2">
         {user ? (

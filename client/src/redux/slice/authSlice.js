@@ -4,6 +4,7 @@ const initialState = {
   userId: localStorage.getItem("userId")
     ? JSON.parse(localStorage.getItem("userId"))
     : "",
+  section: "men",
 };
 
 export const authSlice = createSlice({
@@ -22,8 +23,11 @@ export const authSlice = createSlice({
       localStorage.setItem("userId", JSON.stringify(action.payload));
       state.userId = action.payload;
     },
+    setSection: (state, action) => {
+      state.section = action.payload;
+    },
   },
 });
 
-export const { removeUser, setUser, setUserId } = authSlice.actions;
+export const { removeUser, setUser, setUserId, setSection } = authSlice.actions;
 export default authSlice.reducer;

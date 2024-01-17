@@ -52,8 +52,6 @@ export const getStyleBySubCat = async (req, res, next) => {
 
   const styles = await Style.find({ subCategory: subCatId });
 
-  console.log("sty", styles);
-
   if (!styles) {
     throw new CustomError(404, "No Style Exist.");
   }

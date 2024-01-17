@@ -46,6 +46,18 @@ export const categoryapi = createApi({
         method: "GET",
       }),
     }),
+    getAllCategoriesWithSubCat: builder.query({
+      query: () => ({
+        url: `/allcategories`,
+        method: "GET",
+      }),
+    }),
+    getCategoryBySlug: builder.mutation({
+      query: (slug) => ({
+        url: `/category/${slug}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -56,4 +68,6 @@ export const {
   useGetAllParentCategoriesQuery,
   useGetAllSubCategoriesQuery,
   useGetAllSubCatByParentIdMutation,
+  useGetAllCategoriesWithSubCatQuery,
+  useGetCategoryBySlugMutation,
 } = categoryapi;

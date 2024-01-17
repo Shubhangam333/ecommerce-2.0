@@ -27,6 +27,13 @@ export const productapi = createApi({
       }),
       providesTags: ["products"],
     }),
+    getProductsBySubCategoryId: builder.mutation({
+      query: (data) => ({
+        url: `/products/${data.categoryId}?page=${data.currenPage}&section=${data.section}&sort=${data.sort}`,
+        method: "GET",
+      }),
+      providesTags: ["products"],
+    }),
   }),
 });
 
@@ -34,4 +41,5 @@ export const {
   useCreateProductMutation,
   useGetAllProductsQuery,
   useDeleteProductByIdMutation,
+  useGetProductsBySubCategoryIdMutation,
 } = productapi;

@@ -1,9 +1,9 @@
-const Productcard = () => {
+const Productcard = ({ product }) => {
   return (
     <div className="col-span-3 cursor-pointer grid-product-card">
       <div className="w-full h-[25rem] overflow-hidden">
         <img
-          src="https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1704550969_8235025.jpg?format=webp&w=1080&dpr=1.5"
+          src={product.productImages[0].url}
           alt=""
           className="w-full h-full object-cover object-center hover:scale-125"
         />

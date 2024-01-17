@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
 import Wishlist from "./pages/Wishlist";
@@ -38,6 +38,8 @@ function App() {
     }
   }, [error, dispatch]);
 
+  const { section } = useSelector((state) => state.auth);
+
   return (
     <>
       {isFetching ? (
@@ -45,13 +47,14 @@ function App() {
       ) : (
         <>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Navigate to="/men" />} />
+            <Route path={`/${section}`} element={<Home />} />
             <Route
               path="/auth/:id"
               element={<Authentication isAuthenticated={user ? true : false} />}
             />
             <Route path="/mywishlist" element={<Wishlist />} />
-            <Route path="/:catname" element={<Categorypage />} />
+            <Route path={`/${section}/:catname`} element={<Categorypage />} />
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />
               <Route path="products" element={<ProductDashboard />} />

@@ -55,7 +55,6 @@ const columns = [
 
 const StyleList = () => {
   const { data } = useGetAllStylesQuery();
-  console.log(data);
   const [deleteStyleById] = useDeleteStyleByIdMutation();
 
   const handleDeleteItem = async (id) => {

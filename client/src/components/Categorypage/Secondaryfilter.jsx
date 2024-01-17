@@ -1,9 +1,9 @@
 import Sortfilter from "./Sortfilter";
 
-const Secondaryfilter = () => {
+const Secondaryfilter = ({ title }) => {
   return (
     <section className="flex items-center justify-between">
-      <h3>Men Hoodies and Sweatshirts - 196 items</h3>
+      <h3>{title} - items</h3>
       <Sortfilter />
     </section>
   );
