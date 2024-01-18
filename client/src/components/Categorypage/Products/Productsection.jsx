@@ -6,34 +6,39 @@ import Pagination from "./Pagination";
 import { useSelector } from "react-redux";
 
 const Productsection = ({ categoryId }) => {
-  const [getProductByCategory, { data, isFetching, error }] =
+  const [getProductByCategory, { data, isLoading, error }] =
     useGetProductsBySubCategoryIdMutation();
-
-  const [currenPage, setCurrenPage] = useState(1);
   const { section } = useSelector((state) => state.auth);
-  const { sort, orderBy } = useSelector((state) => state.sort);
-
-  console.log("ob", orderBy);
-
-  // const [id] = useId();
-
-  console.log("dd", data && data.productCount);
+  const { sort, orderBy, styles, currentPage, priceFilter } = useSelector(
+    (state) => state.sort
+  );
 
   useEffect(() => {
     const getProducts = async () => {
       await getProductByCategory({
         categoryId,
-        currenPage,
+        currentPage,
         section,
         sort,
         orderBy,
+        styles,
+        priceFilter,
       });
     };
 
     getProducts();
-  }, [categoryId, getProductByCategory, currenPage, section, sort, orderBy]);
+  }, [
+    categoryId,
+    getProductByCategory,
+    currentPage,
+    section,
+    sort,
+    orderBy,
+    styles,
+    priceFilter,
+  ]);
 
-  if (isFetching) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -41,7 +46,7 @@ const Productsection = ({ categoryId }) => {
     return null;
   }
 
-  const { products, productCount, pages } = data;
+  const { products, pages } = data;
 
   return (
     <>
@@ -49,11 +54,7 @@ const Productsection = ({ categoryId }) => {
         {products.map((product) => (
           <Productcard key={product._id} product={product} />
         ))}
-        <Pagination
-          pages={pages}
-          currenPage={currenPage}
-          setCurrenPage={setCurrenPage}
-        />
+        <Pagination pages={pages} currentPage={currentPage} />
       </section>
     </>
   );

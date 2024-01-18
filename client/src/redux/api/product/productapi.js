@@ -28,11 +28,19 @@ export const productapi = createApi({
       providesTags: ["products"],
     }),
     getProductsBySubCategoryId: builder.mutation({
-      query: (data) => ({
-        url: `/products/${data.categoryId}?page=${data.currenPage}&section=${data.section}&sortBy=${data.sort}&orderBy=${data.orderBy}`,
-        method: "GET",
+      query: ({
+        categoryId,
+        currentPage,
+        section,
+        sort,
+        orderBy,
+        styles,
+        priceFilter,
+      }) => ({
+        url: `/products/${categoryId}?page=${currentPage}&section=${section}&price[lte]=${priceFilter.hb}&price[gte]=${priceFilter.lb}&sortBy=${sort}&orderBy=${orderBy}`,
+        method: "POST",
+        body: { styles },
       }),
-      providesTags: ["products"],
     }),
   }),
 });

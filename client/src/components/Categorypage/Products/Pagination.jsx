@@ -1,15 +1,20 @@
-const Pagination = ({ setCurrenPage, currenPage, pages }) => {
+import { useDispatch } from "react-redux";
+import { setCurrentPage } from "../../../redux/slice/sortSlice";
+
+const Pagination = ({ currentPage, pages }) => {
+  const dispatch = useDispatch();
+
   const handleNextPage = () => {
-    if (currenPage === pages) {
+    if (currentPage === pages) {
       return;
     }
-    setCurrenPage(currenPage + 1);
+    dispatch(setCurrentPage(currentPage + 1));
   };
   const handlePreviousPage = () => {
-    if (currenPage === 1) {
+    if (currentPage === 1) {
       return;
     }
-    setCurrenPage(currenPage - 1);
+    dispatch(setCurrentPage(currentPage - 1));
   };
   return (
     <div className="flex gap-2">
@@ -17,14 +22,14 @@ const Pagination = ({ setCurrenPage, currenPage, pages }) => {
         key={0}
         onClick={handlePreviousPage}
         className="disabled:bg-slate-500 px-4 text-white rounded-md bg-[#17B987]"
-        disabled={currenPage === 1}
+        disabled={currentPage === 1}
       >
         Prev
       </button>
       {[...Array(pages)].map((_, idx) => (
         <button
           key={idx + 1}
-          onClick={() => setCurrenPage(idx + 1)}
+          onClick={() => dispatch(setCurrentPage(idx + 1))}
           className="bg-red-500 px-4 py-1 text-white rounded-md"
         >
           {idx + 1}
@@ -34,7 +39,7 @@ const Pagination = ({ setCurrenPage, currenPage, pages }) => {
         key={100000}
         onClick={handleNextPage}
         className="disabled:bg-slate-500 px-4 text-white rounded-md bg-[#17B987]"
-        disabled={currenPage === pages}
+        disabled={currentPage === pages}
       >
         Next
       </button>

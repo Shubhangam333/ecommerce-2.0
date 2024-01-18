@@ -10,14 +10,10 @@ import { useGetAllCategoriesWithSubCatQuery } from "../../redux/api/category/cat
 
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
-  const navbar = useRef();
-
   const { user } = useSelector((state) => state.auth);
   const { data: categoryList } = useGetAllCategoriesWithSubCatQuery();
 
-  // console.log("ccc", parentCat);
-
-  console.log("clist", categoryList);
+  const navbar = useRef();
 
   useEffect(() => {
     const handleScroll = () => {

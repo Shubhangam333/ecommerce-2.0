@@ -12,8 +12,6 @@ const router = express.Router();
 router.route("/createStyle").post(isAuthenticated, isAdmin, createStyle);
 router.route("/styles").get(isAuthenticated, isAdmin, getAllStyles);
 router.route("/:id").delete(isAuthenticated, isAdmin, deleteStyleById);
-router
-  .route("/styles/:subCatId")
-  .get(isAuthenticated, isAdmin, getStyleBySubCat);
+router.route("/styles/:subCatId").get(getStyleBySubCat);
 
 export default router;

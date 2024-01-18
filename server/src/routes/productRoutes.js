@@ -16,6 +16,6 @@ router
 router.route("/products").get(isAuthenticated, isAdmin, getAllProducts);
 router.route("/:id").delete(isAuthenticated, isAdmin, deleteProductById);
 
-router.route("/products/:categoryId").get(getProductsBySubCategoryId);
+router.route("/products/:categoryId").post(getProductsBySubCategoryId);
 
 export default router;
