@@ -1,6 +1,13 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const Productcard = ({ product }) => {
+  const { section } = useSelector((state) => state.auth);
   return (
-    <div className="col-span-3 cursor-pointer grid-product-card">
+    <Link
+      to={`/${section}/${product.subCategory.slug}/${product.slug}`}
+      className="col-span-3 cursor-pointer grid-product-card"
+    >
       <div className="w-full h-[25rem] overflow-hidden">
         <img
           src={product.productImages[0].url}
@@ -13,7 +20,7 @@ const Productcard = ({ product }) => {
         <p className="text-md font-normal capitalize">{product.style.title}</p>
         <span className="text-lg font-extrabold">{product.price}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -27,6 +27,12 @@ export const productapi = createApi({
       }),
       providesTags: ["products"],
     }),
+    getProductBySlugName: builder.mutation({
+      query: (slug) => ({
+        url: `/product/${slug}`,
+        method: "GET",
+      }),
+    }),
     getProductsBySubCategoryId: builder.mutation({
       query: ({
         categoryId,
@@ -50,4 +56,5 @@ export const {
   useGetAllProductsQuery,
   useDeleteProductByIdMutation,
   useGetProductsBySubCategoryIdMutation,
+  useGetProductBySlugNameMutation,
 } = productapi;

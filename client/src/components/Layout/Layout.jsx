@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
   return (
     <div className="main-layout">
       <Header />
-      {children}
+      <section className="min-h-screen p-4">{children}</section>
       <Footer />
     </div>
   );

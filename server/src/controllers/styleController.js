@@ -47,7 +47,7 @@ export const deleteStyleById = async (req, res, next) => {
   res.status(200).json({ msg: "deleted successfully" });
 };
 
-export const getStyleBySubCat = async (req, res, next) => {
+export const getStyleBySubCat = async (req, res) => {
   const subCatId = req.params.subCatId;
 
   const styles = await Style.find({ subCategory: subCatId });

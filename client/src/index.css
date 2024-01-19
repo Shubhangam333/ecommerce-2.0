@@ -238,3 +238,7 @@ table th {
   background-color: #17b987;
   color: white;
 }
+
+.answer-container {
+  transition: height 0.7s ease-in-out;
+}

@@ -71,6 +71,21 @@ export const getAllProducts = async (req, res, next) => {
   res.status(200).json({ products });
 };
 
+export const getProductBySlugName = async (req, res, next) => {
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate("createdBy", "firstName")
+    .populate("category", "title")
+    .populate("subCategory", "title slug")
+    .populate("style", "title")
+    .sort("-createdAt");
+
+  if (!product) {
+    throw new CustomError("No Product found");
+  }
+
+  res.status(200).json(product);
+};
+
 export const deleteProductById = async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
@@ -96,7 +111,7 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
   let queryStr = JSON.stringify(queryObj);
   queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-  let query = Product.find(JSON.parse(queryStr)).populate("category", "-__v");
+  let query = Product.find(JSON.parse(queryStr));
 
   if (req.query.q) {
     query = query
@@ -149,7 +164,10 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
   if (skip >= productCount)
     throw new CustomError(404, "This Page does not exists");
 
-  const products = await query.populate("style", "title");
+  const products = await query
+    .populate("style", "title")
+    .populate("category", "-__v")
+    .populate("subCategory", "-__v");
 
   if (!products) {
     throw new CustomError(404, "No Product with such category exist.");

@@ -14,6 +14,7 @@ import CategoryDashboard from "./components/Admin/Category/CategoryDashboard";
 import CreateCategory from "./components/Admin/Category/CreateCategory";
 import StyleDashboard from "./components/Admin/Style/StyleDashboard";
 import CreateStyle from "./components/Admin/Style/CreateStyle";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/men" />} />
             <Route path={`/${section}`} element={<Home />} />
+            <Route
+              path={`/${section}/:subcatname/:productname`}
+              element={<ProductDetails />}
+            />
             <Route
               path="/auth/:id"
               element={<Authentication isAuthenticated={user ? true : false} />}
