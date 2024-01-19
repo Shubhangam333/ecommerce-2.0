@@ -18,7 +18,9 @@ export const sortSlice = createSlice({
       state.currentPage = action.payload;
     },
     setPriceFilter: (state, action) => {
-      state.priceFilter = action.payload;
+      state.priceFilter.lb === action.payload.lb
+        ? (state.priceFilter = { lb: 0, hb: 1000000 })
+        : (state.priceFilter = action.payload);
     },
     setSortFilter: (state, action) => {
       state.sort = action.payload;
@@ -43,6 +45,15 @@ export const sortSlice = createSlice({
 
       state.stylesTitle = updatedStyles;
     },
+    resetFilter: (state) => {
+      (state.sort = "title"),
+        (state.orderBy = "asc"),
+        (state.currentPage = 1),
+        (state.styles = []),
+        (state.stylesTitle = []),
+        (state.priceFilter = { lb: 0, hb: 1000000 }),
+        (state.checkedInput = []);
+    },
   },
 });
 
@@ -53,5 +64,6 @@ export const {
   setCurrentPage,
   setStyleByFilterTitle,
   setPriceFilter,
+  resetFilter,
 } = sortSlice.actions;
 export default sortSlice.reducer;

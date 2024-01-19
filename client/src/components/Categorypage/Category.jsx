@@ -5,11 +5,12 @@ import Mainsection from "./Mainsection";
 import { useCallback, useEffect } from "react";
 import { useGetCategoryBySlugMutation } from "../../redux/api/category/categoryapi";
 import Loader from "../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { resetFilter } from "../../redux/slice/sortSlice";
 
 const Category = () => {
   const { catname } = useParams();
-
-  console.log("p", catname);
+  const dispatch = useDispatch();
 
   const [categoryDetails, { data, isFetching }] =
     useGetCategoryBySlugMutation();
@@ -19,8 +20,9 @@ const Category = () => {
   }, [catname, categoryDetails]);
 
   useEffect(() => {
+    dispatch(resetFilter());
     getCategoryDetails();
-  }, [getCategoryDetails]);
+  }, [getCategoryDetails, dispatch]);
 
   console.log("c", data);
 
