@@ -27,7 +27,7 @@ const LoginForm = () => {
   if (data) {
     toast.success("Login Successful");
     dispatch(setUserId(data.userId));
-    navigate("/");
+    navigate(-1);
   }
   if (isError) {
     toast.error(error.data.message);

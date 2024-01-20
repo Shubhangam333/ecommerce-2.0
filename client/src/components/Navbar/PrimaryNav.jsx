@@ -98,7 +98,10 @@ const PrimaryNav = ({ setSecondaryNav }) => {
             <IoIosLogIn />
           </Link>
         )}
-        <Link className="text-3xl flex items-center relative" to="/mywishlist">
+        <Link
+          className="text-3xl flex items-center relative"
+          to="/user/mywishlist"
+        >
           <IoMdHeartEmpty />
           {wishList && (
             <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">
@@ -106,7 +109,7 @@ const PrimaryNav = ({ setSecondaryNav }) => {
             </span>
           )}
         </Link>
-        <Link className="text-3xl flex items-center relative">
+        <Link className="text-3xl flex items-center relative" to="/user/cart">
           <IoBagHandleOutline />
           {data && (
             <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">

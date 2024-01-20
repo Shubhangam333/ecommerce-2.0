@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
-import Wishlist from "./pages/Wishlist";
 import Categorypage from "./pages/Categorypage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -16,6 +15,8 @@ import StyleDashboard from "./components/Admin/Style/StyleDashboard";
 import CreateStyle from "./components/Admin/Style/CreateStyle";
 import ProductDetails from "./pages/ProductDetails";
 import ScrollToTop from "./components/Scroll/ScrollToTop";
+import PrivateRoute from "./pages/User/PrivateRoute";
+import Mainwishlist from "./components/Wishlist/Mainwishlist";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,8 +61,14 @@ function App() {
               path="/auth/:id"
               element={<Authentication isAuthenticated={user ? true : false} />}
             />
-            <Route path="/mywishlist" element={<Wishlist />} />
+
             <Route path={`/${section}/:catname`} element={<Categorypage />} />
+            <Route
+              path="/user"
+              element={<PrivateRoute isAuthenticated={user ? true : false} />}
+            >
+              <Route path="mywishlist" element={<Mainwishlist />} />
+            </Route>
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />
               <Route path="products" element={<ProductDashboard />} />
