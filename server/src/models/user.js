@@ -22,8 +22,12 @@ const userSchema = new mongoose.Schema(
     },
     wishlistItems: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+        },
+        quantity: { type: Number, default: 1 },
+        sizeType: { type: String },
       },
     ],
     cartItems: [
@@ -33,6 +37,7 @@ const userSchema = new mongoose.Schema(
           ref: "Product",
         },
         quantity: { type: Number, default: 1 },
+        sizeType: { type: String },
       },
     ],
   },

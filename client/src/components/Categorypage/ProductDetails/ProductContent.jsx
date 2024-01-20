@@ -1,15 +1,77 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { BsClockHistory } from "react-icons/bs";
-import { FaAngleDown } from "react-icons/fa6";
+import {
+  useAddToCartMutation,
+  useAddToWishListMutation,
+} from "../../../redux/api/user/userapi";
+import { toast } from "react-toastify";
 
 const ProductContent = ({ product }) => {
   const { section } = useSelector((state) => state.auth);
   const [selectedSize, setSelectedSize] = useState("");
-  const [accordionActive, setAccordionActive] = useState(false);
-  const contentHeight = useRef();
+  const [quantity, setQuantity] = useState(1);
+  const { user } = useSelector((state) => state.auth);
+  const [addItemstoCart] = useAddToCartMutation();
+  const [addItemstoWishList] = useAddToWishListMutation();
+
+  const isSizeAvailable = () => {
+    const selectedItem = product.sizes.find(
+      (item) => item.sizeType === selectedSize
+    );
+
+    return selectedItem && selectedItem.quantity >= quantity;
+  };
+
+  const handleWishList = async () => {
+    if (!user) {
+      return toast.error("Login is required");
+    }
+    if (!selectedSize) {
+      return toast.error("Please select a particular size");
+    }
+    if (!isSizeAvailable()) {
+      return toast.error("Specified quantiy is out of stock");
+    }
+
+    try {
+      const res = await addItemstoWishList({
+        product,
+        quantity,
+        sizeType: selectedSize,
+      }).unwrap();
+      toast.success(res.msg);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  };
+
+  const handleCart = async () => {
+    if (!user) {
+      return toast.error("Login is required");
+    }
+
+    if (!selectedSize) {
+      return toast.error("Please select a particular size");
+    }
+    if (!isSizeAvailable()) {
+      return toast.error("Specified quantiy is out of stock");
+    }
+
+    try {
+      const res = await addItemstoCart({
+        product,
+        quantity,
+        sizeType: selectedSize,
+      }).unwrap();
+      toast.success(res.msg);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  };
+
   return (
     <div className="basis-[40%] flex flex-col pr-24">
       <h1 className="capitalize text-3xl text-slate-600 font-extrabold">
@@ -48,16 +110,31 @@ const ProductContent = ({ product }) => {
           name=""
           id="quantity"
           className="outline-none border-2 px-2 border-gray-300"
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
         >
           <option value="1">1</option>
           <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
         </select>
       </div>
       <div className="flex gap-2 ">
-        <button className="basis-[100%] bg-[#EC3D25] py-2 text-white font-extrabold rounded-sm">
+        <button
+          className="basis-[100%] bg-[#EC3D25] py-2 text-white font-extrabold rounded-sm active:scale-95 "
+          onClick={handleCart}
+        >
           Add to Cart
         </button>
-        <button className="basis-[70%] px-2 flex items-center rounded-sm border-[#117A7A] text-[#117A7A] border-[1px]">
+        <button
+          className="basis-[70%] px-2 flex items-center rounded-sm border-[#117A7A] text-[#117A7A] border-[1px] active:scale-95"
+          onClick={handleWishList}
+        >
           <CiHeart className="text-xl" />
           <span>Add to WishList</span>
         </button>

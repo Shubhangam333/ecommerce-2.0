@@ -7,6 +7,7 @@ import dashboardReducer from "./slice/dashboardSlice";
 import sortReducer from "./slice/sortSlice";
 import { styleapi } from "./api/style/styleapi";
 import { productapi } from "./api/product/productapi";
+import { userapi } from "./api/user/userapi";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [categoryapi.reducerPath]: categoryapi.reducer,
     [styleapi.reducerPath]: styleapi.reducer,
     [productapi.reducerPath]: productapi.reducer,
+    [userapi.reducerPath]: userapi.reducer,
     auth: authReducer,
     dashboard: dashboardReducer,
     sort: sortReducer,
@@ -24,6 +26,7 @@ export const store = configureStore({
       authapi.middleware,
       categoryapi.middleware,
       styleapi.middleware,
-      productapi.middleware
+      productapi.middleware,
+      userapi.middleware
     ),
 });
