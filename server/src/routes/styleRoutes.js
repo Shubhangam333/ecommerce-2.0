@@ -5,7 +5,7 @@ import {
   getAllStyles,
   deleteStyleById,
   getStyleBySubCat,
-} from "../controllers/stylecontroller.js";
+} from "../controllers/styleController.js";
 
 const router = express.Router();
 
