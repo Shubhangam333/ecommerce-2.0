@@ -38,7 +38,12 @@ const ProductComponent = () => {
           setImageModal={setImageModal}
         />
         <ProductContent product={product} />
-        {imageModal && <ProductImageModal />}
+        {imageModal && (
+          <ProductImageModal
+            images={product.productImages}
+            setImageModal={setImageModal}
+          />
+        )}
       </section>
     </>
   );

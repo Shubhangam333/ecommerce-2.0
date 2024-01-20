@@ -15,6 +15,7 @@ import CreateCategory from "./components/Admin/Category/CreateCategory";
 import StyleDashboard from "./components/Admin/Style/StyleDashboard";
 import CreateStyle from "./components/Admin/Style/CreateStyle";
 import ProductDetails from "./pages/ProductDetails";
+import ScrollToTop from "./components/Scroll/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
         <h1>Loading</h1>
       ) : (
         <>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Navigate to="/men" />} />
             <Route path={`/${section}`} element={<Home />} />

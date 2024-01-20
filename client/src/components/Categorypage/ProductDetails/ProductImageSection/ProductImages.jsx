@@ -2,7 +2,7 @@ import { useId } from "react";
 
 const ProductImages = ({ images, setImageModal }) => {
   return (
-    <div className="basis-[60%] flex flex-wrap gap-4">
+    <div className="basis-[60%] flex flex-wrap gap-4 cursor-pointer">
       {images.map((image, index) => (
         <div
           key={image.public_id}
