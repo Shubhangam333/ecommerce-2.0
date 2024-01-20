@@ -1,6 +1,6 @@
 import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 
 export const register = async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });

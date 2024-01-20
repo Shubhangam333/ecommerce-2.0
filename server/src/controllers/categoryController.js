@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { Category } from "../models/category.js";
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 
 export const createCategory = async (req, res, next) => {
   const { title, catImage, parent_category } = req.body;

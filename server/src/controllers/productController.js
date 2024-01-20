@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { Product } from "../models/product.js";
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 
 export const createProduct = async (req, res, next) => {
   const {

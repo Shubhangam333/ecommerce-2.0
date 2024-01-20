@@ -1,4 +1,4 @@
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 
 function errorHandler(err, req, res, next) {
   let httpStatusCode = 500;

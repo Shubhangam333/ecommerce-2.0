@@ -1,4 +1,4 @@
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
 

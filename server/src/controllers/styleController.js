@@ -1,4 +1,4 @@
-import CustomError from "../errors/customError.js";
+import CustomError from "../errors/CustomError.js";
 import { Style } from "../models/style.js";
 
 export const createStyle = async (req, res, next) => {
