@@ -5,7 +5,12 @@ import Categorypage from "./pages/Categorypage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useGetProfileQuery } from "./redux/api/auth/authapi";
-import { setUser, removeUser, setUserId } from "./redux/slice/authSlice";
+import {
+  setUser,
+  removeUser,
+  setUserId,
+  removeUserId,
+} from "./redux/slice/authSlice";
 import Dashboardpage from "./pages/Admin/Dashboardpage";
 import CreateProduct from "./components/Admin/Products/CreateProduct";
 import ProductDashboard from "./components/Admin/Products/ProductDashboard";
@@ -17,6 +22,7 @@ import ProductDetails from "./pages/ProductDetails";
 import ScrollToTop from "./components/Scroll/ScrollToTop";
 import PrivateRoute from "./pages/User/PrivateRoute";
 import Mainwishlist from "./components/Wishlist/Mainwishlist";
+import Cart from "./pages/Cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +43,7 @@ function App() {
   useEffect(() => {
     if (error) {
       dispatch(removeUser());
-      dispatch(setUserId(""));
+      dispatch(removeUserId());
     }
   }, [error, dispatch]);
 
@@ -68,6 +74,7 @@ function App() {
               element={<PrivateRoute isAuthenticated={user ? true : false} />}
             >
               <Route path="mywishlist" element={<Mainwishlist />} />
+              <Route path="cart" element={<Cart />} />
             </Route>
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />

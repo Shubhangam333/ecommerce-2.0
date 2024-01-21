@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 import Table from "../Table";
-import { useEffect, useState } from "react";
 import {
   useDeleteProductByIdMutation,
   useGetAllProductsQuery,

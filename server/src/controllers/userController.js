@@ -2,6 +2,9 @@ import CustomError from "../errors/CustomError.js";
 import { User } from "../models/user.js";
 
 export const profile = async (req, res) => {
+  if (req.params.userId === "") {
+    throw new CustomError(400, "No user found.");
+  }
   const user = await User.findById(req.params.userId);
 
   if (!user) {
@@ -31,9 +34,15 @@ export const addToCart = async (req, res, next) => {
 };
 
 export const getAllCartItems = async (req, res, next) => {
-  const user = await User.findById({ _id: req.user._id }).populate(
-    "cartItems.product"
-  );
+  const user = await User.findById({ _id: req.user._id }).populate({
+    path: "cartItems.product",
+    select: "title productImages price slug",
+    populate: {
+      path: "subCategory",
+      model: "Category",
+      select: "title slug",
+    },
+  });
 
   res.status(200).json({ cartItems: user.cartItems });
 };
@@ -57,9 +66,15 @@ export const addToWishList = async (req, res, next) => {
 };
 
 export const getAllWishListItems = async (req, res, next) => {
-  const user = await User.findById({ _id: req.user._id }).populate(
-    "wishlistItems.product"
-  );
+  const user = await User.findById({ _id: req.user._id }).populate({
+    path: "wishlistItems.product",
+    select: "title productImages price slug",
+    populate: {
+      path: "subCategory",
+      model: "Category",
+      select: "title",
+    },
+  });
 
   res.status(200).json({ wishlistItems: user.wishlistItems });
 };

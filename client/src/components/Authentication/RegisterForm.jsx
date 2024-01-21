@@ -2,7 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import { useRegisterMutation } from "../../redux/api/auth/authapi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const RegisterForm = () => {
   const [registerUser, { isLoading, isError, error, isSuccess }] =

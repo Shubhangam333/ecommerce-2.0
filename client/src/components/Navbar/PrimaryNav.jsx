@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import headerLogo from "../../assets/shopping-cart.svg";
+import headerLogo from "/shopping-cart.svg";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosLogIn, IoMdHeartEmpty } from "react-icons/io";
 import { IoBagHandleOutline } from "react-icons/io5";

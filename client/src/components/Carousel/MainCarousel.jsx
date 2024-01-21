@@ -1,8 +1,8 @@
 import ImageSlider from "./ImageSlider";
 
 const slides = [
-  { url: "http://localhost:5173/banner-1-men.webp", title: "beach" },
-  { url: "http://localhost:5173/banner-2-men.webp", title: "boat" },
+  { url: "/banner-1-men.webp", title: "beach" },
+  { url: "/banner-2-men.webp", title: "boat" },
 ];
 const containerStyles = {
   width: "100%",

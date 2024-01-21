@@ -1,18 +1,21 @@
+import { Outlet, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
-import { Outlet, Navigate } from "react-router-dom";
+import React from "react";
 
 const PrivateRoute = ({ isAuthenticated }) => {
-  return (
-    <>
-      {isAuthenticated ? (
-        <Layout>
-          <Outlet />
-        </Layout>
-      ) : (
-        Navigate("/")
-      )}
-    </>
-  );
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
+  return isAuthenticated ? (
+    <Layout>
+      <Outlet />
+    </Layout>
+  ) : null;
 };
 
 export default PrivateRoute;

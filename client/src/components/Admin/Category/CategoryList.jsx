@@ -4,7 +4,6 @@ import {
   useGetAllCategoriesQuery,
 } from "../../../redux/api/category/categoryapi";
 import Table from "../Table";
-import { useEffect, useState } from "react";
 
 const columns = [
   {

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import headerLogo from "../../assets/shopping-cart.svg";
+import headerLogo from "/shopping-cart.svg";
 
 const Footer = () => {
   return (

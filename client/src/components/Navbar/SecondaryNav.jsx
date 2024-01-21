@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import headerLogo from "../../assets/shopping-cart.svg";
+import headerLogo from "/shopping-cart.svg";
 
 const SecondaryNav = ({ setSecondaryNav, secondaryNav }) => {
   const navContainer = useRef();

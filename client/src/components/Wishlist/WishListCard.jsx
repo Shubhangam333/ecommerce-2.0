@@ -1,5 +1,3 @@
-import React from "react";
-
 const WishListCard = ({ product }) => {
   return (
     <div className="flex flex-col gap-2 md:w-[270px]">

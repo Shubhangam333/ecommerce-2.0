@@ -1,5 +1,3 @@
-import headerLogo from "../../../../assets/shopping-cart.svg";
-import { IoClose } from "react-icons/io5";
 import { setNavActive } from "../../../../redux/slice/dashboardSlice";
 import { useDispatch } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";

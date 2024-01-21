@@ -1,4 +1,4 @@
-import logo from "../../assets/wishlist-empty-icon.png";
+import logo from "/wishList-empty-icon.png";
 import Navbtn from "../Navbtns/Navbtn";
 
 const Emptywishlist = () => {

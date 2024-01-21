@@ -2,7 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import {
   useGetAllParentCategoriesQuery,
   useGetAllSubCatByParentIdMutation,
-  useGetAllSubCategoriesQuery,
 } from "../../../redux/api/category/categoryapi";
 import { toast } from "react-toastify";
 import { useCreateStyleMutation } from "../../../redux/api/style/styleapi";
