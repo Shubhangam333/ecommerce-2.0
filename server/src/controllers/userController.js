@@ -1,5 +1,6 @@
 import CustomError from "../errors/CustomError.js";
 import { User } from "../models/user.js";
+import { ObjectId } from "mongodb";
 
 export const profile = async (req, res) => {
   if (!req.params.userId) {
@@ -20,15 +21,24 @@ export const addToCart = async (req, res, next) => {
   if (!product || !quantity || !sizeType) {
     throw new CustomError(400, "Invalid details");
   }
-  await User.findByIdAndUpdate(req.user._id, {
-    $push: {
-      cartItems: {
-        product,
-        quantity,
-        sizeType,
-      },
-    },
-  });
+
+  const user = await User.findById(req.user._id);
+
+  const existingProductIndex = user.cartItems.findIndex(
+    (item) => item.product._id == product._id && item.sizeType === sizeType
+  );
+
+  if (existingProductIndex !== -1) {
+    user.cartItems[existingProductIndex].quantity += quantity;
+  } else {
+    user.cartItems.push({
+      product,
+      quantity,
+      sizeType,
+    });
+  }
+
+  await user.save();
 
   res.status(200).json({ msg: "Product Added to cart" });
 };
@@ -52,16 +62,24 @@ export const addToWishList = async (req, res, next) => {
   if (!product || !quantity || !sizeType) {
     throw new CustomError(400, "Invalid details");
   }
-  await User.findByIdAndUpdate(req.user._id, {
-    $push: {
-      wishlistItems: {
-        product,
-        quantity,
-        sizeType,
-      },
-    },
-  });
 
+  const user = await User.findById(req.user._id);
+
+  const existingProductIndex = user.wishlistItems.findIndex(
+    (item) => item.product._id == product._id && item.sizeType === sizeType
+  );
+
+  if (existingProductIndex !== -1) {
+    user.wishlistItems[existingProductIndex].quantity += quantity;
+  } else {
+    user.wishlistItems.push({
+      product,
+      quantity,
+      sizeType,
+    });
+  }
+
+  await user.save();
   res.status(200).json({ msg: "Added to WishList" });
 };
 
