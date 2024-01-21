@@ -5,6 +5,8 @@ import {
   getAllCartItems,
   addToWishList,
   getAllWishListItems,
+  deleteCartItemById,
+  deleteWishListItemById,
 } from "../controllers/userController.js";
 import { isAuthenticated } from "../middleware/authMiddleware.js";
 
@@ -15,5 +17,10 @@ router.route("/addToCart").post(isAuthenticated, addToCart);
 router.route("/getCartItems").get(isAuthenticated, getAllCartItems);
 router.route("/addToWishList").post(isAuthenticated, addToWishList);
 router.route("/getWishListItems").get(isAuthenticated, getAllWishListItems);
+
+router.route("/cart/:cartItemId").delete(isAuthenticated, deleteCartItemById);
+router
+  .route("/wishlist/:wishlistItemId")
+  .delete(isAuthenticated, deleteWishListItemById);
 
 export default router;

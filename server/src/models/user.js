@@ -9,12 +9,11 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
     contactNumber: { type: String },
-    pofilePicture: { type: String },
+    profilePicture: { type: String },
     address: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
     },
-
     role: {
       type: String,
       enum: ["user", "admin"],

@@ -1,22 +1,31 @@
-import { useGetCartItemsQuery } from "../../redux/api/user/userapi";
+import { toast } from "react-toastify";
+import {
+  useDeleteCartItemsMutation,
+  useGetCartItemsQuery,
+} from "../../redux/api/user/userapi";
 import Loader from "../Loader/Loader";
 import CartItem from "./CartItem";
 
-const CartSection = () => {
-  const { data, isFetching } = useGetCartItemsQuery();
+const CartSection = ({ cartItems }) => {
+  const [deleteItem] = useDeleteCartItemsMutation();
 
-  if (isFetching) {
-    return <Loader />;
-  }
-
-  if (!data || !data.cartItems || !data.cartItems.length > 0) {
-    return <h1>No Items Found</h1>;
-  }
+  const handleDeleteItem = async (id) => {
+    try {
+      await deleteItem(id).unwrap();
+      toast.success("Item deleted");
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  };
 
   return (
     <section className="flex flex-col gap-2 basis-[60%] w-full">
-      {data.cartItems.map((item) => (
-        <CartItem key={item.product._id} item={item} />
+      {cartItems.map((item) => (
+        <CartItem
+          key={item.product._id}
+          item={item}
+          handleDeleteItem={handleDeleteItem}
+        />
       ))}
     </section>
   );

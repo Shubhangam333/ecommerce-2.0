@@ -35,6 +35,20 @@ export const userapi = createApi({
       }),
       providesTags: ["wishListItems"],
     }),
+    deleteCartItems: builder.mutation({
+      query: (cartItemId) => ({
+        url: `cart/${cartItemId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["cartItems"],
+    }),
+    deleteWishListItems: builder.mutation({
+      query: (wishlistItemId) => ({
+        url: `wishlist/${wishlistItemId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["wishListItems"],
+    }),
   }),
 });
 
@@ -43,4 +57,6 @@ export const {
   useGetCartItemsQuery,
   useAddToWishListMutation,
   useGetWishListItemsQuery,
+  useDeleteCartItemsMutation,
+  useDeleteWishListItemsMutation,
 } = userapi;

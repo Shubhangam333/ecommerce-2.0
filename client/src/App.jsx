@@ -43,7 +43,6 @@ function App() {
   useEffect(() => {
     if (error) {
       dispatch(removeUser());
-      dispatch(removeUserId());
     }
   }, [error, dispatch]);
 

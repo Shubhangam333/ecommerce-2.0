@@ -103,17 +103,19 @@ const PrimaryNav = ({ setSecondaryNav }) => {
           to="/user/mywishlist"
         >
           <IoMdHeartEmpty />
-          {wishList && (
-            <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">
-              {wishList.wishlistItems && wishList.wishlistItems.length}
-            </span>
-          )}
+          {wishList &&
+            wishList.wishlistItems &&
+            wishList.wishlistItems.length > 0 && (
+              <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">
+                {wishList.wishlistItems.length}
+              </span>
+            )}
         </Link>
         <Link className="text-3xl flex items-center relative" to="/user/cart">
           <IoBagHandleOutline />
-          {data && (
+          {data && data.cartItems && data.cartItems.length > 0 && (
             <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">
-              {data.cartItems && data.cartItems.length}
+              {data.cartItems.length}
             </span>
           )}
         </Link>

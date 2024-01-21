@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Loader from "../../Loader/Loader";
 import ProductImages from "./ProductImageSection/ProductImages";
 import ProductContent from "./ProductContent";
-import ImageCaraousel from "./ProductImageSection/ImageCaraousel";
 import ProductImageModal from "./ProductImageSection/ProductImageModal";
 
 const ProductComponent = () => {
