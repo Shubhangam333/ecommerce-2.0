@@ -12,7 +12,7 @@ export const register = async (req, res, next) => {
   user = new User(req.body);
   await user.save();
 
-  return res.status(200).send({ message: "Registration Successful" });
+  res.status(200).send({ message: "Registration Successful" });
 };
 
 export const login = async (req, res, next) => {
@@ -38,5 +38,5 @@ export const login = async (req, res, next) => {
     maxAge: process.env.MAX_AGE,
   });
 
-  return res.status(200).json({ userId: user._id });
+  res.status(200).json({ userId: user._id });
 };

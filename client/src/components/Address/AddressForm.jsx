@@ -1,18 +1,36 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { Controller, useForm } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
+import { useCreateAddressMutation } from "../../redux/api/address/addressapi";
+import { toast } from "react-toastify";
 
 const AddressForm = ({ setModal }) => {
+  const [country, setCountry] = useState("");
+  const [region, setRegion] = useState("");
   const addressRef = useRef();
+  const [createAddress, { isLoading }] = useCreateAddressMutation();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    // You can handle the form submission logic here
+    if (country.length === 0 || region.length === 0) {
+      return;
+    }
+    try {
+      await createAddress({ ...data, country, state: region }).unwrap();
+      reset();
+      setModal(false);
+      toast.success("Address Created");
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   useEffect(() => {
@@ -30,11 +48,11 @@ const AddressForm = ({ setModal }) => {
   }, [addressRef, setModal]);
 
   return (
-    <div
-      ref={addressRef}
-      className="fixed inset-0 z-[40000] flex  justify-center  bg-[rgba(0,0,0,0.7)]"
-    >
-      <div className="bg-white  w-[550px] flex flex-col gap-4 p-4 rounded-md">
+    <div className="fixed inset-0 z-[40000] flex  justify-center  bg-[rgba(0,0,0,0.7)]">
+      <div
+        ref={addressRef}
+        className="bg-white  w-[550px] flex flex-col gap-4 p-4 rounded-md overflow-y-scroll"
+      >
         <div className="flex justify-between text-slate-500 ">
           <h2 className="text-2xl ">Add New Address</h2>
           <button
@@ -77,13 +95,13 @@ const AddressForm = ({ setModal }) => {
                   />
                 )}
               />
-              <p className="text-red-500 px-2">{errors.firstname?.message}</p>
+              <p className="text-red-500 px-2">{errors.lastname?.message}</p>
             </div>
           </div>
 
           <div>
             <Controller
-              name="bname"
+              name="address"
               control={control}
               rules={{
                 required: "House Number or  Building Name is required",
@@ -96,7 +114,7 @@ const AddressForm = ({ setModal }) => {
                 />
               )}
             />
-            <p className="text-red-500 px-2">{errors.bname?.message}</p>
+            <p className="text-red-500 px-2">{errors.address?.message}</p>
           </div>
           <div>
             <Controller
@@ -136,7 +154,7 @@ const AddressForm = ({ setModal }) => {
           <div className="flex justify-between gap-2">
             <div className="basis-[100%]">
               <Controller
-                name="city"
+                name="cityDistrictTown"
                 control={control}
                 rules={{ required: "City is required" }}
                 render={({ field }) => (
@@ -147,7 +165,9 @@ const AddressForm = ({ setModal }) => {
                   />
                 )}
               />
-              <p className="text-red-500 px-2">{errors.city?.message}</p>
+              <p className="text-red-500 px-2">
+                {errors.cityDistrictTown?.message}
+              </p>
             </div>
 
             <div className="basis-[100%]">
@@ -165,6 +185,31 @@ const AddressForm = ({ setModal }) => {
                 )}
               />
               <p className="text-red-500 px-2">{errors.postalCode?.message}</p>
+            </div>
+          </div>
+          <div className="flex gap-2 justify-between">
+            <div className="basis-[100%]">
+              <CountryDropdown
+                id="country"
+                value={country}
+                onChange={(val) => setCountry(val)}
+                className="px-2 py-2 w-full rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+              />
+              <p className="text-red-500 px-2">
+                {country.length === 0 && "Country is Required"}
+              </p>
+            </div>
+            <div className="basis-[100%]">
+              <RegionDropdown
+                country={country}
+                value={region}
+                id="region"
+                onChange={(val) => setRegion(val)}
+                className="px-2 py-2 w-full rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+              />
+              <p className="text-red-500 px-2">
+                {region.length === 0 && "Region is Required"}
+              </p>
             </div>
           </div>
           <div>
@@ -195,28 +240,50 @@ const AddressForm = ({ setModal }) => {
               )}
             />
           </div>
+          <div>
+            <Controller
+              name="addressType"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Address type is required" }}
+              render={({ field }) => (
+                <select
+                  {...field}
+                  className="px-2 py-2 w-full rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+                >
+                  <option value="" disabled>
+                    Select an address type
+                  </option>
+                  <option value="home">Home</option>
+                  <option value="office">Office</option>
+                  <option value="work">Work</option>
+                </select>
+              )}
+            />
+            <p className="text-red-500 px-2">{errors.addressType?.message}</p>
+          </div>
           <div className="flex gap-2">
             <Controller
               name="defaultAddress"
               control={control}
               defaultValue={false}
-              render={({ field }) => <input type="checkbox" {...field} />}
+              render={({ field }) => (
+                <input type="checkbox" {...field} id="defaultAddress" />
+              )}
             />
-            <label htmlFor="defaultAddress">
-              Make this my default address:
-            </label>
+            <label htmlFor="defaultAddress">Make this my default address</label>
           </div>
 
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end gap-2 items-center">
             <button
-              type="cancel"
-              className="border-[1px] border-slate-500 px-2  py-1 rounded-md"
+              className="border-[1px] border-slate-500 px-2  py-2 rounded-md"
+              onClick={() => setModal(false)}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-red-500 active:bg-red-600 hover:bg-red-600 px-2 py-2 rounded-md text-white mb-2"
+              className="bg-red-500 active:bg-red-600  hover:bg-red-600 px-2 py-2 rounded-md text-white "
             >
               Submit
             </button>

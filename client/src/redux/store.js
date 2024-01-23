@@ -9,6 +9,7 @@ import cartReducer from "./slice/cartSlice";
 import { styleapi } from "./api/style/styleapi";
 import { productapi } from "./api/product/productapi";
 import { userapi } from "./api/user/userapi";
+import { addressapi } from "./api/address/addressapi";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     [styleapi.reducerPath]: styleapi.reducer,
     [productapi.reducerPath]: productapi.reducer,
     [userapi.reducerPath]: userapi.reducer,
+    [addressapi.reducerPath]: addressapi.reducer,
     auth: authReducer,
     dashboard: dashboardReducer,
     sort: sortReducer,
@@ -29,6 +31,7 @@ export const store = configureStore({
       categoryapi.middleware,
       styleapi.middleware,
       productapi.middleware,
-      userapi.middleware
+      userapi.middleware,
+      addressapi.middleware
     ),
 });

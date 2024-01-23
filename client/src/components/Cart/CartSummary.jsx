@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartTotal } from "../../redux/slice/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const CartSummary = ({ cartItems }) => {
   const { cartTotal, gst } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {
       const { product, quantity } = currentItem;
@@ -15,7 +17,10 @@ const CartSummary = ({ cartItems }) => {
   }, [cartItems, dispatch]);
   return (
     <div className="basis-[30%] flex flex-col">
-      <button className="hover:bg-[#298E83] bg-[#147D7B] py-2 rounded-md text-white">
+      <button
+        onClick={() => navigate("/user/delivery-address")}
+        className="hover:bg-[#298E83] bg-[#147D7B] py-2 rounded-md text-white"
+      >
         Place Order
       </button>
       <div className="flex flex-col gap-6 p-2 my-4">

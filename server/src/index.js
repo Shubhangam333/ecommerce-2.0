@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import catRoutes from "./routes/categoryRoutes.js";
 import styleRoutes from "./routes/styleRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import addressRoutes from "./routes/addressRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import errorHandler from "./middleware/errorHandling.js";
@@ -42,6 +43,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/category", catRoutes);
 app.use("/api/style", styleRoutes);
 app.use("/api/productRoutes", productRoutes);
+app.use("/api/address", addressRoutes);
 
 app.use(errorHandler);
 

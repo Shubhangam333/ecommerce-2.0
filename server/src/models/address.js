@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 
 export const addressSchema = new mongoose.Schema({
-  name: {
+  firstname: {
+    type: String,
+    required: true,
+    trim: true,
+    min: 3,
+    max: 50,
+  },
+  lastname: {
     type: String,
     required: true,
     trim: true,
@@ -13,7 +20,7 @@ export const addressSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  pinCode: {
+  postalCode: {
     type: String,
     required: true,
     trim: true,
@@ -40,6 +47,9 @@ export const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true,
+  },
+  country: {
+    type: String,
     required: true,
   },
   landmark: {
@@ -47,13 +57,18 @@ export const addressSchema = new mongoose.Schema({
     min: 10,
     max: 100,
   },
-  alternatePhone: {
-    type: String,
-  },
   addressType: {
     type: String,
     required: true,
-    enum: ["home", "work", "other"],
+    enum: ["home", "work", "office"],
+  },
+  defaultAddress: {
+    type: Boolean,
+    default: false,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });
