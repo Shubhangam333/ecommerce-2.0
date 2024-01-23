@@ -1,8 +1,5 @@
 import { toast } from "react-toastify";
-import {
-  useDeleteCartItemsMutation,
-  useGetCartItemsQuery,
-} from "../../redux/api/user/userapi";
+import { useDeleteCartItemsMutation } from "../../redux/api/user/userapi";
 import Loader from "../Loader/Loader";
 import CartItem from "./CartItem";
 

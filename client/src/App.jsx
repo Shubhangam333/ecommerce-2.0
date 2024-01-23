@@ -23,6 +23,7 @@ import ScrollToTop from "./components/Scroll/ScrollToTop";
 import PrivateRoute from "./pages/User/PrivateRoute";
 import Mainwishlist from "./components/Wishlist/Mainwishlist";
 import Cart from "./pages/Cart";
+import Address from "./pages/Address";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ function App() {
             >
               <Route path="mywishlist" element={<Mainwishlist />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="delivery-address" element={<Address />} />
             </Route>
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />

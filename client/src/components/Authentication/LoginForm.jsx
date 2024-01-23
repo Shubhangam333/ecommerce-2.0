@@ -20,18 +20,16 @@ const LoginForm = () => {
   } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    await loginUser(data).unwrap();
-    reset();
+    try {
+      await loginUser(data).unwrap();
+      reset();
+      toast.success("Login Successful");
+      dispatch(setUserId(data.userId));
+      navigate(-1);
+    } catch (error) {
+      toast.error(error.data.message);
+    }
   });
-
-  if (data) {
-    toast.success("Login Successful");
-    dispatch(setUserId(data.userId));
-    navigate(-1);
-  }
-  if (isError) {
-    toast.error(error.data.message);
-  }
 
   return (
     <form

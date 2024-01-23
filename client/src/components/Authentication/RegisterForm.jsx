@@ -7,8 +7,6 @@ const RegisterForm = () => {
   const [registerUser, { isLoading, isError, error, isSuccess }] =
     useRegisterMutation();
 
-  console.log(isError, isSuccess);
-
   const navigate = useNavigate();
 
   const {
@@ -21,16 +19,15 @@ const RegisterForm = () => {
   } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    await registerUser(data).unwrap();
-    reset();
+    try {
+      await registerUser(data).unwrap();
+      reset();
+      navigate("/auth/login");
+      toast.success("Registration Successful. Please login.");
+    } catch (error) {
+      toast.error("Something went wrong. Try Again later");
+    }
   });
-  if (isError) {
-    toast.error(error.data.message);
-  }
-  if (isSuccess) {
-    toast.success("Registration Successful. Please login.");
-    navigate("/auth/login");
-  }
 
   return (
     <form

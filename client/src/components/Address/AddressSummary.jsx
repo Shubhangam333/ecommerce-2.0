@@ -1,21 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCartTotal } from "../../redux/slice/cartSlice";
+import { useSelector } from "react-redux";
 
-const CartSummary = ({ cartItems }) => {
+const AddressSummary = () => {
   const { cartTotal, gst } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const totalPrice = cartItems.reduce((accumulator, currentItem) => {
-      const { product, quantity } = currentItem;
-      const itemPrice = product.price * quantity;
-      return accumulator + itemPrice;
-    }, 0);
-    dispatch(setCartTotal(totalPrice));
-  }, [cartItems, dispatch]);
+
   return (
     <div className="basis-[30%] flex flex-col">
-      <button className="hover:bg-[#298E83] bg-[#147D7B] py-2 rounded-md text-white">
+      <button className="hover:bg-[#298E83] active:bg-[#298E83] active:scale-95 bg-[#147D7B] py-2 rounded-md text-white">
         Place Order
       </button>
       <div className="flex flex-col gap-6 p-2 my-4">
@@ -43,4 +33,4 @@ const CartSummary = ({ cartItems }) => {
   );
 };
 
-export default CartSummary;
+export default AddressSummary;

@@ -5,6 +5,7 @@ import { categoryapi } from "./api/category/categoryapi";
 import authReducer from "./slice/authSlice";
 import dashboardReducer from "./slice/dashboardSlice";
 import sortReducer from "./slice/sortSlice";
+import cartReducer from "./slice/cartSlice";
 import { styleapi } from "./api/style/styleapi";
 import { productapi } from "./api/product/productapi";
 import { userapi } from "./api/user/userapi";
@@ -19,6 +20,7 @@ export const store = configureStore({
     auth: authReducer,
     dashboard: dashboardReducer,
     sort: sortReducer,
+    cart: cartReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
