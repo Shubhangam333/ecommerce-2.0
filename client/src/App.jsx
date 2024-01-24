@@ -5,12 +5,7 @@ import Categorypage from "./pages/Categorypage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useGetProfileQuery } from "./redux/api/auth/authapi";
-import {
-  setUser,
-  removeUser,
-  setUserId,
-  removeUserId,
-} from "./redux/slice/authSlice";
+import { setUser, removeUser } from "./redux/slice/authSlice";
 import Dashboardpage from "./pages/Admin/Dashboardpage";
 import CreateProduct from "./components/Admin/Products/CreateProduct";
 import ProductDashboard from "./components/Admin/Products/ProductDashboard";
@@ -24,6 +19,8 @@ import PrivateRoute from "./pages/User/PrivateRoute";
 import Mainwishlist from "./components/Wishlist/Mainwishlist";
 import Cart from "./pages/Cart";
 import Address from "./pages/Address";
+import Loader from "./components/Loader/Loader";
+import CheckOutContainer from "./components/Checkout/CheckOutContainer";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +49,7 @@ function App() {
   return (
     <>
       {isFetching ? (
-        <h1>Loading</h1>
+        <Loader />
       ) : (
         <>
           <ScrollToTop />
@@ -76,6 +73,7 @@ function App() {
               <Route path="mywishlist" element={<Mainwishlist />} />
               <Route path="cart" element={<Cart />} />
               <Route path="delivery-address" element={<Address />} />
+              <Route path="checkout" element={<CheckOutContainer />} />
             </Route>
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />

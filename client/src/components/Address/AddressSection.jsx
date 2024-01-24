@@ -6,27 +6,30 @@ import {
 } from "../../redux/api/address/addressapi";
 import AddressCard from "./AddressCard";
 import { toast } from "react-toastify";
+import Loader from "../Loader/Loader";
 
 const AddressSection = () => {
   const [modal, setModal] = useState(false);
-  const { data } = useGetAllAddressQuery();
+  const { data, isLoading } = useGetAllAddressQuery();
   const [deleteAddress] = useDeleteAddressMutation();
 
   const handleDeleteAddress = async (id) => {
     try {
       const res = await deleteAddress(id).unwrap();
-      toast.success(res.message);
+      if (res) {
+        toast.success(res.message);
+      }
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
 
-  console.log("d", data);
   return (
     <section className="basis-[60%] flex flex-col gap-2 items-start">
       <h1 className="text-lg">Delivery To</h1>
       <div className="flex items-center justify-between w-full">
         <div className="basis-[100%] flex flex-col gap-4">
+          {isLoading && <Loader />}
           {data &&
             data.map((address) => (
               <AddressCard

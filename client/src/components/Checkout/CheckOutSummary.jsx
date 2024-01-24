@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartTotal } from "../../redux/slice/cartSlice";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
-const CartSummary = ({ cartItems }) => {
+const CheckOutSummary = ({ cartItems }) => {
   const { cartTotal, gst } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {
       const { product, quantity } = currentItem;
@@ -17,24 +14,10 @@ const CartSummary = ({ cartItems }) => {
     dispatch(setCartTotal(totalPrice));
   }, [cartItems, dispatch]);
 
-  const handleClick = () => {
-    if (cartItems.length !== 0) {
-      navigate("/user/delivery-address");
-    } else {
-      toast.error("Please add Items to cart");
-    }
-  };
-
   return (
-    <div className="basis-[30%] flex flex-col">
-      <button
-        onClick={handleClick}
-        className="hover:bg-[#298E83] bg-[#147D7B] py-2 rounded-md text-white"
-      >
-        Place Order
-      </button>
+    <div className="basis-[40%] flex flex-col">
       <div className="flex flex-col gap-6 p-2 my-4">
-        <h2>Billing Details</h2>
+        <h2 className="text-xl font-extrabold">Billing Details</h2>
         <div className="flex flex-col gap-2 px-4 ">
           <div className="flex justify-between">
             <span className="text-lg font-light">Cart Total</span>
@@ -54,8 +37,11 @@ const CartSummary = ({ cartItems }) => {
           </div>
         </div>
       </div>
+      <button className="hover:bg-[#298E83] active:bg-[#298E83] active:scale-95 bg-[#147D7B] py-2 rounded-md text-white">
+        Proceed to Payment
+      </button>
     </div>
   );
 };
 
-export default CartSummary;
+export default CheckOutSummary;

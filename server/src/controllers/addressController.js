@@ -40,7 +40,7 @@ export const deleteAddressById = async (req, res, next) => {
 
   if (!user) {
     await Address.deleteOne({ _id: addressId });
-    return;
+    return res.status(200).json({ message: "Address Removed from Profile" });
   }
 
   if (isDefault) {
