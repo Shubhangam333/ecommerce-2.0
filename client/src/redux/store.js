@@ -10,6 +10,8 @@ import { styleapi } from "./api/style/styleapi";
 import { productapi } from "./api/product/productapi";
 import { userapi } from "./api/user/userapi";
 import { addressapi } from "./api/address/addressapi";
+import { paymentapi } from "./api/payment/paymentapi";
+import { orderapi } from "./api/order/orderapi";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +21,8 @@ export const store = configureStore({
     [productapi.reducerPath]: productapi.reducer,
     [userapi.reducerPath]: userapi.reducer,
     [addressapi.reducerPath]: addressapi.reducer,
+    [paymentapi.reducerPath]: paymentapi.reducer,
+    [orderapi.reducerPath]: orderapi.reducer,
     auth: authReducer,
     dashboard: dashboardReducer,
     sort: sortReducer,
@@ -32,6 +36,8 @@ export const store = configureStore({
       styleapi.middleware,
       productapi.middleware,
       userapi.middleware,
-      addressapi.middleware
+      addressapi.middleware,
+      paymentapi.middleware,
+      orderapi.middleware
     ),
 });

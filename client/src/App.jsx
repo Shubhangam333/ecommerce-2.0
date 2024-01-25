@@ -21,10 +21,11 @@ import Cart from "./pages/Cart";
 import Address from "./pages/Address";
 import Loader from "./components/Loader/Loader";
 import CheckOutContainer from "./components/Checkout/CheckOutContainer";
+import Payment from "./components/Payment/Payment";
 
 function App() {
   const dispatch = useDispatch();
-  const { userId } = useSelector((state) => state.auth);
+  const { userId, section } = useSelector((state) => state.auth);
 
   const {
     data: user,
@@ -43,8 +44,6 @@ function App() {
       dispatch(removeUser());
     }
   }, [error, dispatch]);
-
-  const { section } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -74,6 +73,8 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="delivery-address" element={<Address />} />
               <Route path="checkout" element={<CheckOutContainer />} />
+              <Route path="success" element={<Payment />} />
+              <Route path="cancel" element={<Payment />} />
             </Route>
             <Route path="/admin/dashboard" element={<Dashboardpage />}>
               <Route path="create-product" element={<CreateProduct />} />

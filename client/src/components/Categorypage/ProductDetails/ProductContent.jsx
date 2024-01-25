@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { BsClockHistory } from "react-icons/bs";
@@ -8,6 +8,7 @@ import {
   useAddToWishListMutation,
 } from "../../../redux/api/user/userapi";
 import { toast } from "react-toastify";
+import { setCartItems } from "../../../redux/slice/cartSlice";
 
 const ProductContent = ({ product }) => {
   const { section } = useSelector((state) => state.auth);
@@ -16,6 +17,7 @@ const ProductContent = ({ product }) => {
   const { user } = useSelector((state) => state.auth);
   const [addItemstoCart] = useAddToCartMutation();
   const [addItemstoWishList] = useAddToWishListMutation();
+  const dispatch = useDispatch();
 
   const isSizeAvailable = () => {
     const selectedItem = product.sizes.find(
@@ -66,7 +68,10 @@ const ProductContent = ({ product }) => {
         quantity,
         sizeType: selectedSize,
       }).unwrap();
-      toast.success(res.msg);
+      if (res) {
+        toast.success(res.msg);
+        dispatch(setCartItems(res.cartItems));
+      }
     } catch (error) {
       toast.error("Something went wrong.");
     }

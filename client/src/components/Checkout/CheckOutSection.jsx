@@ -1,7 +1,3 @@
-import { useSelector } from "react-redux";
-import { useGetProfileQuery } from "../../redux/api/auth/authapi";
-import { useGetCartItemsQuery } from "../../redux/api/user/userapi";
-import Loader from "../Loader/Loader";
 import CheckOutItemCard from "./CheckOutItemCard";
 
 const CheckOutSection = ({ cartItems }) => {

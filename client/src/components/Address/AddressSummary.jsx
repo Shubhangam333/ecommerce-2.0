@@ -2,17 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useGetAllAddressQuery } from "../../redux/api/address/addressapi";
-import Loader from "../Loader/Loader";
-import { useGetCartItemsQuery } from "../../redux/api/user/userapi";
 import { useEffect } from "react";
 import { setCartTotal } from "../../redux/slice/cartSlice";
 
 const AddressSummary = () => {
-  const { cartTotal, gst } = useSelector((state) => state.cart);
+  const { cartTotal, gst, cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data } = useGetAllAddressQuery();
-  const { data: cartItems, isLoading } = useGetCartItemsQuery();
 
   const handleClick = () => {
     if (data.length !== 0) {
@@ -23,14 +20,11 @@ const AddressSummary = () => {
   };
 
   useEffect(() => {
-    const totalPrice = cartItems.cartItems.reduce(
-      (accumulator, currentItem) => {
-        const { product, quantity } = currentItem;
-        const itemPrice = product.price * quantity;
-        return accumulator + itemPrice;
-      },
-      0
-    );
+    const totalPrice = cartItems.reduce((accumulator, currentItem) => {
+      const { product, quantity } = currentItem;
+      const itemPrice = product.price * quantity;
+      return accumulator + itemPrice;
+    }, 0);
     dispatch(setCartTotal(totalPrice));
   }, [cartItems, dispatch]);
 

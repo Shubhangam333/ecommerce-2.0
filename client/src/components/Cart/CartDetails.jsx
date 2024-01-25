@@ -1,10 +1,18 @@
+import { useEffect } from "react";
 import { useGetCartItemsQuery } from "../../redux/api/user/userapi";
 import Loader from "../Loader/Loader";
 import CartSection from "./CartSection";
 import CartSummary from "./CartSummary";
+import { useDispatch } from "react-redux";
+import { setCartItems } from "../../redux/slice/cartSlice";
 
 const CartDetails = () => {
   const { data, isLoading } = useGetCartItemsQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setCartItems(data.cartItems));
+  }, [dispatch, data.cartItems, data]);
   if (isLoading) {
     return <Loader />;
   }

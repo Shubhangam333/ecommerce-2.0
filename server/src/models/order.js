@@ -62,6 +62,7 @@ const orderSchema = new mongoose.Schema(
         },
         date: {
           type: Date,
+          default: Date.now(),
         },
         isCompleted: {
           type: Boolean,

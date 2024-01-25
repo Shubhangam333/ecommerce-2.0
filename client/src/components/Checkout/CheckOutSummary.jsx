@@ -1,10 +1,31 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCartTotal } from "../../redux/slice/cartSlice";
+import { loadStripe } from "@stripe/stripe-js";
+import { useCreatePaymentMutation } from "../../redux/api/payment/paymentapi";
+import Loader from "../Loader/Loader";
+import { toast } from "react-toastify";
 
-const CheckOutSummary = ({ cartItems }) => {
-  const { cartTotal, gst } = useSelector((state) => state.cart);
+const CheckOutSummary = ({ cartItems, cartTotal, gst }) => {
+  const [processPayment, { isLoading }] = useCreatePaymentMutation();
+
   const dispatch = useDispatch();
+
+  const makePayment = async () => {
+    const publishablekey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+    const stripe = await loadStripe(publishablekey);
+    try {
+      const res = await processPayment({ cartItems }).unwrap();
+      if (res) {
+        stripe.redirectToCheckout({
+          sessionId: res.id,
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  };
+
   useEffect(() => {
     const totalPrice = cartItems.reduce((accumulator, currentItem) => {
       const { product, quantity } = currentItem;
@@ -37,8 +58,11 @@ const CheckOutSummary = ({ cartItems }) => {
           </div>
         </div>
       </div>
-      <button className="hover:bg-[#298E83] active:bg-[#298E83] active:scale-95 bg-[#147D7B] py-2 rounded-md text-white">
-        Proceed to Payment
+      <button
+        onClick={makePayment}
+        className="hover:bg-[#298E83] active:bg-[#298E83] active:scale-95 bg-[#147D7B] py-2 rounded-md text-white"
+      >
+        Proceed to Payment {isLoading && <Loader />}
       </button>
     </div>
   );

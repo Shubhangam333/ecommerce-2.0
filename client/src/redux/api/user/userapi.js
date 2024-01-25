@@ -13,6 +13,13 @@ export const userapi = createApi({
       }),
       invalidatesTags: ["cartItems"],
     }),
+    emptyCart: builder.mutation({
+      query: () => ({
+        url: "/emptycart",
+        method: "POST",
+      }),
+      invalidatesTags: ["cartItems"],
+    }),
     getCartItems: builder.query({
       query: () => ({
         url: "/getCartItems",
@@ -59,4 +66,5 @@ export const {
   useGetWishListItemsQuery,
   useDeleteCartItemsMutation,
   useDeleteWishListItemsMutation,
+  useEmptyCartMutation,
 } = userapi;

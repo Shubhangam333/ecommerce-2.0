@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddressForm from "./AddressForm";
 import {
   useDeleteAddressMutation,
@@ -7,11 +7,20 @@ import {
 import AddressCard from "./AddressCard";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { setCartAddress } from "../../redux/slice/cartSlice";
 
 const AddressSection = () => {
   const [modal, setModal] = useState(false);
   const { data, isLoading } = useGetAllAddressQuery();
   const [deleteAddress] = useDeleteAddressMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setCartAddress(data[0]));
+    }
+  }, [dispatch, data]);
 
   const handleDeleteAddress = async (id) => {
     try {

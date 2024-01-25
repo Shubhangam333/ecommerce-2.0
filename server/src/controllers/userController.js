@@ -1,6 +1,5 @@
 import CustomError from "../errors/CustomError.js";
 import { User } from "../models/user.js";
-import { ObjectId } from "mongodb";
 
 export const profile = async (req, res) => {
   if (!req.params.userId) {
@@ -40,7 +39,22 @@ export const addToCart = async (req, res, next) => {
 
   await user.save();
 
-  res.status(200).json({ msg: "Product Added to cart" });
+  res
+    .status(200)
+    .json({ msg: "Product Added to cart", cartItems: user.cartItems });
+};
+
+export const removeCartItems = async (req, res) => {
+  const result = await User.updateOne(
+    { _id: req.user._id },
+    { $unset: { cartItems: 1 } }
+  );
+
+  if (!result) {
+    throw new CustomError(500, "Something went wrong. Try again later");
+  }
+
+  res.status(200).json({ message: "Item removed from cart" });
 };
 
 export const getAllCartItems = async (req, res, next) => {
