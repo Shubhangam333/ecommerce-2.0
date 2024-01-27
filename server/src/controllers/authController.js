@@ -40,3 +40,14 @@ export const login = async (req, res, next) => {
 
   res.status(200).json({ userId: user._id });
 };
+
+export const logout = async (req, res) => {
+  const options = {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  };
+  res.status(200).cookie("auth_token", null, options).json({
+    success: true,
+    message: "Logout Successful",
+  });
+};

@@ -52,7 +52,7 @@ export const deleteAddressById = async (req, res, next) => {
     if (otherAddress) {
       await User.findByIdAndUpdate(req.user._id, { address: otherAddress._id });
     } else {
-      await User.findByIdAndUpdate(req.user._id, { address: null });
+      await User.findByIdAndUpdate(req.user._id, { $unset: { address: 1 } });
     }
   }
 

@@ -30,7 +30,9 @@ const Pagination = ({ currentPage, pages }) => {
         <button
           key={idx + 1}
           onClick={() => dispatch(setCurrentPage(idx + 1))}
-          className="bg-red-500 px-4 py-1 text-white rounded-md"
+          className={`border-red-500 border-[1px] px-4 py-1 text-red-500 rounded-md ${
+            currentPage === idx + 1 ? "bg-red-500 text-white" : ""
+          }`}
         >
           {idx + 1}
         </button>

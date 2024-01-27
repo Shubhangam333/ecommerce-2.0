@@ -11,8 +11,10 @@ const CartDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCartItems(data.cartItems));
-  }, [dispatch, data.cartItems, data]);
+    if (data) {
+      dispatch(setCartItems(data.cartItems));
+    }
+  }, [dispatch, data]);
   if (isLoading) {
     return <Loader />;
   }

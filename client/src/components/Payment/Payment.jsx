@@ -43,6 +43,7 @@ const Payment = () => {
         paymentStatus: res.status === "paid" ? "completed" : "cancelled",
         paymentType: "card",
         address: cartAddress,
+        orderStatus: [{ type: "ordered" }],
       };
       if (res) {
         const orderes = await createOrder(orderData).unwrap();

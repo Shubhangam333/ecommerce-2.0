@@ -11,7 +11,23 @@ export const orderapi = createApi({
         body: data,
       }),
     }),
+    getOrderByUserId: builder.query({
+      query: (userId) => ({
+        url: `/${userId}`,
+        method: "GET",
+      }),
+    }),
+    getOrderByOrderId: builder.mutation({
+      query: (orderId) => ({
+        url: `/${orderId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useCreateOrderMutation } = orderapi;
+export const {
+  useCreateOrderMutation,
+  useGetOrderByUserIdQuery,
+  useGetOrderByOrderIdMutation,
+} = orderapi;

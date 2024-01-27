@@ -4,13 +4,10 @@ import {
   AiOutlineSortDescending,
 } from "react-icons/ai";
 import { useFilters, usePagination, useSortBy, useTable } from "react-table";
-import CategoryHeader from "./Category/CategoryHeader";
-import { MdDelete } from "react-icons/md";
-import StyleHeader from "./Style/StyleHeader";
-import ProductHeader from "./Products/ProductHeader";
-import OrderHeader from "../Profile/OrderHeader";
+import OrderHeader from "./OrderHeader";
+import { Link } from "react-router-dom";
 
-const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
+const UserOrderTable = ({ columns, data, tableFor }) => {
   const options = {
     columns,
     data,
@@ -40,30 +37,12 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
 
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
-    setFilter("title", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
+    setFilter("totalAmount", value);
     setFilterInput(value);
   };
 
   return (
     <div className="flex flex-col gap-4">
-      {tableFor === "categories" && (
-        <CategoryHeader
-          filterInput={filterInput}
-          handleFilterChange={handleFilterChange}
-        />
-      )}
-      {tableFor === "styles" && (
-        <StyleHeader
-          filterInput={filterInput}
-          handleFilterChange={handleFilterChange}
-        />
-      )}
-      {tableFor === "products" && (
-        <ProductHeader
-          filterInput={filterInput}
-          handleFilterChange={handleFilterChange}
-        />
-      )}
       {tableFor === "userorders" && (
         <OrderHeader
           filterInput={filterInput}
@@ -71,11 +50,11 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
         />
       )}
 
-      <h2 className="text-3xl font-bold text-[#E11B23] capitalize">
+      <h2 className="text-lg font-bold text-[#E11B23] capitalize">
         {tableFor}
       </h2>
 
-      <table {...getTableProps()} className="basis-[80%]">
+      <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, index) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={index}>
@@ -97,7 +76,7 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                   )}
                 </th>
               ))}
-              <th>Delete</th>
+              <th>View Order</th>
             </tr>
           ))}
         </thead>
@@ -113,14 +92,12 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                   </td>
                 ))}
                 <td>
-                  {tableFor !== "userorders" && (
-                    <button
-                      className="text-red-600"
-                      onClick={() => handleDeleteItem(row.cells[0].value)}
-                    >
-                      <MdDelete />
-                    </button>
-                  )}
+                  <Link
+                    to={`/user/order/${row.cells[0].value}`}
+                    className="text-red-600"
+                  >
+                    View Order Details
+                  </Link>
                 </td>
               </tr>
             );
@@ -151,4 +128,4 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   );
 };
 
-export default Table;
+export default UserOrderTable;

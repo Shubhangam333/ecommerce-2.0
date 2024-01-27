@@ -22,22 +22,25 @@ import Address from "./pages/Address";
 import Loader from "./components/Loader/Loader";
 import CheckOutContainer from "./components/Checkout/CheckOutContainer";
 import Payment from "./components/Payment/Payment";
+import Profile from "./pages/User/Profile";
+import OrderDetails from "./components/Profile/OrderInfo/OrderDetails";
+import Orders from "./pages/User/Orders";
 
 function App() {
   const dispatch = useDispatch();
-  const { userId, section } = useSelector((state) => state.auth);
+  const { userId, section, user } = useSelector((state) => state.auth);
 
   const {
-    data: user,
+    data: userinfo,
     error,
     isFetching,
   } = useGetProfileQuery(userId, { pollingInterval: 900000 });
 
   useEffect(() => {
-    if (user) {
-      dispatch(setUser(user));
+    if (userinfo) {
+      dispatch(setUser(userinfo));
     }
-  }, [user, dispatch]);
+  }, [userinfo, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -69,6 +72,9 @@ function App() {
               path="/user"
               element={<PrivateRoute isAuthenticated={user ? true : false} />}
             >
+              <Route path="profile" element={<Profile />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="order/:orderId" element={<OrderDetails />} />
               <Route path="mywishlist" element={<Mainwishlist />} />
               <Route path="cart" element={<Cart />} />
               <Route path="delivery-address" element={<Address />} />

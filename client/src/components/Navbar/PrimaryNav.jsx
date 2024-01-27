@@ -15,9 +15,9 @@ import {
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const { data: categoryList } = useGetAllCategoriesWithSubCatQuery();
   const { data: wishList } = useGetWishListItemsQuery();
-  const { data } = useGetCartItemsQuery();
 
   const navbar = useRef();
 
@@ -88,10 +88,23 @@ const PrimaryNav = ({ setSecondaryNav }) => {
             </li>
           ))}
       </ul>
-      <div className="button-container flex items-center md:gap-4 order-2 md:order-2">
+      <div className="button-container flex items-center md:gap-4 order-2 md:order-2 h-full">
         {user ? (
-          <Link className="text-2xl flex items-center">
-            <FaRegUser />{" "}
+          <Link className="text-2xl flex items-center relative navItem h-full">
+            <FaRegUser />
+            <ul
+              key="1"
+              className="absolute dropdown-menu w-max left-[-80%] top-[110%] z-[1000] bg-white p-4 hidden transition-all font-light text-md "
+            >
+              <li className="text-sm font-bold">
+                <Link
+                  to="/user/profile"
+                  className="hover:text-red-600 text-slate-700"
+                >
+                  Profile
+                </Link>
+              </li>
+            </ul>
           </Link>
         ) : (
           <Link className="text-4xl flex items-center" to="/auth/login">
@@ -113,9 +126,9 @@ const PrimaryNav = ({ setSecondaryNav }) => {
         </Link>
         <Link className="text-3xl flex items-center relative" to="/user/cart">
           <IoBagHandleOutline />
-          {data && data.cartItems && data.cartItems.length > 0 && (
+          {cartItems.length > 0 && (
             <span className="absolute text-sm font-bold rounded-full right-[-4px] top-[-2px]  text-white bg-red-500  h-4 w-4 flex items-center justify-center">
-              {data.cartItems.length}
+              {cartItems.length}
             </span>
           )}
         </Link>

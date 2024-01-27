@@ -54,7 +54,7 @@ const Productsection = ({ categoryId }) => {
         {products.map((product) => (
           <Productcard key={product._id} product={product} />
         ))}
-        <Pagination pages={pages} currentPage={currentPage} />
+        {pages > 1 && <Pagination pages={pages} currentPage={currentPage} />}
       </section>
     </>
   );
