@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    section: { type: String, enum: ["Men", "Women", "Kids"] },
+    section: { type: String, enum: ["men", "women", "kids"] },
     sizes: [
       {
         sizeType: {
@@ -41,7 +41,16 @@ const productSchema = new mongoose.Schema(
     reviews: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        title: String,
         review: String,
+        ratings: {
+          type: Number,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now(),
+        },
       },
     ],
     category: {

@@ -175,3 +175,55 @@ export const getProductsBySubCategoryId = async (req, res, next) => {
 
   res.status(200).json({ productCount, products, pages });
 };
+
+export const addReviewToProduct = async (req, res) => {
+  const { productId, userId, title, review, ratings } = req.body;
+
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    throw new CustomError(400, "Product does not exist.");
+  }
+
+  const newReview = {
+    userId,
+    title,
+    review,
+    ratings,
+  };
+
+  product.reviews.push(newReview);
+
+  const totalRatings = product.reviews.reduce(
+    (sum, review) => sum + review.ratings,
+    0
+  );
+  const averageRating = totalRatings / product.reviews.length;
+
+  product.rating = averageRating;
+
+  await product.save();
+
+  res.status(200).json({ message: "Product Review Created" });
+};
+
+export const getAllProductReviews = async (req, res, next) => {
+  const { productId } = req.params;
+
+  const product = await Product.findById(productId)
+    .populate({
+      path: "reviews.userId",
+      model: "User",
+      select: "firstName",
+    })
+    .sort({ "reviews.createdAt": "desc" })
+    .exec();
+
+  if (!product) {
+    throw new CustomError(400, "No Product exist with this Id");
+  }
+
+  const reviews = product.reviews;
+
+  res.status(200).json(reviews);
+};

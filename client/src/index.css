@@ -242,3 +242,6 @@ table th {
 .answer-container {
   transition: height 0.7s ease-in-out;
 }
+svg.star-svg {
+  display: inline;
+}
