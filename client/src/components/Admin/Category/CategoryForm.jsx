@@ -2,10 +2,12 @@ import { useForm, Controller } from "react-hook-form";
 import {
   useCreateCategoryMutation,
   useGetAllParentCategoriesQuery,
+  useUpdateCategoryMutation,
 } from "../../../redux/api/category/categoryapi";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-const CategoryForm = () => {
+const CategoryForm = ({ isEditable }) => {
   const {
     handleSubmit,
     control,
@@ -14,8 +16,13 @@ const CategoryForm = () => {
     reset,
   } = useForm();
 
-  const [postCategory, { data: cat }] = useCreateCategoryMutation();
+  const [postCategory] = useCreateCategoryMutation();
+  const [updateCategory, { data: updatedcat }] = useUpdateCategoryMutation();
   const { data } = useGetAllParentCategoriesQuery();
+
+  const { catId } = useParams();
+
+  console.log("i", isEditable);
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -34,11 +41,22 @@ const CategoryForm = () => {
       // const imageDetails = getValues("categoryDetails");
       const formData = { ...data };
       console.log(formData);
+      if (!isEditable) {
+        const res = await postCategory(formData).unwrap();
 
-      const res = await postCategory(formData).unwrap();
-      if (res) {
-        toast.success("category created successfully");
-        reset();
+        if (res) {
+          toast.success("category created successfully");
+          reset();
+        }
+      }
+      if (isEditable) {
+        const formData = { categoryId: catId, ...data };
+        const res = await updateCategory(formData).unwrap();
+
+        if (res) {
+          toast.success("category updated successfully");
+          reset();
+        }
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again later");

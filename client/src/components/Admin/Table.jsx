@@ -9,6 +9,7 @@ import { MdDelete } from "react-icons/md";
 import StyleHeader from "./Style/StyleHeader";
 import ProductHeader from "./Products/ProductHeader";
 import OrderHeader from "../Profile/OrderHeader";
+import { Link } from "react-router-dom";
 
 const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   const options = {
@@ -112,7 +113,7 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                     {cell.render("Cell")}
                   </td>
                 ))}
-                <td>
+                <td className="flex gap-2 text-sm">
                   {tableFor !== "userorders" && (
                     <button
                       className="text-red-600"
@@ -120,6 +121,14 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                     >
                       <MdDelete />
                     </button>
+                  )}
+                  {tableFor === "categories" && (
+                    <Link
+                      to={`/admin/dashboard/edit-category/${row.cells[0].value}`}
+                      className="bg-red-500 text-white px-2 rounded-lg"
+                    >
+                      Edit
+                    </Link>
                   )}
                 </td>
               </tr>

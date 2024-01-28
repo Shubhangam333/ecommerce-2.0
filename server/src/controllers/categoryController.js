@@ -33,6 +33,44 @@ export const createCategory = async (req, res, next) => {
   res.status(200).json({ category, msg: "Category created" });
 };
 
+export const updateCategory = async (req, res, next) => {
+  const { categoryId, title, catImage, parent_category } = req.body;
+
+  const updatedData = {
+    title,
+    slug: title.toLowerCase().split(" ").join("-"),
+    modifiedBy: req.user._id,
+  };
+
+  if (parent_category) {
+    updatedData.parentId = parent_category;
+  }
+
+  let imageData = {};
+  if (catImage) {
+    const myCloud = await cloudinary.uploader.upload(catImage, {
+      folder: "ecommerce_category",
+      crop: "scale",
+    });
+    imageData.public_id = myCloud.public_id;
+    imageData.url = myCloud.secure_url;
+
+    updatedData.categoryImage = imageData;
+  }
+
+  const updatedCategory = await Category.findByIdAndUpdate(
+    categoryId,
+    updatedData,
+    { new: true }
+  );
+
+  if (!updatedCategory) {
+    throw new CustomError(404, "Category Not found");
+  }
+
+  res.status(200).json({ message: "Category Updated Successfully" });
+};
+
 export const getAllCategories = async (req, res, next) => {
   const categories = await Category.find()
     .populate("createdBy", "firstName")

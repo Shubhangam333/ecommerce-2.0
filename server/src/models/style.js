@@ -23,7 +23,7 @@ const styleSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    section: { type: String, enum: ["Men", "Women", "Kids"] },
+    section: { type: String, enum: ["men", "women", "kids"] },
     updatedAt: Date,
   },
   { timestamps: true }

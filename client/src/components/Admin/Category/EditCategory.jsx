@@ -1,11 +1,11 @@
 import CategoryForm from "./CategoryForm";
 
-const CreateCategory = () => {
+const EditCategory = () => {
   return (
     <section className="p-4 min-h-screen">
-      <CategoryForm isEditable={false} />
+      <CategoryForm isEditable={true} />
     </section>
   );
 };
 
-export default CreateCategory;
+export default EditCategory;

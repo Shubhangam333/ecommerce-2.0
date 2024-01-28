@@ -34,7 +34,7 @@ const Category = () => {
         <>
           {data && (
             <>
-              <Categoryheader />
+              <Categoryheader categoryImg={data.categoryImage.url} />
               <Categorynavsection title={data.title} />
               <Mainsection categoryId={data._id} />
             </>

@@ -1,4 +1,3 @@
-import { Rating } from "react-simple-star-rating";
 import StarRatings from "react-star-ratings";
 
 const ReviewCard = ({ review }) => {
@@ -16,7 +15,7 @@ const ReviewCard = ({ review }) => {
           rating={review.rating}
           starDimension="20px"
           starSpacing="4px"
-          starRatedColor="#FFFF00"
+          starRatedColor="red"
         />
         <p className="font-bold text-xl">{review.title}</p>
         <p className="text-lg">{review.review}</p>

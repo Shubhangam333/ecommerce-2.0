@@ -10,6 +10,7 @@ import {
   getSubCategoriesByParentCategoryId,
   getCategoryWithSubCategories,
   getCategoryBySlug,
+  updateCategory,
 } from "../controllers/categoryController.js";
 
 const router = express.Router();
@@ -17,6 +18,9 @@ const router = express.Router();
 router
   .route("/createCategory")
   .post(isAuthenticated, isAdmin, upload.single("catImage"), createCategory);
+router
+  .route("/updateCategory")
+  .post(isAuthenticated, isAdmin, upload.single("catImage"), updateCategory);
 router.route("/categories").get(isAuthenticated, isAdmin, getAllCategories);
 router.route("/:id").delete(isAuthenticated, isAdmin, deleteCategoryById);
 router

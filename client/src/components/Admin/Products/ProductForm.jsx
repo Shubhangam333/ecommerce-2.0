@@ -101,10 +101,7 @@ const ProductForm = () => {
         rules={{ required: "Description is required" }}
         render={({ field }) => (
           <>
-            <ReactQuill
-              {...field}
-              theme="snow" // or use another theme as per your preference
-            />
+            <ReactQuill {...field} theme="snow" />
             {errors.description && (
               <p className="text-red-500 px-2">{errors.description.message}</p>
             )}

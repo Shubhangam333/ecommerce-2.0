@@ -2,7 +2,7 @@ import CustomError from "../errors/CustomError.js";
 import { Style } from "../models/style.js";
 
 export const createStyle = async (req, res, next) => {
-  const { title, parent_category, sub_category } = req.body;
+  const { title, parent_category, sub_category, section } = req.body;
 
   const slug = title.toLowerCase().split(" ").join("-");
 
@@ -11,6 +11,7 @@ export const createStyle = async (req, res, next) => {
     slug,
     category: parent_category,
     subCategory: sub_category,
+    section,
     createdBy: req.user._id,
   };
   const style = new Style(styleData);
