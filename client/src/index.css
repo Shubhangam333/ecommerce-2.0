@@ -245,3 +245,10 @@ table th {
 svg.star-svg {
   display: inline;
 }
+
+.address-card {
+  padding: 1rem;
+  border: 1px solid #147d7b;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

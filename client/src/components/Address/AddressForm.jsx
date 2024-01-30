@@ -4,12 +4,15 @@ import { Controller, useForm } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 import { useCreateAddressMutation } from "../../redux/api/address/addressapi";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCartAddress } from "../../redux/slice/cartSlice";
 
 const AddressForm = ({ setModal }) => {
   const [country, setCountry] = useState("");
   const [region, setRegion] = useState("");
   const addressRef = useRef();
   const [createAddress, { isLoading }] = useCreateAddressMutation();
+  const dispatch = useDispatch();
 
   const {
     control,
@@ -24,8 +27,15 @@ const AddressForm = ({ setModal }) => {
       return;
     }
     try {
-      await createAddress({ ...data, country, state: region }).unwrap();
+      const res = await createAddress({
+        ...data,
+        country,
+        state: region,
+      }).unwrap();
       reset();
+      if (res.address.defaultAddress) {
+        dispatch(setCartAddress(res.address));
+      }
       setModal(false);
       toast.success("Address Created");
     } catch (error) {

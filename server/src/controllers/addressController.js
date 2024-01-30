@@ -18,7 +18,7 @@ export const createAddress = async (req, res) => {
     await user.save();
   }
 
-  res.status(200).json({ message: "Address Created" });
+  res.status(200).json({ message: "Address Created", address });
 };
 
 export const getUserAddress = async (req, res) => {
@@ -58,4 +58,36 @@ export const deleteAddressById = async (req, res, next) => {
 
   await Address.deleteOne({ _id: addressId });
   res.status(200).json({ message: "Address Removed" });
+};
+
+export const updateDefaultAddress = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const addressId = req.params.addressId;
+  if (!user) {
+    throw new CustomError(404, "User not found");
+  }
+
+  // Find and update the default address in Address schema
+  const updatedAddress = await Address.findByIdAndUpdate(
+    addressId,
+    { defaultAddress: true },
+    { new: true }
+  );
+
+  if (!updatedAddress) {
+    throw new CustomError(404, "Address not found");
+  }
+
+  user.address = updatedAddress._id;
+
+  await Address.updateMany(
+    { user: req.user._id, _id: { $ne: addressId } },
+    { defaultAddress: false }
+  );
+
+  await user.save();
+
+  res
+    .status(200)
+    .json({ message: "Default address updated successfully", updatedAddress });
 };

@@ -20,6 +20,13 @@ export const addressapi = createApi({
       }),
       invalidatesTags: ["address"],
     }),
+    updateAddress: builder.mutation({
+      query: (addressId) => ({
+        url: `/update/${addressId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["address"],
+    }),
     getAllAddress: builder.query({
       query: () => ({
         url: `/alladdress`,
@@ -34,4 +41,5 @@ export const {
   useCreateAddressMutation,
   useGetAllAddressQuery,
   useDeleteAddressMutation,
+  useUpdateAddressMutation,
 } = addressapi;

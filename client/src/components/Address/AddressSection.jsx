@@ -3,22 +3,33 @@ import AddressForm from "./AddressForm";
 import {
   useDeleteAddressMutation,
   useGetAllAddressQuery,
+  useUpdateAddressMutation,
 } from "../../redux/api/address/addressapi";
 import AddressCard from "./AddressCard";
 import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
-import { setCartAddress } from "../../redux/slice/cartSlice";
+import { clearAddress, setCartAddress } from "../../redux/slice/cartSlice";
 
 const AddressSection = () => {
   const [modal, setModal] = useState(false);
   const { data, isLoading } = useGetAllAddressQuery();
   const [deleteAddress] = useDeleteAddressMutation();
+  const [updateAddress, { isLoading: addressupdateload }] =
+    useUpdateAddressMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (data) {
-      dispatch(setCartAddress(data[0]));
+      const defaultAddress = data.find(
+        (address) => address.defaultAddress === true
+      );
+
+      if (defaultAddress) {
+        dispatch(setCartAddress(defaultAddress));
+      } else {
+        dispatch(clearAddress());
+      }
     }
   }, [dispatch, data]);
 
@@ -32,11 +43,21 @@ const AddressSection = () => {
       toast.error("Something went wrong");
     }
   };
+  const handleUpdateAddress = async (id) => {
+    try {
+      const res = await updateAddress(id).unwrap();
+      if (res) {
+        toast.success(res.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <section className="basis-[60%] flex flex-col gap-2 items-start">
       <h1 className="text-lg">Delivery To</h1>
-      <div className="flex items-center justify-between w-full">
+      <div className="flex flex-col gap-4  w-full">
         <div className="basis-[100%] flex flex-col gap-4">
           {isLoading && <Loader />}
           {data &&
@@ -45,6 +66,8 @@ const AddressSection = () => {
                 key={address._id}
                 address={address}
                 handleDeleteAddress={handleDeleteAddress}
+                handleUpdateAddress={handleUpdateAddress}
+                addressupdateload={addressupdateload}
               />
             ))}
         </div>
