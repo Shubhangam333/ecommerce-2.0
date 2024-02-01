@@ -4,9 +4,14 @@ import {
   useGetAllSubCatByParentIdMutation,
 } from "../../../redux/api/category/categoryapi";
 import { toast } from "react-toastify";
-import { useCreateStyleMutation } from "../../../redux/api/style/styleapi";
+import {
+  useCreateStyleMutation,
+  useUpdateStyleMutation,
+} from "../../../redux/api/style/styleapi";
+import { useParams } from "react-router-dom";
 
-const StyleForm = () => {
+const StyleForm = ({ isEditable, styleinfo }) => {
+  console.log("s", styleinfo);
   const {
     handleSubmit,
     control,
@@ -17,7 +22,9 @@ const StyleForm = () => {
   const { data } = useGetAllParentCategoriesQuery();
   const [getSubCat, { data: subcat }] = useGetAllSubCatByParentIdMutation();
   const [createStyle] = useCreateStyleMutation();
+  const [updateStyle] = useUpdateStyleMutation();
 
+  const { styleId } = useParams();
   const handleParentCatChange = async (e) => {
     try {
       await getSubCat(e.target.value).unwrap();
@@ -29,11 +36,20 @@ const StyleForm = () => {
     try {
       const formData = { ...data };
       console.log(formData);
-
-      const res = await createStyle(formData).unwrap();
-      if (res) {
-        toast.success("Style created successfully");
-        reset();
+      if (!isEditable) {
+        const res = await createStyle(formData).unwrap();
+        if (res) {
+          toast.success("Style created successfully");
+          reset();
+        }
+      }
+      if (isEditable) {
+        const formData = { styleId, ...data };
+        const res = await updateStyle(formData).unwrap();
+        if (res) {
+          toast.success("Style updated successfully");
+          reset();
+        }
       }
     } catch (error) {
       toast.error("Something went wrong.Please try again later");
@@ -49,7 +65,7 @@ const StyleForm = () => {
       <Controller
         name="title"
         control={control}
-        defaultValue=""
+        defaultValue={styleinfo ? styleinfo.title : ""}
         rules={{ required: "Title is required" }}
         render={({ field }) => (
           <>
@@ -125,7 +141,7 @@ const StyleForm = () => {
       <Controller
         name="section"
         control={control}
-        defaultValue=""
+        defaultValue={styleinfo ? styleinfo.section : ""}
         rules={{ required: "Section is required" }}
         render={({ field }) => (
           <>

@@ -13,6 +13,14 @@ export const styleapi = createApi({
       }),
       invalidatesTags: ["styles"],
     }),
+    updateStyle: builder.mutation({
+      query: (credentials) => ({
+        url: "/updateStyle",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["styles"],
+    }),
     deleteStyleById: builder.mutation({
       query: (id) => ({
         url: `/${id}`,
@@ -34,12 +42,20 @@ export const styleapi = createApi({
       }),
       providesTags: ["styles"],
     }),
+    getStyleDetailById: builder.mutation({
+      query: (styleId) => ({
+        url: `/getStyle/${styleId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateStyleMutation,
+  useUpdateStyleMutation,
   useGetAllStylesQuery,
   useDeleteStyleByIdMutation,
   useGetAllStylesBySubCatMutation,
+  useGetStyleDetailByIdMutation,
 } = styleapi;

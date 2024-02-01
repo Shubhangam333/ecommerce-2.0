@@ -19,6 +19,10 @@ const columns = [
     accessor: "title",
   },
   {
+    Header: "Section",
+    accessor: "section",
+  },
+  {
     Header: "CreatedBy",
     accessor: "createdBy",
     Cell: ({ cell: { value } }) => {

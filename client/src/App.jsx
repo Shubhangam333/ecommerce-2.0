@@ -26,6 +26,7 @@ import Profile from "./pages/User/Profile";
 import OrderDetails from "./components/Profile/OrderInfo/OrderDetails";
 import Orders from "./pages/User/Orders";
 import EditCategory from "./components/Admin/Category/EditCategory";
+import EditStyle from "./components/Admin/Style/EditStyle";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +91,7 @@ function App() {
               <Route path="create-category" element={<CreateCategory />} />
               <Route path="edit-category/:catId" element={<EditCategory />} />
               <Route path="styles" element={<StyleDashboard />} />
+              <Route path="edit-style/:styleId" element={<EditStyle />} />
               <Route path="create-style" element={<CreateStyle />} />
             </Route>
           </Routes>

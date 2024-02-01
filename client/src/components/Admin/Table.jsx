@@ -98,7 +98,7 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                   )}
                 </th>
               ))}
-              <th>Delete</th>
+              <th>Edit Info</th>
             </tr>
           ))}
         </thead>
@@ -125,6 +125,14 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                   {tableFor === "categories" && (
                     <Link
                       to={`/admin/dashboard/edit-category/${row.cells[0].value}`}
+                      className="bg-red-500 text-white px-2 rounded-lg"
+                    >
+                      Edit
+                    </Link>
+                  )}
+                  {tableFor === "styles" && (
+                    <Link
+                      to={`/admin/dashboard/edit-style/${row.cells[0].value}`}
                       className="bg-red-500 text-white px-2 rounded-lg"
                     >
                       Edit
