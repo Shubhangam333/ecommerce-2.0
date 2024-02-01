@@ -5,9 +5,10 @@ import {
   useGetAllParentCategoriesQuery,
   useGetAllSubCatByParentIdMutation,
 } from "../../../redux/api/category/categoryapi";
-import { useGetAllStylesBySubCatMutation } from "../../../redux/api/style/styleapi";
+import { useGetAllStylesBySubCatAndSectionMutation } from "../../../redux/api/style/styleapi";
 import { useCreateProductMutation } from "../../../redux/api/product/productapi";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const ProductForm = () => {
   const {
@@ -20,8 +21,9 @@ const ProductForm = () => {
 
   const { data: parentCat } = useGetAllParentCategoriesQuery();
   const [getSubCat, { data: subcat }] = useGetAllSubCatByParentIdMutation();
-  const [getStyleBySubCat, { data: styles }] =
-    useGetAllStylesBySubCatMutation();
+  const [getStyleBySubCatAndSection, { data: styles }] =
+    useGetAllStylesBySubCatAndSectionMutation();
+  const { section } = useSelector((state) => state.auth);
   // const [selectedImages, setSelectedImages] = useState([]);
   const [createProduct, { data }] = useCreateProductMutation();
   const handleParentCatChange = async (e) => {
@@ -33,7 +35,10 @@ const ProductForm = () => {
   };
   const handleSubCatChange = async (e) => {
     try {
-      await getStyleBySubCat(e.target.value).unwrap();
+      await getStyleBySubCatAndSection({
+        subCatId: e.target.value,
+        section,
+      }).unwrap();
     } catch (error) {
       console.log(error);
     }

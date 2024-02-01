@@ -70,10 +70,11 @@ export const deleteStyleById = async (req, res, next) => {
   res.status(200).json({ msg: "deleted successfully" });
 };
 
-export const getStyleBySubCat = async (req, res) => {
+export const getStyleBySubCatAndSection = async (req, res) => {
   const subCatId = req.params.subCatId;
+  const section = req.params.section;
 
-  const styles = await Style.find({ subCategory: subCatId });
+  const styles = await Style.find({ subCategory: subCatId, section });
 
   if (!styles) {
     throw new CustomError(404, "No Style Exist.");

@@ -7,7 +7,9 @@ const initialState = {
   userId: localStorage.getItem("userId")
     ? JSON.parse(localStorage.getItem("userId"))
     : null,
-  section: "men",
+  section: localStorage.getItem("section")
+    ? JSON.parse(localStorage.getItem("section"))
+    : "men",
 };
 
 export const authSlice = createSlice({
@@ -31,6 +33,7 @@ export const authSlice = createSlice({
       localStorage.removeItem("userId");
     },
     setSection: (state, action) => {
+      localStorage.setItem("section", JSON.stringify(action.payload));
       state.section = action.payload;
     },
   },

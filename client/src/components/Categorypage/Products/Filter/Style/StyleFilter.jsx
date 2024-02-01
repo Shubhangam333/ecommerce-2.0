@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 import CheckboxInput from "./CheckboxInput";
 import SearchInput from "./SearchInput";
-import { useGetAllStylesBySubCatMutation } from "../../../../../redux/api/style/styleapi";
+import { useGetAllStylesBySubCatAndSectionMutation } from "../../../../../redux/api/style/styleapi";
 import Loader from "../../../../Loader/Loader";
+import { useSelector } from "react-redux";
 
 const StyleFilter = ({ categoryId }) => {
-  const [getStyleBySubCat, { data: styles, isLoading }] =
-    useGetAllStylesBySubCatMutation();
+  const [getStyleBySubCatAndSection, { data: styles, isLoading }] =
+    useGetAllStylesBySubCatAndSectionMutation();
+  const { section } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const getStyleList = async () => {
-      await getStyleBySubCat(categoryId).unwrap();
+      await getStyleBySubCatAndSection({
+        subCatId: categoryId,
+        section,
+      }).unwrap();
     };
 
     getStyleList();
-  }, [getStyleBySubCat, categoryId]);
+  }, [getStyleBySubCatAndSection, categoryId, section]);
 
   if (isLoading) {
     return <Loader />;

@@ -9,6 +9,7 @@ import ProductImageModal from "./ProductImageSection/ProductImageModal";
 import { MdEdit } from "react-icons/md";
 import ReviewComponent from "./Review/ReviewComponent";
 import ReviewList from "./Review/ReviewList";
+import { useSelector } from "react-redux";
 
 const ProductComponent = () => {
   const [getProductDetails, { data: product, isLoading }] =
@@ -16,6 +17,7 @@ const ProductComponent = () => {
   const { productname } = useParams();
   const [imageModal, setImageModal] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     const getDetails = async () => {
       await getProductDetails(productname).unwrap();
@@ -48,22 +50,24 @@ const ProductComponent = () => {
           />
         )}
       </section>
-      <div className="flex w-full flex-col">
-        <button
-          className="mt-8 self-end flex gap-2 items-center text-gray-500"
-          onClick={() => setIsReviewOpen(!isReviewOpen)}
-        >
-          <MdEdit />
-          Write a Review
-        </button>
+      {user && (
+        <div className="flex w-full flex-col">
+          <button
+            className="mt-8 self-end flex gap-2 items-center text-gray-500"
+            onClick={() => setIsReviewOpen(!isReviewOpen)}
+          >
+            <MdEdit />
+            Write a Review
+          </button>
 
-        <ReviewComponent
-          setIsReviewOpen={setIsReviewOpen}
-          isReviewOpen={isReviewOpen}
-          productId={product._id}
-        />
-        <ReviewList productId={product._id} />
-      </div>
+          <ReviewComponent
+            setIsReviewOpen={setIsReviewOpen}
+            isReviewOpen={isReviewOpen}
+            productId={product._id}
+          />
+          <ReviewList productId={product._id} />
+        </div>
+      )}
     </>
   );
 };

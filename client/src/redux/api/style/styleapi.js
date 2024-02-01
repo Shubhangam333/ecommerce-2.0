@@ -35,9 +35,9 @@ export const styleapi = createApi({
       }),
       providesTags: ["styles"],
     }),
-    getAllStylesBySubCat: builder.mutation({
-      query: (subCatId) => ({
-        url: `/styles/${subCatId}`,
+    getAllStylesBySubCatAndSection: builder.mutation({
+      query: ({ subCatId, section }) => ({
+        url: `/styles/${subCatId}/${section}`,
         method: "GET",
       }),
       providesTags: ["styles"],
@@ -56,6 +56,6 @@ export const {
   useUpdateStyleMutation,
   useGetAllStylesQuery,
   useDeleteStyleByIdMutation,
-  useGetAllStylesBySubCatMutation,
+  useGetAllStylesBySubCatAndSectionMutation,
   useGetStyleDetailByIdMutation,
 } = styleapi;

@@ -4,7 +4,7 @@ import {
   createStyle,
   getAllStyles,
   deleteStyleById,
-  getStyleBySubCat,
+  getStyleBySubCatAndSection,
   updateStyle,
   getStyleDetailsById,
 } from "../controllers/styleController.js";
@@ -18,6 +18,6 @@ router
   .post(isAuthenticated, isAdmin, getStyleDetailsById);
 router.route("/styles").get(isAuthenticated, isAdmin, getAllStyles);
 router.route("/:id").delete(isAuthenticated, isAdmin, deleteStyleById);
-router.route("/styles/:subCatId").get(getStyleBySubCat);
+router.route("/styles/:subCatId/:section").get(getStyleBySubCatAndSection);
 
 export default router;
