@@ -13,9 +13,22 @@ export const createAddress = async (req, res) => {
     throw new CustomError(400, "User does not exist");
   }
 
-  if (!user.address || address.defaultAddress) {
+  if (user.address && address.defaultAddress) {
+    const otherAddress = await Address.findOne({
+      user: req.user._id,
+      _id: { $ne: address._id },
+    });
     user.address = address._id;
     await user.save();
+    otherAddress.defaultAddress = false;
+    await otherAddress.save();
+  }
+
+  if (!user.address) {
+    user.address = address._id;
+    await user.save();
+    address.defaultAddress = true;
+    await address.save();
   }
 
   res.status(200).json({ message: "Address Created", address });
@@ -51,6 +64,8 @@ export const deleteAddressById = async (req, res, next) => {
 
     if (otherAddress) {
       await User.findByIdAndUpdate(req.user._id, { address: otherAddress._id });
+      otherAddress.defaultAddress = true;
+      await otherAddress.save();
     } else {
       await User.findByIdAndUpdate(req.user._id, { $unset: { address: 1 } });
     }

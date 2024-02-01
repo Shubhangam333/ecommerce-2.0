@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import { setCartTotal } from "../../redux/slice/cartSlice";
 
 const AddressSummary = () => {
-  const { cartTotal, gst, cartItems } = useSelector((state) => state.cart);
+  const { cartTotal, gst, cartItems, cartAddress } = useSelector(
+    (state) => state.cart
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data } = useGetAllAddressQuery();
 
   const handleClick = () => {
-    if (data.length !== 0) {
+    if (cartAddress) {
       navigate("/user/checkout");
     } else {
       toast.error("Please add your address first");

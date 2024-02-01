@@ -33,12 +33,15 @@ const AddressCard = ({
           >
             Remove
           </button>
-          <button
-            className=" rounded-md border-[1px] border-slate-400 px-2"
-            onClick={() => handleUpdateAddress(address._id)}
-          >
-            Set As Default
-          </button>
+
+          {!address.defaultAddress && (
+            <button
+              className=" rounded-md border-[1px] border-slate-400 px-2"
+              onClick={() => handleUpdateAddress(address._id)}
+            >
+              Set As Default
+            </button>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-2">
