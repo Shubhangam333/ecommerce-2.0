@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useGetProfileQuery } from "./redux/api/auth/authapi";
 import { setUser, removeUser } from "./redux/slice/authSlice";
-import Dashboardpage from "./pages/Admin/Dashboardpage";
 import CreateProduct from "./components/Admin/Products/CreateProduct";
 import ProductDashboard from "./components/Admin/Products/ProductDashboard";
 import CategoryDashboard from "./components/Admin/Category/CategoryDashboard";
@@ -27,22 +26,24 @@ import OrderDetails from "./components/Profile/OrderInfo/OrderDetails";
 import Orders from "./pages/User/Orders";
 import EditCategory from "./components/Admin/Category/EditCategory";
 import EditStyle from "./components/Admin/Style/EditStyle";
+import Error from "./pages/Error";
+import AdminRoute from "./pages/Admin/AdminRoute";
 
 function App() {
   const dispatch = useDispatch();
   const { userId, section, user } = useSelector((state) => state.auth);
 
-  const {
-    data: userinfo,
-    error,
-    isFetching,
-  } = useGetProfileQuery(userId, { pollingInterval: 900000 });
+  const { data, error, isFetching } = useGetProfileQuery(userId, {
+    pollingInterval: 900000,
+  });
+
+  console.log("id", data);
 
   useEffect(() => {
-    if (userinfo) {
-      dispatch(setUser(userinfo));
+    if (data && data.user) {
+      dispatch(setUser(data.user));
     }
-  }, [userinfo, dispatch]);
+  }, [data, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -70,10 +71,7 @@ function App() {
             />
 
             <Route path={`/${section}/:catname`} element={<Categorypage />} />
-            <Route
-              path="/user"
-              element={<PrivateRoute isAuthenticated={user ? true : false} />}
-            >
+            <Route path="/user" element={<PrivateRoute />}>
               <Route path="profile" element={<Profile />} />
               <Route path="orders" element={<Orders />} />
               <Route path="order/:orderId" element={<OrderDetails />} />
@@ -84,7 +82,7 @@ function App() {
               <Route path="success" element={<Payment />} />
               <Route path="cancel" element={<Payment />} />
             </Route>
-            <Route path="/admin/dashboard" element={<Dashboardpage />}>
+            <Route path="/admin/dashboard" element={<AdminRoute />}>
               <Route path="create-product" element={<CreateProduct />} />
               <Route path="products" element={<ProductDashboard />} />
               <Route path="category" element={<CategoryDashboard />} />
@@ -94,6 +92,7 @@ function App() {
               <Route path="edit-style/:styleId" element={<EditStyle />} />
               <Route path="create-style" element={<CreateStyle />} />
             </Route>
+            <Route path="*" element={<Error />} />
           </Routes>
         </>
       )}

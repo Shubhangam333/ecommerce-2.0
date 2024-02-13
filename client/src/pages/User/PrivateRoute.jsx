@@ -1,21 +1,16 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
-import React from "react";
+import { useSelector } from "react-redux";
 
-const PrivateRoute = ({ isAuthenticated }) => {
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
-
-  return isAuthenticated ? (
+const PrivateRoute = () => {
+  const { user } = useSelector((state) => state.auth);
+  return user ? (
     <Layout>
       <Outlet />
     </Layout>
-  ) : null;
+  ) : (
+    <Navigate to="/auth/login" />
+  );
 };
 
 export default PrivateRoute;

@@ -38,7 +38,10 @@ export const login = async (req, res, next) => {
     maxAge: process.env.MAX_AGE,
   });
 
-  res.status(200).json({ userId: user._id });
+  console.log("u", user);
+  const { password, wishlistItems, cartItems, ...rest } = user._doc;
+
+  res.status(200).json({ user: rest });
 };
 
 export const logout = async (req, res) => {

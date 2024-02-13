@@ -11,7 +11,9 @@ export const profile = async (req, res) => {
     throw new CustomError(400, "No user found.");
   }
 
-  res.status(200).json(user);
+  const { password, wishlistItems, cartItems, ...rest } = user._doc;
+
+  res.status(200).json({ user: rest });
 };
 
 export const addToCart = async (req, res, next) => {
