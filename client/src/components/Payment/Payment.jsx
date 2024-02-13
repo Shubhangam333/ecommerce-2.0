@@ -1,20 +1,15 @@
 import { useCallback, useEffect } from "react";
-import { useGetPaymentInfoMutation } from "../../redux/api/payment/paymentapi";
 import Loader from "../Loader/Loader";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Success from "./Success";
 import Cancel from "./Cancel";
 import { useCreateOrderMutation } from "../../redux/api/order/orderapi";
-import { useGetProfileQuery } from "../../redux/api/auth/authapi";
 import { useSelector } from "react-redux";
-import {
-  useEmptyCartMutation,
-  useGetCartItemsQuery,
-} from "../../redux/api/user/userapi";
+import { useEmptyCartMutation } from "../../redux/api/user/userapi";
 import { toast } from "react-toastify";
 
 const Payment = () => {
-  const [getPaymentInfo, { data, isLoading }] = useGetPaymentInfoMutation();
+  // const [getPaymentInfo, { data, isLoading }] = useGetPaymentInfoMutation();
   const { cartTotal, gst, cartItems, cartAddress } = useSelector(
     (state) => state.cart
   );

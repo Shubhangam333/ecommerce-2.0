@@ -42,3 +42,15 @@ export const getPaymentInfo = async (req, res) => {
     .status(200)
     .json({ id: session.payment_intent, status: session.payment_status });
 };
+
+export const createPaymentIntent = async (req, res) => {
+  const { amount } = req.body;
+  console.log("a", amount);
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency: "inr",
+  });
+
+  res.status(200).json(paymentIntent.client_secret);
+};

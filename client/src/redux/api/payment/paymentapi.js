@@ -3,24 +3,15 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const paymentapi = createApi({
   reducerPath: "paymentapi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/payment" }),
-  tagTypes: ["payment"],
   endpoints: (builder) => ({
-    createPayment: builder.mutation({
-      query: (cartItems) => ({
-        url: "/process",
+    createPaymentIntent: builder.mutation({
+      query: (amount) => ({
+        url: "/payment-intent",
         method: "POST",
-        body: cartItems,
-      }),
-      invalidatesTags: ["payment"],
-    }),
-    getPaymentInfo: builder.mutation({
-      query: (sessionId) => ({
-        url: `/paymentInfo?session_id=${sessionId}`,
-        method: "POST",
+        body: amount,
       }),
     }),
   }),
 });
 
-export const { useCreatePaymentMutation, useGetPaymentInfoMutation } =
-  paymentapi;
+export const { useCreatePaymentIntentMutation } = paymentapi;

@@ -28,6 +28,9 @@ import EditCategory from "./components/Admin/Category/EditCategory";
 import EditStyle from "./components/Admin/Style/EditStyle";
 import Error from "./pages/Error";
 import AdminRoute from "./pages/Admin/AdminRoute";
+import PaymentPage from "./components/Payment/PaymentPage";
+import Success from "./components/Payment/Success";
+import Cancel from "./components/Payment/Cancel";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,8 +82,9 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="delivery-address" element={<Address />} />
               <Route path="checkout" element={<CheckOutContainer />} />
-              <Route path="success" element={<Payment />} />
-              <Route path="cancel" element={<Payment />} />
+              <Route path="payment" element={<PaymentPage />} />
+              <Route path="success" element={<Success />} />
+              <Route path="cancel" element={<Cancel />} />
             </Route>
             <Route path="/admin/dashboard" element={<AdminRoute />}>
               <Route path="create-product" element={<CreateProduct />} />
