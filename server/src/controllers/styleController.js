@@ -4,7 +4,11 @@ import { Style } from "../models/style.js";
 export const createStyle = async (req, res, next) => {
   const { title, parent_category, sub_category, section } = req.body;
 
-  const slug = title.toLowerCase().split(" ").join("-");
+  const slug = title
+    .split(" ")
+    .join("-")
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9-]/g, "");
 
   const styleData = {
     title,

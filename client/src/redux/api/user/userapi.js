@@ -56,6 +56,12 @@ export const userapi = createApi({
       }),
       invalidatesTags: ["wishListItems"],
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: `/allusers`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -67,4 +73,5 @@ export const {
   useDeleteCartItemsMutation,
   useDeleteWishListItemsMutation,
   useEmptyCartMutation,
+  useGetAllUsersQuery,
 } = userapi;

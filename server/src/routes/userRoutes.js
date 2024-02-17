@@ -8,12 +8,14 @@ import {
   deleteCartItemById,
   deleteWishListItemById,
   removeCartItems,
+  getAllUsers,
 } from "../controllers/userController.js";
-import { isAuthenticated } from "../middleware/authMiddleware.js";
+import { isAdmin, isAuthenticated } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.route("/profile/:userId").get(isAuthenticated, profile);
+router.route("/allusers").get(isAuthenticated, isAdmin, getAllUsers);
 router.route("/addToCart").post(isAuthenticated, addToCart);
 router.route("/getCartItems").get(isAuthenticated, getAllCartItems);
 router.route("/addToWishList").post(isAuthenticated, addToWishList);

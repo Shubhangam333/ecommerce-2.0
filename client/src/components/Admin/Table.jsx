@@ -10,6 +10,7 @@ import StyleHeader from "./Style/StyleHeader";
 import ProductHeader from "./Products/ProductHeader";
 import OrderHeader from "../Profile/OrderHeader";
 import { Link } from "react-router-dom";
+import AdminOrderHeader from "./Orders/AdminOrderHeader";
 
 const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   const options = {
@@ -38,10 +39,16 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
   } = useTable(options, useFilters, useSortBy, usePagination);
 
   const [filterInput, setFilterInput] = useState("");
+  const [orderfilterInput, setOrderFilterInput] = useState("");
 
   const handleFilterChange = (e) => {
     const value = e.target.value || undefined;
     setFilter("title", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
+    setFilterInput(value);
+  };
+  const handleOrderFilterChange = (e) => {
+    const value = e.target.value || undefined;
+    setFilter("user", value); // Update the show.name filter. Now our table will filter and show only the rows which have a matching value
     setFilterInput(value);
   };
 
@@ -69,6 +76,12 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
         <OrderHeader
           filterInput={filterInput}
           handleFilterChange={handleFilterChange}
+        />
+      )}
+      {tableFor === "adminorders" && (
+        <AdminOrderHeader
+          filterInput={filterInput}
+          handleFilterChange={handleOrderFilterChange}
         />
       )}
 
@@ -114,14 +127,15 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                   </td>
                 ))}
                 <td className="flex gap-2 text-sm">
-                  {tableFor !== "userorders" && (
-                    <button
-                      className="text-red-600"
-                      onClick={() => handleDeleteItem(row.cells[0].value)}
-                    >
-                      <MdDelete />
-                    </button>
-                  )}
+                  {tableFor !== "userorders" ||
+                    (tableFor !== "adminorders" && (
+                      <button
+                        className="text-red-600"
+                        onClick={() => handleDeleteItem(row.cells[0].value)}
+                      >
+                        <MdDelete />
+                      </button>
+                    ))}
                   {tableFor === "categories" && (
                     <Link
                       to={`/admin/dashboard/edit-category/${row.cells[0].value}`}
@@ -136,6 +150,14 @@ const Table = ({ columns, data, tableFor, handleDeleteItem }) => {
                       className="bg-red-500 text-white px-2 rounded-lg"
                     >
                       Edit
+                    </Link>
+                  )}
+                  {tableFor === "adminorders" && (
+                    <Link
+                      to={`/admin/dashboard/order/${row.cells[0].value}`}
+                      className="bg-red-500 text-white px-2 rounded-lg"
+                    >
+                      View Orders
                     </Link>
                   )}
                 </td>

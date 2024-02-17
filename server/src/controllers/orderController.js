@@ -52,3 +52,15 @@ export const getOrderDetailsByOrderId = async (req, res) => {
 
   res.status(200).json(order);
 };
+export const getAllOrders = async (req, res) => {
+  const orders = await Order.find().populate("user").populate({
+    path: "items.productId",
+    select: "title price ",
+  });
+
+  if (!orders) {
+    throw new CustomError("404", "No Order found");
+  }
+
+  res.status(200).json(orders);
+};

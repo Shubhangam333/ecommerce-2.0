@@ -9,7 +9,7 @@ const Footer = () => {
           Over 6 Million Happy Customers
         </h1>
       </div>
-      <section className="flex flex-col gap-4 ">
+      <section className="flex flex-col gap-4 items-center">
         <div className="logo flex justify-center  w-full">
           <img
             src={headerLogo}
@@ -17,8 +17,8 @@ const Footer = () => {
             className="w-12 h-12 object-cover block"
           />
         </div>
-        <section className="grid sm:grid-cols-4 grid-cols-1 justify-center sm:gap-16 gap-2 px-8">
-          <div className="flex flex-col items-start ">
+        {/* <section className="grid sm:grid-cols-4 grid-cols-1 justify-center sm:gap-16 gap-2 px-8 items-center">
+          <div className="flex flex-col md:items-start items-center">
             <h2 className="text-xl uppercase text-[#E11B23] font-extrabold mb-2">
               About Us
             </h2>
@@ -35,7 +35,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-start ">
+          <div className="flex flex-col md:items-start items-center ">
             <h2 className="text-xl uppercase text-[#E11B23] font-extrabold mb-2">
               ASSISTANCE
             </h2>
@@ -67,11 +67,11 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col items-start ">
+          <div className="flex flex-col md:items-start items-center ">
             <h2 className="text-xl uppercase text-[#E11B23] font-extrabold mb-2">
               my Account
             </h2>
-            <ul className="text-slate-800 font-bold flex flex-col items-start">
+            <ul className="text-slate-800 font-bold flex flex-col md:items-start items-center">
               <li>
                 <Link to="/" className="hover:text-slate-500 hover:underline">
                   Login
@@ -99,7 +99,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col  ">
+          <div className="flex flex-col items-center ">
             <h2 className="text-xl uppercase text-[#E11B23] font-extrabold mb-2">
               Subscribe Now
             </h2>
@@ -120,7 +120,7 @@ const Footer = () => {
               </form>
             </div>
           </div>
-        </section>
+        </section> */}
       </section>
     </footer>
   );

@@ -5,7 +5,11 @@ import CustomError from "../errors/CustomError.js";
 export const createCategory = async (req, res, next) => {
   const { title, catImage, parent_category } = req.body;
 
-  const slug = title.toLowerCase().split(" ").join("-");
+  const slug = title
+    .split(" ")
+    .join("-")
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9-]/g, "");
 
   const catData = {
     title,

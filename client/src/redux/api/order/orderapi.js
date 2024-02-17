@@ -23,6 +23,12 @@ export const orderapi = createApi({
         method: "POST",
       }),
     }),
+    getAllOrders: builder.query({
+      query: () => ({
+        url: `/orders/all`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -30,4 +36,5 @@ export const {
   useCreateOrderMutation,
   useGetOrderByUserIdQuery,
   useGetOrderByOrderIdMutation,
+  useGetAllOrdersQuery,
 } = orderapi;

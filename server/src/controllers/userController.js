@@ -136,3 +136,12 @@ export const deleteWishListItemById = async (req, res, next) => {
   }
   res.status(200).json({ msg: "Item Removed from Wishlist" });
 };
+export const getAllUsers = async (req, res, next) => {
+  const users = await User.find();
+
+  if (!users) {
+    throw new CustomError("404", "No User found");
+  }
+
+  res.status(200).json(users);
+};

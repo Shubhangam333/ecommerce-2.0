@@ -3,6 +3,7 @@ const OrderPaymentDetails = ({
   totalAmount,
   createdAt,
   orderStatus,
+  updatedAt,
 }) => {
   return (
     <div>
@@ -26,6 +27,12 @@ const OrderPaymentDetails = ({
           Ordered At:{" "}
           <span className="font-normal  text-md capitalize">
             {createdAt.slice(0, 10)}
+          </span>
+        </p>
+        <p className="flex justify-between font-bold text-lg">
+          Updated At:{" "}
+          <span className="font-normal  text-md capitalize">
+            {updatedAt.slice(0, 10)}
           </span>
         </p>
       </div>

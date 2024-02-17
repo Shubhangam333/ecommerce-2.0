@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import headerLogo from "/shopping-cart.svg";
 import { FaRegUser } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosLogIn, IoMdHeartEmpty } from "react-icons/io";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetAllCategoriesWithSubCatQuery } from "../../redux/api/category/categoryapi";
-import {
-  useGetCartItemsQuery,
-  useGetWishListItemsQuery,
-} from "../../redux/api/user/userapi";
+import { useGetWishListItemsQuery } from "../../redux/api/user/userapi";
+import { useLogoutMutation } from "../../redux/api/auth/authapi";
+import { toast } from "react-toastify";
+import { clearCart } from "../../redux/slice/cartSlice";
 
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
@@ -18,8 +18,23 @@ const PrimaryNav = ({ setSecondaryNav }) => {
   const { cartItems } = useSelector((state) => state.cart);
   const { data: categoryList } = useGetAllCategoriesWithSubCatQuery();
   const { data: wishList } = useGetWishListItemsQuery();
+  const [logoOut] = useLogoutMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate("/");
 
   const navbar = useRef();
+
+  const handleLogout = async () => {
+    try {
+      const res = await logoOut().unwrap();
+      if (res) {
+        dispatch(clearCart());
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -103,6 +118,24 @@ const PrimaryNav = ({ setSecondaryNav }) => {
                 >
                   Profile
                 </Link>
+              </li>
+              {user.role === "admin" && (
+                <li className="text-sm font-bold">
+                  <Link
+                    to="/admin/dashboard"
+                    className="hover:text-red-600 text-slate-700"
+                  >
+                    Admin Dashboard
+                  </Link>
+                </li>
+              )}
+              <li className="text-sm font-bold">
+                <button
+                  onClick={handleLogout}
+                  className="hover:text-red-600 text-slate-700"
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </Link>

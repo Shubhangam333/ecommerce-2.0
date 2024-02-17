@@ -20,7 +20,6 @@ import Cart from "./pages/Cart";
 import Address from "./pages/Address";
 import Loader from "./components/Loader/Loader";
 import CheckOutContainer from "./components/Checkout/CheckOutContainer";
-import Payment from "./components/Payment/Payment";
 import Profile from "./pages/User/Profile";
 import OrderDetails from "./components/Profile/OrderInfo/OrderDetails";
 import Orders from "./pages/User/Orders";
@@ -31,6 +30,9 @@ import AdminRoute from "./pages/Admin/AdminRoute";
 import PaymentPage from "./components/Payment/PaymentPage";
 import Success from "./components/Payment/Success";
 import Cancel from "./components/Payment/Cancel";
+import OrderList from "./components/Admin/Orders/OrderList";
+import AdminOrderDetails from "./components/Admin/Orders/AdminOrderDetails";
+import UsersList from "./components/Admin/Users/UsersList";
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +59,9 @@ function App() {
   return (
     <>
       {isFetching ? (
-        <Loader />
+        <div className="min-h-screen">
+          <Loader />
+        </div>
       ) : (
         <>
           <ScrollToTop />
@@ -95,6 +99,9 @@ function App() {
               <Route path="styles" element={<StyleDashboard />} />
               <Route path="edit-style/:styleId" element={<EditStyle />} />
               <Route path="create-style" element={<CreateStyle />} />
+              <Route path="orders" element={<OrderList />} />
+              <Route path="order/:orderId" element={<AdminOrderDetails />} />
+              <Route path="users" element={<UsersList />} />
             </Route>
             <Route path="*" element={<Error />} />
           </Routes>

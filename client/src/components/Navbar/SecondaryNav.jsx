@@ -58,7 +58,7 @@ const SecondaryNav = ({ setSecondaryNav, secondaryNav }) => {
             <button className=" text-center basis-[100%]">Kids</button>
           </div>
         </div>
-        <div className="items">
+        <div className="my-4">
           <ul>
             <li>
               <div>WinterWear</div>

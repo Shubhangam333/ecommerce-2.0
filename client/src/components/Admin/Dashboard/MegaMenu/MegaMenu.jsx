@@ -1,4 +1,4 @@
-import { FaHome, FaShoppingBag } from "react-icons/fa";
+import { FaHome, FaRegUser, FaShoppingBag } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { BsCartFill } from "react-icons/bs";
 import MenuHeader from "./MenuHeader";
@@ -30,6 +30,11 @@ const navItems = [
     icon: <BsCartFill className="text-xl text-[#17B987]  " />,
     title: "Styles",
     url: "/admin/dashboard/styles",
+  },
+  {
+    icon: <FaRegUser className="text-xl text-[#17B987]  " />,
+    title: "Users",
+    url: "/admin/dashboard/users",
   },
 ];
 

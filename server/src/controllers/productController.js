@@ -14,7 +14,11 @@ export const createProduct = async (req, res, next) => {
     style,
   } = req.body;
 
-  const slug = title.toLowerCase().split(" ").join("-");
+  const slug = title
+    .split(" ")
+    .join("-")
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9-]/g, "");
 
   const sizesData = JSON.parse(sizes);
 

@@ -16,7 +16,7 @@ const AddressDetails = ({ address }) => {
             <span className="font-bold">{address.postalCode}</span>
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-sm">
           <span>Mobile:</span>
           <span className="font-bold">{address.mobileNumber}</span>
         </div>
