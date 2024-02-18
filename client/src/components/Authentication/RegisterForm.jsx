@@ -105,7 +105,7 @@ const RegisterForm = () => {
         <p className="text-red-500 px-2">{`${errors.confirmPassword.message}`}</p>
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 sm:flex-row flex-col">
         <label>Gender</label>
         <div>
           <Controller
@@ -113,7 +113,7 @@ const RegisterForm = () => {
             control={control}
             rules={{ required: "Please select a gender" }}
             render={({ field }) => (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <input type="radio" {...field} value="Male" id="male" />
                 <label htmlFor="male">Male</label>
 

@@ -37,7 +37,7 @@ const ProductComponent = () => {
   return (
     <>
       <Breadcrumb title={product.title} />
-      <section className="flex justify-between items-start min-h-screen">
+      <section className="flex justify-between items-start min-h-screen md:flex-row flex-col">
         <ProductImages
           images={product.productImages}
           setImageModal={setImageModal}

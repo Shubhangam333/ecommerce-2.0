@@ -50,7 +50,7 @@ const Productsection = ({ categoryId }) => {
 
   return (
     <>
-      <section className="col-span-12 grid grid-cols-9 gap-12 justify-center">
+      <section className="col-span-12 md:grid grid-cols-9 gap-12 justify-center flex flex-wrap ">
         {products.map((product) => (
           <Productcard key={product._id} product={product} />
         ))}

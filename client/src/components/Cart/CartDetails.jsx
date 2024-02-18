@@ -24,7 +24,7 @@ const CartDetails = () => {
   }
 
   return (
-    <section className="flex p-6 gap-6">
+    <section className="flex p-6 gap-6 md:flex-row flex-col">
       <CartSection cartItems={data.cartItems} />
       <CartSummary cartItems={data.cartItems} />
     </section>

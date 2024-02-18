@@ -78,7 +78,7 @@ const ProductContent = ({ product }) => {
   };
 
   return (
-    <div className="basis-[40%] flex flex-col pr-24">
+    <div className="basis-[40%] flex flex-col md:pr-24">
       <h1 className="capitalize text-3xl text-slate-600 font-extrabold">
         {product.title}
       </h1>
@@ -131,13 +131,13 @@ const ProductContent = ({ product }) => {
       </div>
       <div className="flex gap-2 ">
         <button
-          className="basis-[100%] bg-[#EC3D25] py-2 text-white font-extrabold rounded-sm active:scale-95 "
+          className="sm:basis-[100%] basis-[70%] bg-[#EC3D25] py-2 text-white font-extrabold rounded-sm active:scale-95 "
           onClick={handleCart}
         >
           Add to Cart
         </button>
         <button
-          className="basis-[70%] px-2 flex items-center rounded-sm border-[#117A7A] text-[#117A7A] border-[1px] active:scale-95"
+          className="basis-[70%] sm:px-2 flex items-center justify-center rounded-sm border-[#117A7A] text-[#117A7A] border-[1px] active:scale-95"
           onClick={handleWishList}
         >
           <CiHeart className="text-xl" />

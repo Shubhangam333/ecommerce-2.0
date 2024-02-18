@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const CheckOutItemCard = ({ item }) => {
   const { section } = useSelector((state) => state.auth);
   return (
-    <div className="flex border-b-[1px] border-slate-500 py-2 items-center">
+    <div className="flex border-b-[1px] border-slate-500 py-2 md:items-center md:flex-row flex-col">
       <div className="basis-[30%] h-36">
         <img
           src={item.product.productImages[0].url}

@@ -6,7 +6,7 @@ const Productcard = ({ product }) => {
   return (
     <Link
       to={`/${section}/${product.subCategory.slug}/${product.slug}`}
-      className="col-span-3 cursor-pointer "
+      className="col-span-3 cursor-pointer basis-[15rem]"
     >
       <div className="transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 shadow-md duration-300 hover:scale-105 hover:shadow-lg">
         <img

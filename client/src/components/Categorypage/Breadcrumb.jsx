@@ -8,7 +8,7 @@ const Breadcrumb = () => {
   console.log("p", pathnames);
   return (
     <nav className="my-4 mb-6">
-      <ul className="flex gap-2 text-sm">
+      <ul className="flex gap-2 text-sm flex-wrap">
         <li>
           <Link to="/" className="hover:text-[#018DCB]  text-gray-600">
             Home /

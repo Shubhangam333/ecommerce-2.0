@@ -4,7 +4,7 @@ import Secondaryfilter from "./Secondaryfilter";
 
 const Categorynav = ({ title }) => {
   return (
-    <div className="basis-[80%] flex flex-col gap-2">
+    <div className="md:basis-[80%] w-full  flex flex-col gap-2">
       <Breadcrumb title={title} />
       <Secondaryfilter title={title} />
       <FilterBreadCrumb />

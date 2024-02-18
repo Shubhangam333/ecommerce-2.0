@@ -42,7 +42,7 @@ const CartItem = ({ item, handleDeleteItem }) => {
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between gap-4 md:flex-row flex-col">
       <div className="basis-[30%] h-[200px]">
         <img
           src={item.product.productImages[0].url}
@@ -61,8 +61,8 @@ const CartItem = ({ item, handleDeleteItem }) => {
           <p className="text-sm text-gray-600">
             {item.product.subCategory.title}
           </p>
-          <div className="flex gap-2 text-sm my-4">
-            <div className="flex gap-2">
+          <div className="flex gap-2 text-sm my-4 md:flex-row flex-col">
+            <div className="flex md:gap-2 md:justify-normal justify-between">
               <label htmlFor={`size-section-${item._id}`}>Size:</label>
               <select
                 name="qty"
@@ -80,7 +80,7 @@ const CartItem = ({ item, handleDeleteItem }) => {
                 )}
               </select>
             </div>
-            <div className=" flex gap-4">
+            <div className=" flex md:gap-4 md:justify-normal justify-between">
               <label htmlFor="quantity" className="font-light">
                 Quantity
               </label>
@@ -105,7 +105,7 @@ const CartItem = ({ item, handleDeleteItem }) => {
             {item.product.price}
           </span>
           <button
-            className="px-6 mb-6 text-sm opacity-90 hover:opacity-100 bg-[#147D7B] py-1 text-white rounded-lg "
+            className="px-6 md:mb-6 mb-2 text-sm opacity-90 hover:opacity-100 bg-[#147D7B] py-1 text-white rounded-lg "
             onClick={() => handleDeleteItem(item._id)}
           >
             Remove

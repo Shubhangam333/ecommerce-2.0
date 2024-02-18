@@ -6,7 +6,7 @@ const ProductImages = ({ images, setImageModal }) => {
       {images.map((image, index) => (
         <div
           key={image.public_id}
-          className="basis-[40%]"
+          className="md:basis-[40%]"
           onClick={() => setImageModal(true)}
         >
           <img src={image.url} className=" h-full w-full object-cover" />{" "}
