@@ -59,7 +59,7 @@ function App() {
   return (
     <>
       {isFetching ? (
-        <div className="min-h-screen">
+        <div className="min-h-screen flex justify-center items-center">
           <Loader />
         </div>
       ) : (
