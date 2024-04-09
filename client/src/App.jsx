@@ -66,7 +66,7 @@ function App() {
         <>
           <ScrollToTop />
           <Routes>
-            <Route path="/" element={<Navigate to="/men" />} />
+            <Route path="/" element={<Navigate to={`/${section}`} />} />
             <Route path={`/${section}`} element={<Home />} />
             <Route
               path={`/${section}/:subcatname/:productname`}

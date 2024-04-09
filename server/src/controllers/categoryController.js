@@ -3,7 +3,7 @@ import { Category } from "../models/category.js";
 import CustomError from "../errors/CustomError.js";
 
 export const createCategory = async (req, res, next) => {
-  const { title, catImage, parent_category } = req.body;
+  const { title, catImage, parent_category, section } = req.body;
 
   const slug = title
     .split(" ")
@@ -15,6 +15,7 @@ export const createCategory = async (req, res, next) => {
     title,
     slug,
     createdBy: req.user._id,
+    section,
   };
   if (parent_category) {
     catData.parentId = parent_category;
@@ -38,12 +39,13 @@ export const createCategory = async (req, res, next) => {
 };
 
 export const updateCategory = async (req, res, next) => {
-  const { categoryId, title, catImage, parent_category } = req.body;
+  const { categoryId, title, catImage, parent_category, section } = req.body;
 
   const updatedData = {
     title,
     slug: title.toLowerCase().split(" ").join("-"),
     modifiedBy: req.user._id,
+    section,
   };
 
   if (parent_category) {
@@ -146,6 +148,7 @@ export const getSubCategoriesByParentCategoryId = async (req, res, next) => {
 export const getCategoryWithSubCategories = async (req, res, next) => {
   const parentCategories = await Category.find({
     parentId: { $exists: false },
+    section: req.params.section,
   });
 
   const categoriesWithSubcategories = await Promise.all(
@@ -164,6 +167,22 @@ export const getCategoryWithSubCategories = async (req, res, next) => {
 
 export const getCategoryBySlug = async (req, res, next) => {
   const category = await Category.findOne({ slug: req.params.slug });
+
+  if (!category) {
+    throw new CustomError(404, "No Category Exists.");
+  }
+
+  res.status(200).json(category);
+};
+export const getCategoryDetailsById = async (req, res, next) => {
+  const categoryId = req.params.catId;
+
+  console.log("cd", categoryId);
+  if (!categoryId) {
+    throw new CustomError(404, "CategoryId Id is required.");
+  }
+
+  const category = await Category.findOne({ _id: categoryId });
 
   if (!category) {
     throw new CustomError(404, "No Category Exists.");

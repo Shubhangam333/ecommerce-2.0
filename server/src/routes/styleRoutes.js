@@ -7,6 +7,7 @@ import {
   getStyleBySubCatAndSection,
   updateStyle,
   getStyleDetailsById,
+  getAllStylesBySection,
 } from "../controllers/styleController.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router
 router.route("/styles").get(isAuthenticated, isAdmin, getAllStyles);
 router.route("/:id").delete(isAuthenticated, isAdmin, deleteStyleById);
 router.route("/styles/:subCatId/:section").get(getStyleBySubCatAndSection);
+router.route("/styles/:section").get(getAllStylesBySection);
 
 export default router;

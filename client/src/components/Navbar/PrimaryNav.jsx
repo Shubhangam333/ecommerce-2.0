@@ -4,9 +4,9 @@ import { FaRegUser } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosLogIn, IoMdHeartEmpty } from "react-icons/io";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetAllCategoriesWithSubCatQuery } from "../../redux/api/category/categoryapi";
+import { useGetAllCategoriesWithSubCatMutation } from "../../redux/api/category/categoryapi";
 import { useGetWishListItemsQuery } from "../../redux/api/user/userapi";
 import { useLogoutMutation } from "../../redux/api/auth/authapi";
 import { toast } from "react-toastify";
@@ -16,10 +16,13 @@ const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
-  const { data: categoryList } = useGetAllCategoriesWithSubCatQuery();
+  const [getCategories, { data: categoryList }] =
+    useGetAllCategoriesWithSubCatMutation();
   const { data: wishList } = useGetWishListItemsQuery();
   const [logoOut] = useLogoutMutation();
   const dispatch = useDispatch();
+  const navbarClass = isNavbarFixed ? "fixed top-0 left-0 right-0" : "";
+  const { section } = useSelector((state) => state.auth);
   const navigate = useNavigate("/");
 
   const navbar = useRef();
@@ -35,6 +38,14 @@ const PrimaryNav = ({ setSecondaryNav }) => {
       toast.error("Something went wrong.");
     }
   };
+
+  const getCategoryList = useCallback(async () => {
+    try {
+      await getCategories(section).unwrap();
+    } catch (error) {
+      console.log("e", error);
+    }
+  }, [getCategories, section]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,8 +65,9 @@ const PrimaryNav = ({ setSecondaryNav }) => {
     };
   }, []);
 
-  const navbarClass = isNavbarFixed ? "fixed top-0 left-0 right-0" : "";
-  const { section } = useSelector((state) => state.auth);
+  useEffect(() => {
+    getCategoryList();
+  }, [getCategoryList]);
 
   return (
     <nav

@@ -30,7 +30,7 @@ const LoginForm = () => {
         navigate("/");
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(error.data.message);
     }
   });
 

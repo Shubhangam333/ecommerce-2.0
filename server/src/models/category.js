@@ -28,6 +28,7 @@ const categorySchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    section: { type: String, enum: ["men", "women", "kids"] },
   },
   { timestamps: true }
 );

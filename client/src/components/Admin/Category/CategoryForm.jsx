@@ -7,7 +7,7 @@ import {
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
-const CategoryForm = ({ isEditable }) => {
+const CategoryForm = ({ isEditable, catInfo }) => {
   const {
     handleSubmit,
     control,
@@ -19,10 +19,7 @@ const CategoryForm = ({ isEditable }) => {
   const [postCategory] = useCreateCategoryMutation();
   const [updateCategory, { data: updatedcat }] = useUpdateCategoryMutation();
   const { data } = useGetAllParentCategoriesQuery();
-
   const { catId } = useParams();
-
-  console.log("i", isEditable);
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -72,7 +69,7 @@ const CategoryForm = ({ isEditable }) => {
       <Controller
         name="title"
         control={control}
-        defaultValue=""
+        defaultValue={catInfo ? catInfo.title : ""}
         rules={{ required: "Title is required" }}
         render={({ field }) => (
           <>
@@ -110,6 +107,29 @@ const CategoryForm = ({ isEditable }) => {
               <p className="text-red-500 px-2">
                 {errors.parent_category.message}
               </p>
+            )}
+          </>
+        )}
+      />
+      <label htmlFor="section">Section</label>
+      <Controller
+        name="section"
+        control={control}
+        defaultValue={catInfo ? catInfo.section : ""}
+        rules={{ required: "Section is required" }}
+        render={({ field }) => (
+          <>
+            <select
+              {...field}
+              className="w-full px-2 py-2 rounded-lg border-[1px] border-slate-400 focus:border-blue-400 outline-none "
+            >
+              <option value="">Select Section</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="kids">Kids</option>
+            </select>
+            {errors.section && (
+              <p className="text-red-500 px-2">{errors.section.message}</p>
             )}
           </>
         )}

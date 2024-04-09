@@ -86,6 +86,19 @@ export const getStyleBySubCatAndSection = async (req, res) => {
 
   res.status(200).json(styles);
 };
+export const getAllStylesBySection = async (req, res) => {
+  const section = req.params.section;
+
+  let styles = await Style.find({ section });
+
+  styles = styles.length > 7 ? styles.slice(0, 7) : styles;
+
+  if (!styles) {
+    throw new CustomError(404, "No Style Exist.");
+  }
+
+  res.status(200).json(styles);
+};
 
 export const getStyleDetailsById = async (req, res) => {
   const styleId = req.params.styleId;
