@@ -43,19 +43,20 @@ Our Ecommerce Website is a modern web application that allows users to browse, s
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/Shubhangam333/ecommerce-2.0.git
+   cd ecommerce-2.0
+   ```
 # Install backend dependencies
-cd backend
-npm install
+   cd server
+   npm install
 
 # Install frontend dependencies
-cd ../frontend
-npm install
+   cd client
+   npm install
 
 Set up environment variables:
 
-2. Create a .env file in the backend directory.
+2. Create a .env file in the server directory.
 Define environment variables such as MongoDB connection URI, JWT secret, etc.
 Database setup:
 
@@ -64,21 +65,14 @@ Create a new database for the application and configure the connection URI in th
 
 ## Running the Application
 
-1. Start the backend server:
+1. Run the server and webapp:
 
-cd backend
-npm start
-
-2. Start the frontend development server:
-
-cd frontend
-npm start
+cd server
+npm run dev
 
 ## Access the application:
-Open your web browser and go to http://localhost:3000 to view the Ecommerce Website.
+Open your web browser and go to http://localhost:5173 to view the Ecommerce Website.
 
 ## Contributing
 We welcome contributions from the community! If you have any ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
-## License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for your own purposes.
