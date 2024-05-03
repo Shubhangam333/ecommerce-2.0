@@ -1,11 +1,11 @@
 import MainCarousel from "../Carousel/MainCarousel";
-import Categories from "../Categories/Categories";
+import LatestArrival from "../Arrivals/LatestArrival";
 
 const MainComponent = () => {
   return (
     <div>
       <MainCarousel />
-      <Categories />
+      <LatestArrival />
     </div>
   );
 };

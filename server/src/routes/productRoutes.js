@@ -8,6 +8,7 @@ import {
   getProductBySlugName,
   addReviewToProduct,
   getAllProductReviews,
+  getProductsByParentCategory,
 } from "../controllers/productController.js";
 import { upload } from "../config/imageupload.js";
 
@@ -21,6 +22,7 @@ router.route("/:id").delete(isAuthenticated, isAdmin, deleteProductById);
 
 router.route("/products/:categoryId").post(getProductsBySubCategoryId);
 router.route("/product/:slug").get(getProductBySlugName);
+router.route("/product/home/:section").post(getProductsByParentCategory);
 
 router.route("/createReview").post(addReviewToProduct);
 router.route("/reviews/:productId").post(getAllProductReviews);

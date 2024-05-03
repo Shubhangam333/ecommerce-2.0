@@ -231,3 +231,15 @@ export const getAllProductReviews = async (req, res, next) => {
 
   res.status(200).json(reviews);
 };
+
+export const getProductsByParentCategory = async (req, res, next) => {
+  const section = req.params.section;
+
+  const products = (await Product.find({ section })).slice(0, 4);
+
+  if (!products) {
+    throw new CustomError(400, "No Products found");
+  }
+
+  res.status(200).json(products);
+};

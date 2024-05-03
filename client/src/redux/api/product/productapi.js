@@ -63,6 +63,12 @@ export const productapi = createApi({
       }),
       providesTags: ["reviews"],
     }),
+    getProductsBySection: builder.mutation({
+      query: (section) => ({
+        url: `/product/home/${section}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -74,4 +80,5 @@ export const {
   useGetProductBySlugNameMutation,
   useCreateProductReviewMutation,
   useGetAllProductReviewQuery,
+  useGetProductsBySectionMutation,
 } = productapi;
