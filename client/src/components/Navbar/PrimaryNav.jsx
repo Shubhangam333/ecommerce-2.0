@@ -73,7 +73,7 @@ const PrimaryNav = ({ setSecondaryNav }) => {
     <nav
       id="navbar"
       ref={navbar}
-      className={`bg-white h-[50px] md:px-12 px-4 z-[1000] flex items-center shadow-2xl border-b-2 border-slate-300 ${navbarClass} w-full justify-between`}
+      className={`bg-white h-[50px] md:px-12 px-4 z-[10] flex items-center shadow-2xl border-b-2 border-slate-300 ${navbarClass} w-full justify-between`}
       // className=" fixed top-0 left-0 right-0 bg-white  md:px-12 px-4 flex items-center justify-between shadow-2xl border-b-2 border-slate-300 h-12"
     >
       <div className="logo flex items-center order-1 md:order-0 ">
@@ -89,13 +89,13 @@ const PrimaryNav = ({ setSecondaryNav }) => {
         {categoryList &&
           categoryList.map((cat) => (
             <li className="h-full flex items-center" key={cat._id}>
-              <div className="navItem relative z-[10000] h-full flex flex-col justify-center">
+              <div className="navItem relative z-[100] h-full flex flex-col justify-center">
                 <h3 className="cursor-pointer h-full flex items-center uppercase font-extrabold gap-2 text-slate-700 text-sm hover:text-[#E01B23]">
                   {cat.parent.title} <IoIosArrowDown />
                 </h3>
                 <ul
                   key={cat.parent._id}
-                  className="absolute dropdown-menu w-max top-[110%] z-[1000] bg-white p-4 hidden left-0  transition-all font-light text-md "
+                  className="absolute dropdown-menu w-max top-[110%] z-[10] bg-white p-4 hidden left-0  transition-all font-light text-md "
                 >
                   {cat.subcategories &&
                     cat.subcategories.map((subcat, index) => (
