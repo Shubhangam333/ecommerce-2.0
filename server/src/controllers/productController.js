@@ -235,11 +235,11 @@ export const getAllProductReviews = async (req, res, next) => {
 export const getProductsByParentCategory = async (req, res, next) => {
   const section = req.params.section;
 
-  const products = (await Product.find({ section })).slice(0, 4);
+  const products = await Product.find({ section }).populate("subCategory");
 
   if (!products) {
     throw new CustomError(400, "No Products found");
   }
 
-  res.status(200).json(products);
+  res.status(200).json(products.slice(0, 4));
 };

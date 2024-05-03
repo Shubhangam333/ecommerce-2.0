@@ -1,6 +1,12 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 const ArrivalProductCard = ({ arrivalItem }) => {
+  const { section } = useSelector((state) => state.auth);
+  console.log("a", arrivalItem);
   return (
-    <div
+    <Link
+      to={`/${section}/${arrivalItem.subCategory.slug}/${arrivalItem.slug}`}
       className={` overflow-hidden cursor-pointer border-[1px] border-[#17b987] rounded-md`}
     >
       <div className="max-w-[300px] max-h-[400px]">
@@ -10,7 +16,7 @@ const ArrivalProductCard = ({ arrivalItem }) => {
           alt=""
         />
       </div>
-    </div>
+    </Link>
   );
 };
 
