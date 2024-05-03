@@ -26,36 +26,237 @@ Our Ecommerce Website is a modern web application that allows users to browse, s
 
 ## Project Structure
 
-.
-├── backend # Backend Node.js server
-│ ├── controllers # Route controllers
-│ ├── models # MongoDB models
-│ ├── routes # Express.js routes
-│ └── ...
-├── frontend # Frontend React.js application
-│ ├── public # Static assets
-│ ├── src # React components and styles
-│ └── ...
-└── ...
+- .gitignore
+- README.md
+- package-lock.json
+- package.json
+- tailwind.config.js
+- vite.config.js
+- src
+  - App.jsx
+  - index.css
+  - main.jsx
+  - pages
+    - Address.jsx
+    - Admin
+      - AdminRoute.jsx
+      - Dashboardpage.jsx
+    - Authentication.jsx
+    - Cart.jsx
+    - Categorypage.jsx
+    - CheckOut.jsx
+    - Error.jsx
+    - Home.jsx
+    - ProductDetails.jsx
+    - User
+      - Orders.jsx
+      - PrivateRoute.jsx
+      - Profile.jsx
+  - redux
+    - api
+      - address
+        - addressapi.js
+      - auth
+        - authapi.js
+      - category
+        - categoryapi.js
+      - order
+        - orderapi.js
+      - payment
+        - paymentapi.js
+      - product
+        - productapi.js
+      - style
+        - styleapi.js
+      - user
+        - userapi.js
+    - slice
+      - authSlice.js
+      - cartSlice.js
+      - dashboardSlice.js
+      - sortSlice.js
+    - store.js
+  - assets
+    - react.svg
+    - shopping-cart.svg
+    - wishList-empty-icon.png
+  - components
+    - Address
+      - AddressCard.jsx
+      - AddressContainer.jsx
+      - AddressForm.jsx
+      - AddressSection.jsx
+      - AddressSummary.jsx
+    - Admin
+      - Category
+        - CategoryDashboard.jsx
+        - CategoryForm.jsx
+        - CategoryHeader.jsx
+        - CategoryList.jsx
+        - CreateCategory.jsx
+        - EditCategory.jsx
+      - Dashboard
+        - Breadcrumb.jsx
+        - Dashboard.jsx
+        - DashboardHeader.jsx
+        - MainContainer.jsx
+        - MegaMenu
+          - MegaMenu.jsx
+          - MenuHeader.jsx
+          - MenuItem.jsx
+          - SubMenu.jsx
+        - MenuBtn.jsx
+        - SearchInput.jsx
+      - Orders
+        - AdminOrderDetails.jsx
+        - AdminOrderHeader.jsx
+        - OrderList.jsx
+      - Products
+        - CreateProduct.jsx
+        - ProductDashboard.jsx
+        - ProductForm.jsx
+        - ProductHeader.jsx
+        - ProductList.jsx
+      - Style
+        - CreateStyle.jsx
+        - EditStyle.jsx
+        - StyleDashboard.jsx
+        - StyleForm.jsx
+        - StyleHeader.jsx
+        - StyleList.jsx
+      - Table.jsx
+      - Users
+        - UsersList.jsx
+    - Authentication
+      - AuthComponent.jsx
+      - LoginForm.jsx
+      - RegisterForm.jsx
+    - Carousel
+      - ImageSlider.jsx
+      - MainCarousel.jsx
+    - Cart
+      - CartDetails.jsx
+      - CartItem.jsx
+      - CartSection.jsx
+      - CartSummary.jsx
+    - Categories
+      - Categories.jsx
+      - Categorycard.jsx
+      - Categorylisting.jsx
+    - Categorypage
+      - Breadcrumb.jsx
+      - Category.jsx
+      - Categoryheader.jsx
+      - Categorynav.jsx
+      - Categorynavsection.jsx
+      - Mainsection.jsx
+      - Primaryfilter.jsx
+      - ProductDetails
+        - ProductComponent.jsx
+        - ProductContent.jsx
+        - ProductImageSection
+          - ImageCaraousel.jsx
+          - ProductImageModal.jsx
+          - ProductImages.jsx
+        - RatingComponent.jsx
+        - Review
+          - ReviewCard.jsx
+          - ReviewComponent.jsx
+          - ReviewForm.jsx
+          - ReviewList.jsx
+      - Products
+        - Filter
+          - FilterBreadCrumb.jsx
+          - Price
+            - PriceFilter.jsx
+            - PriceRadioInput.jsx
+          - PriceFilterItem.jsx
+          - Style
+            - CheckboxInput.jsx
+            - SearchInput.jsx
+          - StyleFilter.jsx
+          - StyleFilterItem.jsx
+        - Pagination.jsx
+        - Productcard.jsx
+        - Productnavfilter.jsx
+        - Productsection.jsx
+      - Secondaryfilter.jsx
+      - Sortfilter.jsx
+    - Checkout
+      - CheckOutContainer.jsx
+      - CheckOutItemCard.jsx
+      - CheckOutSection.jsx
+      - CheckOutSummary.jsx
+    - Footer
+      - Footer.jsx
+    - Header
+      - Header.jsx
+    - Home
+      - MainComponent.jsx
+      - ProductCard.jsx
+    - Layout
+      - DashBoardLayout.jsx
+      - Layout.jsx
+      - ProfileLayout.jsx
+    - Loader
+      - Loader.jsx
+      - loader.css
+    - Navbar
+      - Navbar.jsx
+      - PrimaryNav.jsx
+      - SecondaryNav.jsx
+      - SecondarytopNav.jsx
+      - Topnav.jsx
+    - Navbtns
+      - Navbtn.jsx
+    - Payment
+      - Cancel.jsx
+      - Payment.jsx
+      - PaymentForm.css
+      - PaymentForm.jsx
+      - PaymentPage.jsx
+      - Success.jsx
+    - Profile
+      - OrderHeader.jsx
+      - OrderInfo
+        - AddressDetails.jsx
+        - OrderDetails.jsx
+        - OrderPaymentDetails.jsx
+        - OrderedProductList.jsx
+        - ProductCard.jsx
+      - OrderList.jsx
+      - ProfileDetails.jsx
+      - ProfileHeader.jsx
+      - ProfileNav.jsx
+      - UserOrderTable.jsx
+    - Scroll
+      - ScrollToTop.jsx
+    - Wishlist
+      - Emptywishlist.jsx
+      - Mainwishlist.jsx
+      - WishListCard.jsx
+      - WishListSection.jsx
+
 
 
 ## Setup Instructions
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/Shubhangam333/ecommerce-2.0.git
+   cd ecommerce-2.0
+   ```
 # Install backend dependencies
-cd backend
-npm install
+   cd server
+   npm install
 
 # Install frontend dependencies
-cd ../frontend
-npm install
+   cd client
+   npm install
 
 Set up environment variables:
 
-2. Create a .env file in the backend directory.
+2. Create a .env file in the server directory.
 Define environment variables such as MongoDB connection URI, JWT secret, etc.
 Database setup:
 
@@ -64,21 +265,14 @@ Create a new database for the application and configure the connection URI in th
 
 ## Running the Application
 
-1. Start the backend server:
+1. Run the server and webapp:
 
-cd backend
-npm start
-
-2. Start the frontend development server:
-
-cd frontend
-npm start
+cd server
+npm run dev
 
 ## Access the application:
-Open your web browser and go to http://localhost:3000 to view the Ecommerce Website.
+Open your web browser and go to http://localhost:5173 to view the Ecommerce Website.
 
 ## Contributing
 We welcome contributions from the community! If you have any ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
-## License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for your own purposes.
