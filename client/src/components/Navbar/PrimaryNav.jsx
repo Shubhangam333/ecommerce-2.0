@@ -43,7 +43,7 @@ const PrimaryNav = ({ setSecondaryNav }) => {
     try {
       await getCategories(section).unwrap();
     } catch (error) {
-      console.log("e", error);
+      // console.log("e", error);
     }
   }, [getCategories, section]);
 

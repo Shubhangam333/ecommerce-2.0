@@ -14,8 +14,8 @@ const OrderDetails = () => {
 
   const getOrderDetails = useCallback(async () => {
     try {
-      const res = await orderDetails(params.orderId);
-      console.log("r", res);
+      await orderDetails(params.orderId);
+      // console.log("r", res);
     } catch (error) {
       console.log("er", error);
     }
@@ -33,24 +33,28 @@ const OrderDetails = () => {
     return <h1>Not found</h1>;
   }
 
-  console.log("d", data);
   return (
-    <section className="flex flex-col gap-2">
-      <section className="px-12 flex gap-4 py-6">
-        <div className="basis-[70%]">
-          <OrderedProductList productdata={data.items} />
-        </div>
-        <div className="basis-[30%]">
-          <AddressDetails address={data.address} />
-          <OrderPaymentDetails
-            paymentType={data.paymentType}
-            totalAmount={data.totalAmount}
-            createdAt={data.createdAt}
-            orderStatus={data.orderStatus}
-          />
-        </div>
-      </section>
-    </section>
+    <>
+      {data && (
+        <section className="flex flex-col gap-2">
+          <section className="px-12 flex gap-4 py-6">
+            <div className="basis-[70%]">
+              <OrderedProductList productdata={data.items} />
+            </div>
+            <div className="basis-[30%]">
+              <AddressDetails address={data.address} />
+              <OrderPaymentDetails
+                paymentType={data.paymentType}
+                totalAmount={data.totalAmount}
+                createdAt={data.createdAt}
+                orderStatus={data.orderStatus}
+                updatedAt={data.updatedAt}
+              />
+            </div>
+          </section>
+        </section>
+      )}
+    </>
   );
 };
 
