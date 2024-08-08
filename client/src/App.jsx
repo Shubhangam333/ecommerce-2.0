@@ -36,13 +36,12 @@ import UsersList from "./components/Admin/Users/UsersList";
 
 function App() {
   const dispatch = useDispatch();
-  const { userId, section, user } = useSelector((state) => state.auth);
+  const { userId, section } = useSelector((state) => state.auth);
 
-  const { data, error, isFetching } = useGetProfileQuery(userId, {
+  const { data, error, isFetching, isLoading } = useGetProfileQuery(userId, {
     pollingInterval: 900000,
+    skip: !userId,
   });
-
-  console.log("id", data);
 
   useEffect(() => {
     if (data && data.user) {
@@ -58,7 +57,7 @@ function App() {
 
   return (
     <>
-      {isFetching ? (
+      {isFetching || isLoading ? (
         <div className="min-h-screen flex justify-center items-center">
           <Loader />
         </div>
@@ -74,7 +73,7 @@ function App() {
             />
             <Route
               path="/auth/:id"
-              element={<Authentication isAuthenticated={user ? true : false} />}
+              element={<Authentication isAuthenticated={data ? true : false} />}
             />
 
             <Route path={`/${section}/:catname`} element={<Categorypage />} />

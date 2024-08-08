@@ -3,7 +3,6 @@ import AuthComponent from "../components/Authentication/AuthComponent";
 import Layout from "../components/Layout/Layout";
 
 const Authentication = ({ isAuthenticated }) => {
-  console.log("iss", isAuthenticated);
   const navigate = useNavigate();
   return (
     <>

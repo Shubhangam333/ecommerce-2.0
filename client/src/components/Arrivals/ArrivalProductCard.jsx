@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ArrivalProductCard = ({ arrivalItem }) => {
   const { section } = useSelector((state) => state.auth);
-  console.log("a", arrivalItem);
+
   return (
     <Link
       to={`/${section}/${arrivalItem.subCategory.slug}/${arrivalItem.slug}`}

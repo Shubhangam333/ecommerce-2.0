@@ -2,6 +2,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useRegisterMutation } from "../../redux/api/auth/authapi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const RegisterForm = () => {
   const [registerUser, { isLoading, isError, error, isSuccess }] =
@@ -35,7 +36,7 @@ const RegisterForm = () => {
       className="border-[1px] p-4 border-slate-500  registerform flex flex-col gap-y-2"
     >
       <div className="flex flex-col sm:flex-row gap-2 ">
-        {isLoading && <h1>Loading</h1>}
+        {isLoading && <Loader />}
         <div className="basis-[100%]">
           <input
             {...register("firstName", {

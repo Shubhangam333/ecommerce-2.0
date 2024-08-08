@@ -38,7 +38,7 @@ const LoginForm = () => {
     <>
       {isLoading && <Loader />}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className="border-[1px] p-4 border-slate-500  loginform flex flex-col gap-y-2"
       >
         <input

@@ -14,11 +14,13 @@ import { clearCart } from "../../redux/slice/cartSlice";
 
 const PrimaryNav = ({ setSecondaryNav }) => {
   const [isNavbarFixed, setIsNavbarFixed] = useState(false);
-  const { user } = useSelector((state) => state.auth);
+  const { user, userId } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
   const [getCategories, { data: categoryList }] =
     useGetAllCategoriesWithSubCatMutation();
-  const { data: wishList } = useGetWishListItemsQuery();
+  const { data: wishList } = useGetWishListItemsQuery(undefined, {
+    skip: !userId,
+  });
   const [logoOut] = useLogoutMutation();
   const dispatch = useDispatch();
   const navbarClass = isNavbarFixed ? "fixed top-0 left-0 right-0" : "";

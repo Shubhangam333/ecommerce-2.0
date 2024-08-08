@@ -35,7 +35,6 @@ const MainCarousel = () => {
   const { section } = useSelector((state) => state.auth);
   const images = slides.find((s) => s.category === section).images;
 
-  console.log(images);
   return (
     <div
       style={containerStyles}

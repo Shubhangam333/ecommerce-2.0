@@ -22,7 +22,9 @@ export const authSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = null;
+      state.userId = null;
       localStorage.removeItem("user");
+      localStorage.removeItem("userId");
     },
     setUserId: (state, action) => {
       localStorage.setItem("userId", JSON.stringify(action.payload));
